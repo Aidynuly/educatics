@@ -13,13 +13,15 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Introductions') }}
+                                {{ __('Категории курсов') }}
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('test.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
+                                <form action="{{route('course-intros.create')}}" method="post">
+                                    @method('get')
+                                    <input type="hidden" name="course_id" value="{{$course['id']}}">
+                                    <button class="btn btn-primary" type="submit">Создать новый</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -36,7 +38,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Курс</th>
-                                    <th>Название</th>
+                                    <th>Название категории</th>
                                     <th></th>
                                 </tr>
                                 </thead>

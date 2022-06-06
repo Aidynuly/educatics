@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('title')->constrained('translates')->onDelete('cascade');
-            $table->foreignId('course_intro_id')->constrained('course_intros')->onDelete('cascade');
+            $table->foreignId('course_intro_id')->nullable()->constrained('course_intros')->onDelete('cascade');
+            $table->enum('type', ['course', 'prof'])->default('course');
             $table->timestamps();
         });
     }

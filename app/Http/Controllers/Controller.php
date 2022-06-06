@@ -20,7 +20,7 @@ class Controller extends BaseController
             'status'    =>  $status,
             'message'   =>  $message,
             'data'  =>  $data,
-        ]);
+        ], $status);
     }
 
     protected function uploadImage($image)

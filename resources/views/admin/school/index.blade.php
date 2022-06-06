@@ -51,7 +51,7 @@
                                             <td>{{ App\Models\Translate::whereId($school->name)->value('ru') }}</td>
                                             <td>{{ App\Models\Translate::whereId($school->name)->value('en') }}</td>
                                             <td>{{ App\Models\Translate::whereId($school->name)->value('kz') }}</td>
-                                            <td>{{ $school->city_id }}</td>
+                                            <td>{{ \App\Models\Translate::whereId(\App\Models\City::whereId($school->city_id)->value('title'))->value('ru') }}</td>
                                             <td>
                                                 <form action="{{ route('schools.destroy',$school->id) }}" method="POST">
 {{--                                                    <a class="btn btn-sm btn-primary " href="{{ route('schools.show',$school->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>--}}
@@ -68,7 +68,6 @@
                         </div>
                     </div>
                 </div>
-                {!! $schools->links() !!}
             </div>
         </div>
     </div>

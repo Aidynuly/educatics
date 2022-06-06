@@ -7,6 +7,7 @@ use App\Http\Resources\ArticleResource;
 use App\Models\AboutUs;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -20,5 +21,12 @@ class ApiController extends Controller
         $articles = Article::get();
 
         return self::response(200, ArticleResource::collection($articles), 'success');
+    }
+
+    public function session(Request $request)
+    {
+        $session = Str::random(40);
+
+        return self::response(200, strtoupper($session), 'session');
     }
 }

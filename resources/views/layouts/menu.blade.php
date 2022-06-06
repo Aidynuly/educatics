@@ -58,3 +58,17 @@
         <p>Тарифы</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{route('about-us.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-table"></i>
+        <p>Про нас</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{route('prof-tests.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>Проф тест</p>
+    </a>
+</li>

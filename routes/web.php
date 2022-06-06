@@ -33,4 +33,7 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     Route::resource('employees', \App\Http\Controllers\Admin\EmployeeController::class);
     Route::resource('tariffs', \App\Http\Controllers\Admin\TariffController::class);
+    Route::resource('about-us', \App\Http\Controllers\Admin\AboutUController::class);
+    Route::resource('prof-tests', \App\Http\Controllers\Admin\ProfTestController::class);
+    Route::resource('answers', \App\Http\Controllers\Admin\AnswerController::class);
 });

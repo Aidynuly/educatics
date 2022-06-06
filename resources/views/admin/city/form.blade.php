@@ -2,21 +2,27 @@
     <div class="box-body">
 
         <div class="form-group">
-            {{ Form::label('Русский') }}
-            {{ Form::text('ru', App\Models\Translate::whereId($city->title)->value('en'), ['class' => 'form-control' . ($errors->has('ru') ? ' is-invalid' : ''), 'placeholder' => 'Русский']) }}
-            {!! $errors->first('title', '<div class="invalid-feedback">:message</div>') !!}
+            <label for="ru">RU</label>
+            <textarea type="text" class="ckeditor form-control" id="ru" name="ru" placeholder="Введите название:"></textarea>
+            @if($errors->has('ru'))
+                <span class="text-danger">{{$errors->first('ru')}}</span>
+            @endif
         </div>
 
         <div class="form-group">
-            {{ Form::label('Английский') }}
-            {{ Form::text('en', App\Models\Translate::whereId($city->title)->value('ru'), ['class' => 'form-control' . ($errors->has('en') ? ' is-invalid' : ''), 'placeholder' => 'Английский']) }}
-            {!! $errors->first('title', '<div class="invalid-feedback">:message</div>') !!}
+            <label for="ru">KZ</label>
+            <textarea type="text" class="ckeditor form-control" id="ru" name="kz" placeholder="Введите название:"></textarea>
+            @if($errors->has('ru'))
+                <span class="text-danger">{{$errors->first('ru')}}</span>
+            @endif
         </div>
 
         <div class="form-group">
-            {{ Form::label('Казахский') }}
-            {{ Form::text('kz', App\Models\Translate::whereId($city->title)->value('kz'), ['class' => 'form-control' . ($errors->has('kz') ? ' is-invalid' : ''), 'placeholder' => 'Казахский']) }}
-            {!! $errors->first('title', '<div class="invalid-feedback">:message</div>')!!}
+            <label for="ru">EN</label>
+            <textarea type="text" class="ckeditor form-control" id="ru" name="en" placeholder="Введите название:"></textarea>
+            @if($errors->has('ru'))
+                <span class="text-danger">{{$errors->first('ru')}}</span>
+            @endif
         </div>
 
     </div>

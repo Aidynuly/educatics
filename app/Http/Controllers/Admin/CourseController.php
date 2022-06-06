@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
 use App\Models\CourseIntro;
+use App\Models\Translate;
 use App\Models\UserCourse;
 use Illuminate\Http\Request;
 use function redirect;
@@ -24,10 +25,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate();
+        $courses = Course::get();
 
-        return view('admin.course.index', compact('courses'))
-            ->with('i', (request()->input('page', 1) - 1) * $courses->perPage());
+        return view('admin.course.index', compact('courses'));
     }
 
     /**
@@ -50,7 +50,26 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $course = Course::create($request->all());
+        $title = Translate::create([
+            'ru'    =>  $request['title_ru'],
+            'en'    =>  $request['title_en'],
+            'kz'    =>  $request['title_kz'],
+        ]);
+        $description = Translate::create([
+            'ru'    =>  $request['description_ru'],
+            'kz'    =>  $request['description_kz'],
+            'en'    =>  $request['description_en'],
+        ]);
+
+        if (isset($request['certificate'])) {
+            $name = $this->uploadDocument($request['certificate']);
+        }
+        $course = Course::create([
+            'title' =>  $title['id'],
+            'description'   =>  $description['id'],
+            'certificate'   =>  $name ?? null,
+            'price' =>  $request['price'],
+        ]);
 
         return redirect()->route('courses.index')
             ->with('success', 'Course created successfully.');
@@ -93,7 +112,16 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        $course->update($request->all());
+        $title = Translate::find($course->title)->update([
+            'ru'    =>  $request['title_ru'],
+            'en'    =>  $request['title_en'],
+            'kz'    =>  $request['title_kz'],
+        ]);
+        $description = Translate::find($course->description)->update([
+            'ru'    =>  $request['description_ru'],
+            'kz'    =>  $request['description_kz'],
+            'en'    =>  $request['description_en'],
+        ]);
 
         return redirect()->route('courses.index')
             ->with('success', 'Course updated successfully');

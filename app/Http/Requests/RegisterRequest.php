@@ -25,21 +25,23 @@ class RegisterRequest extends FormRequest
     {
         return [
             'type'  =>  'required',
-            'tariff_id' =>  'required|exists:tariffs,id',
             'age'       =>  'required',
             'login' =>  'required|unique:users,login',
             'password'  =>  'required',
             'phone' =>  'required|unique:users,phone',
             'name'  =>  'required',
             'surname'   =>  'required',
-            'school_id' =>  'required|exists:schools,id',
+            'school_name'   =>  'required'
         ];
     }
 
     public function failedValidation( $validator)
     {
         throw new HttpResponseException(
-            response()->json(['message' => $validator->errors()->first()],400)
+            response()->json([
+                'message' => $validator->errors()->first(),
+                'status'        =>  400,
+            ],200)
         );
     }
 }

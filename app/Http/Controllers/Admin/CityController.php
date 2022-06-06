@@ -37,6 +37,7 @@ class CityController extends Controller
     public function create()
     {
         $city = new City();
+
         return view('admin.city.create', compact('city'));
     }
 

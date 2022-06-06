@@ -23,8 +23,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Test whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Test whereType($value)
  */
 class Test extends Model
 {
     use HasFactory;
+
+    const COURSE_TYPE = 'course';
+    const PROF_TYPE = 'prof';
+
+    protected $fillable = [
+        'title',
+        'course_intro_id',
+        'created_at',
+        'updated_at',
+    ];
 }

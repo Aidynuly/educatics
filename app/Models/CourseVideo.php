@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CourseVideo whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CourseVideo whereVideoId($value)
  * @mixin \Eloquent
+ * @property int $course_intro_id
+ * @method static \Illuminate\Database\Eloquent\Builder|CourseVideo whereCourseIntroId($value)
  */
 class CourseVideo extends Model
 {

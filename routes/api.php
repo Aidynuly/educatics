@@ -23,16 +23,32 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('cities', [CityController::class, 'get']);
+Route::get('tariffs', [CityController::class, 'getTariff']);
 Route::get('schools', [SchoolController::class, 'get']);
 Route::get('courses', [CourseController::class, 'get']);
 Route::get('course-intros', [CourseController::class, 'byId']);
 Route::get('course-intro-test', [CourseController::class, 'getTest']);
+Route::get('course-intro-videos', [CourseController::class, 'videos']);
 Route::get('about-us', [ApiController::class, 'about']);
 Route::get('articles', [ApiController::class, 'article']);
 Route::get('employees', [EmployeeController::class, 'get']);
+Route::get('answers', [\App\Http\Controllers\Api\AnswerController::class, 'get']);
+Route::get('prof-test', [\App\Http\Controllers\Api\ProfTestController::class, 'get']);
+Route::get('prof-test/questions', [\App\Http\Controllers\Api\ProfTestController::class, 'questions']);
+
+Route::post('prof-test/answer/submit', [\App\Http\Controllers\Api\ProfTestController::class, 'submit']);
+Route::post('prof-test/answers/finish', [\App\Http\Controllers\Api\ProfTestController::class, 'finish']);
+
+Route::get('session', [ApiController::class, 'session']);
+
 Route::prefix('V1')->middleware('auth:sanctum')->group(function (){
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::prefix('course')->group(function () {
+        Route::post('/answer', [\App\Http\Controllers\Api\UserController::class, 'submit']);
+        Route::post('/test/finish', [\App\Http\Controllers\Api\UserController::class, 'finish']);
+    });
 });

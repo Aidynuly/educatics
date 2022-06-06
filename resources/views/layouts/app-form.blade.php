@@ -9,23 +9,23 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://jaryk-back.test-nomad.kz/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="https://jaryk-back.test-nomad.kz/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="https://jaryk-back.test-nomad.kz/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
-    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="https://jaryk-back.test-nomad.kz/plugins/jqvmap/jqvmap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="http://127.0.0.1:8000/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://jaryk-back.test-nomad.kz/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="https://jaryk-back.test-nomad.kz/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="https://jaryk-back.test-nomad.kz/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
-    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="https://jaryk-back.test-nomad.kz/plugins/summernote/summernote-bs4.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -46,7 +46,7 @@
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- User image -->
                     <li class="user-header bg-primary">
-                        <img src="http://127.0.0.1:8000/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="https://jaryk-back.test-nomad.kz/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                         <p>
                             Admin
                         </p>
@@ -87,39 +87,39 @@
 
 
 
-<script src="http://127.0.0.1:8000/plugins/jquery/jquery.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="http://127.0.0.1:8000/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="http://127.0.0.1:8000/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
-<script src="http://127.0.0.1:8000/plugins/chart.js/Chart.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
-<script src="http://127.0.0.1:8000/plugins/sparklines/sparkline.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/sparklines/sparkline.js"></script>
 <!-- JQVMap -->
-<script src="http://127.0.0.1:8000/plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="http://127.0.0.1:8000/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
 <!-- jQuery Knob Chart -->
-<script src="http://127.0.0.1:8000/plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/jquery-knob/jquery.knob.min.js"></script>
 <!-- daterangepicker -->
-<script src="http://127.0.0.1:8000/plugins/moment/moment.min.js"></script>
-<script src="http://127.0.0.1:8000/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/moment/moment.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="http://127.0.0.1:8000/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Summernote -->
-<script src="http://127.0.0.1:8000/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
-<script src="http://127.0.0.1:8000/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="http://127.0.0.1:8000/dist/js/adminlte.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="http://127.0.0.1:8000/dist/js/demo.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="http://127.0.0.1:8000/dist/js/pages/dashboard.js"></script>
+<script src="https://jaryk-back.test-nomad.kz/dist/js/pages/dashboard.js"></script>
 
 <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 <script type="text/javascript">

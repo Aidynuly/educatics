@@ -20,7 +20,7 @@ class QuestionResource extends JsonResource
             'id'    =>  $this->id,
             'title' =>  Translate::find($this->title),
             'image' =>  $this->image,
-            'answers'   =>  AnswerResource::collection(Answer::whereQuestionId($this->id)->get()),
+            'answers'   =>  AnswerResource::collection(Answer::whereQuestionId($this->id)->orderBy('queue', 'desc')->get()),
         ];
     }
 }

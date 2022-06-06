@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Moderator whereLogin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Moderator wherePassword($value)
  * @mixin \Eloquent
+ * @method static \Database\Factories\ModeratorFactory factory(...$parameters)
  */
 class Moderator extends Model
 {

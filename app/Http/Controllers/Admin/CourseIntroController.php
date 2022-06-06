@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\CourseIntro;
+use App\Models\Translate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Xml\Tests;
 
@@ -22,11 +25,15 @@ class CourseIntroController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $course = Course::find($request['course_id']);
+
+        return view('admin.course-intro.create', [
+            'course'    =>  $course,
+        ]);
     }
 
     /**
@@ -37,20 +44,41 @@ class CourseIntroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = Translate::create([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'    =>  $request['title_en'],
+        ]);
+//        $description = Translate::create([
+//            'ru'    =>  $request['description_ru'],
+//            'kz'    =>  $request['description_kz'],
+//            'en'    =>  $request['description_en'],
+//        ]);
+        $intro = CourseIntro::create([
+            'title' =>  $title['id'],
+            'created_at'    =>  Carbon::now(),
+            'updated_at'    =>  Carbon::now(),
+            'course_id' =>  $request['course_id'],
+        ]);
+
+        return redirect()->route('courses.show', $request['course_id'])->with('success', 'Успешно создан');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
         $intros = CourseIntro::whereCourseId($id)->get();
+        $course = Course::find($id);
 
-        return view('admin.course-intro.index', compact('intros'));
+        return view('admin.course-intro.index', [
+            'intros'    =>  $intros,
+            'course'    =>  $course,
+        ]);
     }
 
     /**
@@ -61,7 +89,9 @@ class CourseIntroController extends Controller
      */
     public function edit($id)
     {
-        dd('edit'. $id);
+        $intro = CourseIntro::find($id);
+
+        return view('admin.course-intro.edit', ['intro' => $intro]);
     }
 
     /**

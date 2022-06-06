@@ -25,8 +25,18 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Answer whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Answer whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $queue
+ * @method static \Illuminate\Database\Eloquent\Builder|Answer whereQueue($value)
  */
 class Answer extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'question_id',
+        'title',
+        'is_correct',
+        'created_at',
+        'updated_at',
+    ];
 }

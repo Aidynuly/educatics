@@ -24,10 +24,9 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $schools = School::paginate();
+        $schools = School::get();
 
-        return view('admin.school.index', compact('schools'))
-            ->with('i', (request()->input('page', 1) - 1) * $schools->perPage());
+        return view('admin.school.index', compact('schools'));
     }
 
     /**
@@ -38,7 +37,9 @@ class SchoolController extends Controller
     public function create()
     {
         $school = new School();
-        return view('admin.school.create', compact('school'));
+        $cities = City::get();
+
+        return view('admin.school.create', ['school' => $school, 'cities' => $cities]);
     }
 
     /**
@@ -81,8 +82,8 @@ class SchoolController extends Controller
     public function edit($id)
     {
         $school = School::find($id);
-
-        return view('admin.school.edit', compact('school'));
+        $cities = City::get();
+        return view('admin.school.edit', ['school' => $school, 'cities' => $cities]);
     }
 
     /**

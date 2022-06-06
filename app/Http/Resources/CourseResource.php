@@ -24,7 +24,6 @@ class CourseResource extends JsonResource
             'price'     =>  $this->price,
             'certificate'   =>  $this->certificate,
             'created_at'    =>  $this->created_at,
-            'videos'    =>  CourseVideoResource::collection(CourseVideo::whereCourseId($this->id)->get()),
             'intros'    =>  CourseIntroResource::collection(CourseIntro::whereCourseId($this->id)->get()),
         ];
     }

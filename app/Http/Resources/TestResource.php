@@ -20,7 +20,9 @@ class TestResource extends JsonResource
             'id'    =>  $this->id,
             'title' =>  Translate::find($this->title),
             'course_intro_id'   =>  $this->course_intro_id,
-            'questions' =>  QuestionResource::collection(Question::whereTestId($this->id)->get()),
+            'questions' =>  $questions = QuestionResource::collection(Question::whereTestId($this->id)->get()),
+            'count' =>  count($questions),
+            'type'  =>  $this->type,
         ];
     }
 }

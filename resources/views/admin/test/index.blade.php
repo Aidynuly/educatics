@@ -13,15 +13,20 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Test') }}
+                                {{ __('Тесты') }}
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('test.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
+                                <form action="{{route('test.create')}}" method="post">
+                                    @method('get')
+                                    <input type="hidden" name="intro_id" id="intro_id" value="{{$introId}}">
+                                    <button class="btn btn-primary" type="submit">{{ __('Создать новый') }}</button>
+                                </form>
+{{--                                <a href="{{ route('test.create', $introId) }}" class="btn btn-primary btn-sm float-right"  data-placement="left">--}}
+{{--                                    <input type="hidden" name="intro_id" id="intro_id" value="{{$introId}}">--}}
+{{--                                    {{ __('Создать новый') }}--}}
+{{--                                </a>--}}
                             </div>
-
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -34,11 +39,11 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Вопрос</th>
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Название теста</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($tests as $test)

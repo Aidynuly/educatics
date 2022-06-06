@@ -61,8 +61,10 @@ class User extends Authenticatable
         'name',
         'surname',
         'school_id',
+        'school_name',
         'created_at',
         'updated_at',
+        'session_id',
     ];
 
     static $rules = [

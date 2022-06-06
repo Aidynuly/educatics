@@ -17,7 +17,7 @@ class CourseVideoResource extends JsonResource
     {
         return [
             'id'    =>  $this->id,
-            'course_id' =>  $this->course_id,
+            'course_intro_id' =>  $this->course_intro_id,
             'video' =>  Video::find($this->video_id),
         ];
     }

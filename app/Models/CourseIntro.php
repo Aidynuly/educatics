@@ -27,4 +27,11 @@ use Illuminate\Database\Eloquent\Model;
 class CourseIntro extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'course_id',
+        'created_at',
+        'updated_at',
+    ];
 }

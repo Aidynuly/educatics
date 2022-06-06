@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Course') }}
+                                {{ __('Курсы') }}
                             </span>
 
                              <div class="float-right">
@@ -66,7 +66,6 @@
                         </div>
                     </div>
                 </div>
-                {!! $courses->links() !!}
             </div>
         </div>
     </div>
