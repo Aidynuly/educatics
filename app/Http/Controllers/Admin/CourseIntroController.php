@@ -61,7 +61,7 @@ class CourseIntroController extends Controller
             'course_id' =>  $request['course_id'],
         ]);
 
-        return redirect()->route('courses.show', $request['course_id'])->with('success', 'Успешно создан');
+        return redirect()->route('course-intros.show', $request['course_id'])->with('success', 'Успешно создан');
     }
 
     /**
@@ -103,7 +103,14 @@ class CourseIntroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $intro = CourseIntro::find($id);
+        Translate::find($intro->title)->update([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'    =>  $request['title_en'],
+        ]);
+
+        return redirect()->route('course-intros.show', $intro->course_id)->with('success', 'updated');
     }
 
     /**
@@ -114,9 +121,10 @@ class CourseIntroController extends Controller
      */
     public function destroy($id)
     {
+        $course = CourseIntro::whereId($id)->value('course_id');
         CourseIntro::find($id)->delete();
 
-        return redirect()->route('courses.index');
+        return redirect()->route('course-intros.show', $course)->with('success', 'deleted');
     }
 
     public function get($id)

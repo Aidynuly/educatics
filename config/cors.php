@@ -17,7 +17,9 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+//    'paths' => ['*'],
+
+    'allowed_methods' => ['get', 'post', 'put', 'delete', 'options'],
 
     'allowed_origins' => ['*'],
 

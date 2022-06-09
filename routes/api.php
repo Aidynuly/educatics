@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\SchoolController;
+use App\Http\Controllers\Api\FeedbackController;
+use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,14 +43,20 @@ Route::post('prof-test/answers/finish', [\App\Http\Controllers\Api\ProfTestContr
 
 Route::get('session', [ApiController::class, 'session']);
 
+Route::post('feedback', [\App\Http\Controllers\Api\FeedbackController::class, 'post']);
+
 Route::prefix('V1')->middleware('auth:sanctum')->group(function (){
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/payment', [PaymentController::class, 'payment']);
+
 
     Route::prefix('course')->group(function () {
         Route::post('/answer', [\App\Http\Controllers\Api\UserController::class, 'submit']);
         Route::post('/test/finish', [\App\Http\Controllers\Api\UserController::class, 'finish']);
+
+        Route::post('/video', [\App\Http\Controllers\Api\VideoController::class, 'get']);
     });
 });
