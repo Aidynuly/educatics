@@ -44,4 +44,22 @@ class CourseController extends Controller
 
         return self::response(200, new CourseIntroResource($intro), 'success');
     }
+
+    public function getOne(Request $request)
+    {
+        $request->validate([
+            'course_id' =>  'required|exists:courses,id',
+        ]);
+
+        return self::response(200, new CourseResource(Course::find($request['course_id'])), 'success');
+    }
+
+    public function getIntroById(Request $request)
+    {
+        $request->validate([
+            'course_intro_id'   =>  'required|exists:course_intros,id',
+        ]);
+
+        return self::response(200, new CourseIntroResource(CourseIntro::find($request['course_intro_id'])), 'success');
+    }
 }

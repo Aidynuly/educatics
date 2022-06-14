@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('school_id');
-            $table->dropColumn('school_id');
-            $table->string('school_name')->after('surname');
+        Schema::create('socials', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->text('url');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('socials');
     }
 };

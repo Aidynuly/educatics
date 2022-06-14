@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Tariff;
+use App\Models\UserCourse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -14,6 +16,19 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'    =>  $this->id,
+            'type'  =>  $this->type,
+            'tariff'    =>  Tariff::find($this->tariff_id),
+            'age'       =>  $this->age,
+            'login'     =>  $this->login,
+            'phone'     =>  $this->phone,
+            'name'      =>  $this->name,
+            'surname'   =>  $this->surname,
+            'school_name'   =>  $this->school_name,
+            'session_id'    =>  $this->session_id,
+            'school'    =>  $this->school_id,
+            'courses'   =>  UserCourse::whereUserId($this->id)->get(),
+        ];
     }
 }

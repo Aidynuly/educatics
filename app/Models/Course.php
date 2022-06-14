@@ -46,7 +46,14 @@ class Course extends Model
      *
      * @var array
      */
-    protected $fillable = ['title','description','price','certificate'];
+    protected $fillable = [
+        'title',
+        'description',
+        'price',
+        'certificate',
+        'background_color',
+        'icon'
+    ];
 
 
     /**

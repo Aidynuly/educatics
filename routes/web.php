@@ -36,4 +36,9 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('about-us', \App\Http\Controllers\Admin\AboutUController::class);
     Route::resource('prof-tests', \App\Http\Controllers\Admin\ProfTestController::class);
     Route::resource('answers', \App\Http\Controllers\Admin\AnswerController::class);
+    Route::resource('video', \App\Http\Controllers\Admin\VideoController::class);
+    Route::resource('docs', \App\Http\Controllers\Admin\DocController::class);
+
+    Route::resource('main-page', \App\Http\Controllers\Admin\MainPageController::class);
+    Route::resource('social', \App\Http\Controllers\Admin\SocialController::class);
 });

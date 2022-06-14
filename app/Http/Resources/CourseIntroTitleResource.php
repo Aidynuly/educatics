@@ -2,13 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\CourseVideo;
-use App\Models\CourseDoc;
-use App\Models\Test;
 use App\Models\Translate;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CourseIntroResource extends JsonResource
+class CourseIntroTitleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,10 +18,6 @@ class CourseIntroResource extends JsonResource
         return [
             'id'    =>  $this->id,
             'title' =>  Translate::find($this->title),
-            'course_id' =>  $this->course_id,
-            'videos'    =>  CourseVideoResource::collection(CourseVideo::where('course_intro_id', $this->id)->get()),
-            'tests'     =>  TestResource::collection(Test::whereCourseIntroId($this->id)->get()),
-            'docs'      =>  CourseDoc::where('course_intro_id', $this->id)->get(),
         ];
     }
 }

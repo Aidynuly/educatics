@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users',function (Blueprint $table) {
-            $table->string('session_id')->nullable();
+        Schema::table('courses', function (Blueprint $table) {
+            $table->string('trailer')->nullable()->after('background_color');
         });
     }
 

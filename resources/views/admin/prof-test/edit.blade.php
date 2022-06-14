@@ -65,12 +65,20 @@
                                                         @if($errors->has('ru'))
                                                             <span class="text-danger">{{$errors->first('title_en')}}</span>
                                                         @endif
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="box-footer mt20">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div>
+                            <div>
+                                <div>
                                     <label>Ответы</label>
                                     <div class="card-body">
                                         <div class="card-header">
@@ -186,10 +194,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="box-footer mt20">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
+{{--                        </form>--}}
                     </div>
                 </div>
             </div>

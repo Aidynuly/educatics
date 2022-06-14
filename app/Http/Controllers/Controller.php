@@ -25,15 +25,17 @@ class Controller extends BaseController
 
     protected function uploadImage($image)
     {
-        Storage::disk('public')->put('images', $image);
+        $path = Storage::disk('public')->put('images', $image);
+        $name = basename($path);
 
-        return $image->getClientOriginalName();
+        return 'storage/images/' . $name;
     }
 
     protected function uploadDocument($doc)
     {
-        Storage::disk('public')->put('images', $doc);
+        $path = Storage::disk('public')->put('docs', $doc);
+        $name = basename($path);
 
-        return $doc->getClientOriginalName();
+        return 'storage/images/' . $name;
     }
 }

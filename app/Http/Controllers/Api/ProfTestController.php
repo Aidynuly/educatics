@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CourseResource;
 use App\Http\Resources\ProfTestResource;
 use App\Http\Resources\QuestionResource;
 use App\Models\Answer;
+use App\Models\Course;
 use App\Models\ProfTestAnswer;
 use App\Models\Question;
 use App\Models\Test;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -57,8 +60,24 @@ class ProfTestController extends Controller
         $request->validate([
             'session_id'    =>  'required',
         ]);
-
-        $answers = ProfTestAnswer::whereSessionId($request['session_id'])->get();
-        $correctAnswers = ProfTestAnswer::whereSessionId($request['session_id'])->where('is_correct', true)->get();
+        $user = User::where('session_id', $request['session_id'])->first();
+        $data['answers'] = ProfTestAnswer::whereSessionId($request['session_id'])->get();
+        $data['count_correct'] = ProfTestAnswer::whereSessionId($request['session_id'])->where('is_correct', true)->get();
+        $data['courses'] = CourseResource::collection(Course::where('price', 30000)->get());
+        $data['first_block'] = [
+            'path'  =>  'var/path',
+            'title' =>  [
+                'ru'    =>  'ru',
+                'kz'    =>  'kz',
+                'en'    =>  'en',
+            ],
+            'description'   =>  [
+                'ru'    =>  'ru description',
+                'kz'    =>  'kz description',
+                'en'    =>  'en description',
+            ]
+        ];
+        
+        return self::response(200, $data,'success');
     }
 }

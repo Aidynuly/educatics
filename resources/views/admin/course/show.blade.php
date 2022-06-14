@@ -133,7 +133,7 @@
                                     </li>
                                 </ul>
                                 <div class="text-center mt-5 mb-3">
-                                    <a href="#" class="btn btn-sm btn-primary">Добавить файлы</a>
+{{--                                    <a href="{{route('video.show', $course->id)}}" class="btn btn-sm btn-primary">Видео курса</a>--}}
                                     <a href="{{route('course-intros.show', $course->id)}}" class="btn btn-sm btn-info">Категории</a>
                                 </div>
                             </div>

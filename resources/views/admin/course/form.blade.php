@@ -16,7 +16,9 @@
                         <div class="form-group">
                             <label for="ru">RU</label>
 {{--                            <textarea type="text" class="ckeditor form-control" id="ru" name="title_ru" placeholder="Введите название:"></textarea>--}}
-                            <textarea type="text" class="form-control" id="ru" name="title_ru" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class="form-control" id="ru" name="title_ru" placeholder="Введите название:">
+                                {{isset($course->title) ? \App\Models\Translate::where('id', $course->title)->value('ru') : ''}}
+                            </textarea>
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('title_ru')}}</span>
                             @endif
@@ -26,7 +28,9 @@
                         <div class="form-group" id="kz">
                             <label for="ru">KZ</label>
 {{--                            <textarea type="text" class="ckeditor form-control" id="ru" name="title_kz" placeholder="Введите название:"></textarea>--}}
-                            <textarea type="text" class="form-control" id="ru" name="title_kz" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class="form-control" id="ru" name="title_kz" placeholder="Введите название:">
+                                 {{isset($course->title) ? \App\Models\Translate::where('id', $course->title)->value('kz') : ''}}
+                            </textarea>
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('title_kz')}}</span>
                             @endif
@@ -36,7 +40,9 @@
                         <div class="form-group" id="en">
                             <label for="ru">EN</label>
 {{--                            <textarea type="text" class="ckeditor form-control" id="ru" name="title_en" placeholder="Введите название:"></textarea>--}}
-                            <textarea type="text" class="form-control" id="ru" name="title_en" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class="form-control" id="ru" name="title_en" placeholder="Введите название:">
+                                 {{isset($course->title) ? \App\Models\Translate::where('id', $course->title)->value('en') : ''}}
+                            </textarea>
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('title_en')}}</span>
                             @endif
@@ -61,7 +67,9 @@
                     <div class="active tab-pane" id="russian_desc">
                         <div class="form-group">
                             <label for="ru">RU</label>
-                            <textarea type="text" class=" form-control" id="ru" name="description_ru" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class=" form-control" id="ru" name="description_ru" placeholder="Введите название:">
+                                 {{isset($course->description) ? \App\Models\Translate::where('id', $course->description)->value('ru') : ''}}
+                            </textarea>
 {{--                            <textarea type="text" class="ckeditor form-control" id="ru" name="description_ru" placeholder="Введите название:"></textarea>--}}
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('description_ru')}}</span>
@@ -71,7 +79,9 @@
                     <div class="tab-pane" id="english_desc">
                         <div class="form-group">
                             <label for="ru">EN</label>
-                            <textarea type="text" class=" form-control" id="ru" name="description_en" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class=" form-control" id="ru" name="description_en" placeholder="Введите название:">
+                                {{isset($course->description) ? \App\Models\Translate::where('id', $course->description)->value('en') : ''}}
+                            </textarea>
 {{--                            <textarea type="text" class="ckeditor form-control" id="ru" name="description_en" placeholder="Введите название:"></textarea>--}}
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('description_en')}}</span>
@@ -82,7 +92,9 @@
                         <div class="form-group">
                             <label for="kz">KZ</label>
 {{--                            <textarea type="text" class="ckeditor form-control" id="kz" name="description_kz" placeholder="Введите название:"></textarea>--}}
-                            <textarea type="text" class="form-control" id="kz" name="description_kz" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class="form-control" id="kz" name="description_kz" placeholder="Введите название:">
+                                {{isset($course->description) ? \App\Models\Translate::where('id', $course->description)->value('kz') : ''}}
+                            </textarea>
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('description_kz')}}</span>
                             @endif
@@ -99,11 +111,21 @@
             {!! $errors->first('price', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+            {{ Form::label('background_color') }}
+            {{ Form::text('background_color', $course->background_color, ['class' => 'form-control' . ($errors->has('background_color') ? ' is-invalid' : ''), 'placeholder' => 'Color']) }}
+            {!! $errors->first('background_color', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
             {{Form::label('Выберите файл, чтобы загрузить сертификат')}}
             {{Form::file('certificate', ['class' => 'form-control' . ($errors->has('kz') ? ' is-invalid' : ''), 'placeholder' => 'Сертификат' ])}}
             {!! $errors->first('certificate', '<div class="invalid-feedback">:message</div>')!!}
         </div>
 
+        <div class="form-group">
+            {{Form::label('Выберите файл, чтобы загрузить иконку')}}
+            {{Form::file('icon', ['class' => 'form-control' . ($errors->has('kz') ? ' is-invalid' : ''), 'placeholder' => 'Иконка' ])}}
+            {!! $errors->first('icon', '<div class="invalid-feedback">:message</div>')!!}
+        </div>
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Submit</button>

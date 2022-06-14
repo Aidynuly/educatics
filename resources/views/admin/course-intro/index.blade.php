@@ -50,6 +50,8 @@
                                         <td>{{ App\Models\Translate::whereId($intro->title)->value('ru') }}</td>
                                         <td>
                                             <form action="{{route('course-intros.destroy', $intro->id)}}" method="POST">
+                                                <a class="btn btn-sm btn-primary " href="{{route('video.show', $intro->id)}}">Видео</a>
+                                                <a class="btn btn-sm btn-primary " href="{{route('docs.show', $intro->id)}}">Документы</a>
                                                 <a class="btn btn-sm btn-primary " href="{{route('test.show', $intro->id)}}">Тесты</a>
                                                 <a class="btn btn-sm btn-success" href="{{route('course-intros.edit', $intro->id)}}"><i class="fa fa-fw fa-edit"></i></a>
                                                 @csrf

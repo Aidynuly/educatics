@@ -1,7 +1,7 @@
 @extends('layouts.app-form')
 
 @section('template_title')
-    Questions
+    Videos
 @endsection
 
 @section('content')
@@ -13,20 +13,16 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Questions') }}
+                                {{ __('Видео курсы') }}
                             </span>
 
                             <div class="float-right">
-{{--                                <a href="{{ route('prof-tests.create')}}" class="btn btn-primary btn-sm float-right"  data-placement="left">--}}
-{{--                                    {{ __('Create New') }}--}}
-{{--                                </a>--}}
-                                <form method="get" action="{{route('prof-tests.create')}}">
-                                    <input type="hidden" name="id" value="{{$test->id}}">
-
-                                    <button class="btn btn-primary btn-sm float-right" type="submit">Create new</button>
+                                <form action="{{route('video.create')}}" method="post">
+                                    @method('get')
+                                    <input type="hidden" name="course_intro_id" value="{{$intro['id']}}">
+                                    <button class="btn btn-primary" type="submit">Создать новый</button>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -41,20 +37,24 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
-                                    <th>Вопрос</th>
+                                    <th>Курс</th>
+                                    <th>Название видео</th>
+                                    <th>Ссылка на видео</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($questions as $question)
+                                @foreach ($videos as $video)
                                     <tr>
-                                        <td>{{ $question->id }}</td>
-                                        <td>{{ \App\Models\Translate::whereId($question->title)->value('ru') }}</td>
+                                        <td>{{ $video->id }}</td>
+                                        <td>{{ App\Models\Translate::whereId(\App\Models\Course::whereId($course)->value('title'))->value('ru') }}</td>
+                                        <td>{{ \App\Models\Video::whereId($video->video_id)->value('name') }}</td>
+                                        <td>{{ \App\Models\Video::whereId($video->video_id)->value('link') }}</td>
                                         <td>
-                                            <form action="{{route('prof-tests.destroy', $question->id)}}" method="POST">
+                                            <form action="{{route('video.destroy', $video->id)}}" method="POST">
+                                                <a class="btn btn-sm btn-success" href="{{route('video.edit', $video->id)}}"><i class="fa fa-fw fa-edit"></i></a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <a class="btn btn-sm btn-success" href="{{route('prof-tests.edit', $question->id)}}"><i class="fa fa-fw fa-edit"></i></a>
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                             </form>
                                         </td>

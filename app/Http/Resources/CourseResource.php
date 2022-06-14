@@ -24,7 +24,11 @@ class CourseResource extends JsonResource
             'price'     =>  $this->price,
             'certificate'   =>  $this->certificate,
             'created_at'    =>  $this->created_at,
-            'intros'    =>  CourseIntroResource::collection(CourseIntro::whereCourseId($this->id)->get()),
+            'background_color'  => $this->background_color,
+            'icon'      =>  $this->icon,
+            'trailer'   =>  $this->trailer,
+            'intros'    =>  CourseIntroTitleResource::collection(CourseIntro::whereCourseId($this->id)->get()),
+//            'intros'    =>  CourseIntro::whereCourseId($this->id)->get(),
         ];
     }
 }

@@ -72,3 +72,17 @@
         <p>Проф тест</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{route('main-page.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>Главная страница</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{route('social.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>Социальные сети </p>
+    </a>
+</li>

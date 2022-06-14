@@ -28,7 +28,9 @@ Route::get('cities', [CityController::class, 'get']);
 Route::get('tariffs', [CityController::class, 'getTariff']);
 Route::get('schools', [SchoolController::class, 'get']);
 Route::get('courses', [CourseController::class, 'get']);
+Route::get('course-by-id', [CourseController::class, 'getOne']);
 Route::get('course-intros', [CourseController::class, 'byId']);
+Route::get('course-intro-by-id', [CourseController::class, 'getIntroById']);
 Route::get('course-intro-test', [CourseController::class, 'getTest']);
 Route::get('course-intro-videos', [CourseController::class, 'videos']);
 Route::get('about-us', [ApiController::class, 'about']);
@@ -45,9 +47,12 @@ Route::get('session', [ApiController::class, 'session']);
 
 Route::post('feedback', [\App\Http\Controllers\Api\FeedbackController::class, 'post']);
 
+Route::get('socials', [ApiController::class, 'socials']);
+Route::get('main-page', [ApiController::class, 'main']);
+
 Route::prefix('V1')->middleware('auth:sanctum')->group(function (){
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return new \App\Http\Resources\UserResource($request->user());
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/payment', [PaymentController::class, 'payment']);

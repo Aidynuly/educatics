@@ -29,4 +29,11 @@ use Illuminate\Database\Eloquent\Model;
 class CourseVideo extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'course_intro_id',
+        'video_id',
+        'created_at',
+        'updated_at',
+    ];
 }

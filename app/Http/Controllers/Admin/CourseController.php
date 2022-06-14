@@ -61,14 +61,20 @@ class CourseController extends Controller
             'en'    =>  $request['description_en'],
         ]);
 
+        if (isset($request['icon'])) {
+            $icon = $this->uploadImage($request->file('icon'));
+        }
+
         if (isset($request['certificate'])) {
-            $name = $this->uploadDocument($request['certificate']);
+            $name = $this->uploadDocument($request->file('certificate'));
         }
         $course = Course::create([
             'title' =>  $title['id'],
             'description'   =>  $description['id'],
             'certificate'   =>  $name ?? null,
             'price' =>  $request['price'],
+            'background_color'  =>  $request['background_color'],
+            'icon'      =>  $icon ?? null,
         ]);
 
         return redirect()->route('courses.index')
@@ -121,6 +127,21 @@ class CourseController extends Controller
             'ru'    =>  $request['description_ru'],
             'kz'    =>  $request['description_kz'],
             'en'    =>  $request['description_en'],
+        ]);
+
+        if (isset($request['icon'])) {
+            $icon = $this->uploadImage($request->file('icon'));
+        }
+
+        if (isset($request['certificate'])) {
+            $name = $this->uploadDocument($request->file('certificate'));
+        }
+
+        $course->update([
+            'background_color'  =>  $request['background_color'],
+            'price'             =>  $request['price'],
+            'icon'          =>  $icon ?? $course->icon,
+            'certificate'       =>  $name ?? $course->certificate,
         ]);
 
         return redirect()->route('courses.index')
