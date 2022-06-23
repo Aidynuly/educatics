@@ -86,3 +86,10 @@
         <p>Социальные сети </p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{route('feedback.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>Обратная связь </p>
+    </a>
+</li>

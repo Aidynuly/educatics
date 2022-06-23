@@ -13,7 +13,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Update question</span>
+                        <span class="card-title">Обновить вопрос</span>
 
                         <form method="get" action="{{route('answers.create')}}">
                             <input type="hidden" name="id" value="{{$question->id}}">
@@ -69,10 +69,10 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="box-footer mt20">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="box-footer mt20">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </form>

@@ -53,10 +53,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label>Правильный ответ</label>
-                                    <div class="card-body">
-                                        <input type="checkbox" name="is_correct">
-                                    </div>
+                                    <label for="is_correct">Правильный ответ</label>
+                                    <input type="checkbox" name="is_correct" id="is_correct">
                                 </div>
                                 <div class="box-footer mt20">
                                     <button type="submit" class="btn btn-primary">Submit</button>

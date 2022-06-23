@@ -17,9 +17,6 @@
                             </span>
 
                             <div class="float-right">
-{{--                                <a href="{{ route('prof-tests.create')}}" class="btn btn-primary btn-sm float-right"  data-placement="left">--}}
-{{--                                    {{ __('Create New') }}--}}
-{{--                                </a>--}}
                                 <form method="get" action="{{route('prof-tests.create')}}">
                                     <input type="hidden" name="id" value="{{$test->id}}">
 
