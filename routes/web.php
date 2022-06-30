@@ -42,4 +42,6 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('main-page', \App\Http\Controllers\Admin\MainPageController::class);
     Route::resource('social', \App\Http\Controllers\Admin\SocialController::class);
     Route::resource('feedback', \App\Http\Controllers\Admin\FeedbackController::class);
+    Route::resource('footer-doc', \App\Http\Controllers\Admin\FooterDocController::class);
+
 });

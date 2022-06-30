@@ -49,7 +49,7 @@ Route::post('feedback', [\App\Http\Controllers\Api\FeedbackController::class, 'p
 
 Route::get('socials', [ApiController::class, 'socials']);
 Route::get('main-page', [ApiController::class, 'main']);
-
+Route::get('get-footer', [ApiController::class, 'footer']);
 Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return new \App\Http\Resources\UserResource($request->user());

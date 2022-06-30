@@ -93,3 +93,10 @@
         <p>Обратная связь </p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{route('footer-doc.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>Футер документы </p>
+    </a>
+</li>

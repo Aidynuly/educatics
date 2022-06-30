@@ -36,6 +36,6 @@ class Controller extends BaseController
         $path = Storage::disk('public')->put('docs', $doc);
         $name = basename($path);
 
-        return 'storage/images/' . $name;
+        return 'storage/docs/' . $name;
     }
 }

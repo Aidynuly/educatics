@@ -9,6 +9,9 @@ use App\Models\AboutUs;
 use App\Models\Article;
 use App\Models\Social;
 use App\Models\Mainpage;
+use App\Models\Contact;
+use App\Models\SocialNetwork;
+use App\Models\Doc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -41,5 +44,19 @@ class ApiController extends Controller
     public function main(Request $request)
     {
         return self::response(200, MainPageResource::collection(Mainpage::get()), 'success');
+    }
+
+    public function footer(Request $request)
+    {
+        $data['contacts']['mail'] = Contact::where('type','mail')->value('phone');
+        $data['contacts']['phone'] = Contact::where('type','phone')->value('phone');
+        $data['social_networks']['vk'] = Social::where('type', 'vk')->value('url');
+        $data['social_networks']['insta'] = Social::where('type', 'insta')->value('url');
+        $data['social_networks']['whatsapp'] = Social::where('type', 'whatsapp')->value('url');
+        $data['docs']['use'] = Doc::where('type', 'use')->value('url');
+        $data['docs']['oferta'] = Doc::where('type', 'oferta')->value('url');
+        $data['docs']['privacy'] = Doc::where('type', 'privacy')->value('url');
+
+        return self::response(200, $data, 'success');
     }
 }
