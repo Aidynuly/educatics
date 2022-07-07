@@ -16,7 +16,7 @@ class Controller extends BaseController
     protected static function response($status, $data, $message = null): JsonResponse
     {
         return response()->json([
-            'success'   =>  boolval($status == 200),
+            'success'   =>  boolval($status == 200 || $status == 201 || $status == 202),
             'status'    =>  $status,
             'message'   =>  $message,
             'data'  =>  $data,
@@ -37,5 +37,14 @@ class Controller extends BaseController
         $name = basename($path);
 
         return 'storage/docs/' . $name;
+    }
+
+    protected function deleteFile($file)
+    {
+        try {
+            Storage::delete($file);
+        } catch (\RuntimeException $exception) {
+            dd($exception->getMessage());
+        }
     }
 }

@@ -18,31 +18,6 @@
                         </div>
                     </div>
 
-{{--                    <div class="card-body">--}}
-{{--                        <ul class="nav nav-pills">--}}
-{{--                            <li class="nav-item"><a class="nav-link active" href="#en" data-toggle="tab">Английский</a></li>--}}
-{{--                            <li class="nav-item"><a class="nav-link" href="#ru" data-toggle="tab">Русский</a></li>--}}
-{{--                            <li class="nav-item"><a class="nav-link" href="#kz" data-toggle="tab">Казахский</a></li>--}}
-{{--                        </ul>--}}
-
-{{--                        <div class="form-group">--}}
-{{--                            <strong>Title:</strong>--}}
-{{--                            {{ $course->title }}--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <strong>Description:</strong>--}}
-{{--                            {{ $course->description }}--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <strong>Price:</strong>--}}
-{{--                            {{ $course->price }}--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <strong>Certificate:</strong>--}}
-{{--                            {{ $course->certificate }}--}}
-{{--                        </div>--}}
-
-{{--                    </div>--}}
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">

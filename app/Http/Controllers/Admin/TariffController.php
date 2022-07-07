@@ -116,6 +116,7 @@ class TariffController extends Controller
 
         $tariff->update([
             'price' =>  $request['price'],
+            'count' =>  $request['count'] ?? $tariff['count']
         ]);
 
         return redirect()->route('tariffs.index')
@@ -129,9 +130,7 @@ class TariffController extends Controller
      */
     public function destroy($id)
     {
-        $tariff = Tariff::find($id);
-        Translate::find($tariff->title)->delete();
-        Translate::find($tariff->description)->delete();
+        $tariff = Tariff::find($id)->delete();
 
         return redirect()->route('tariffs.index')
             ->with('success', 'Tariff deleted successfully');

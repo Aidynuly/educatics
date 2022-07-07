@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\UserTest;
+use Carbon\Carbon;
+use Carbon\Traits\Week;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -28,7 +30,8 @@ class UserController extends Controller
             'question_id'   =>  $request['question_id'],
             'test_id'   =>  $question['test_id'],
             'answer_id' =>  $request['answer_id'],
-            'is_correct'    =>  $answer['is_correct']
+            'is_correct'    =>  $answer['is_correct'],
+            'created_at'    =>  Carbon::now(),
         ]);
 
         return self::response(201, $userTest, 'success');

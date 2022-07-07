@@ -36,13 +36,12 @@
                                     <tr>
                                         <th>#</th>
 										<th>Тип</th>
+                                        <th>Имя</th>
+                                        <th>Фамилия</th>
 										<th>Тариф</th>
 										<th>Возраст</th>
 										<th>Логин</th>
 										<th>Номер</th>
-										<th>Имя</th>
-										<th>Фамилия</th>
-										<th>Школа</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -55,13 +54,12 @@
                                             @else
                                                 <td>Детский</td>
                                             @endif
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->surname }}</td>
 											<td>{{ \App\Models\Translate::whereId(\App\Models\Tariff::whereId($user->tariff_id)->value('title'))->value('ru') }}</td>
 											<td>{{ $user->age }}</td>
 											<td>{{ $user->login }}</td>
 											<td>{{ $user->phone }}</td>
-											<td>{{ $user->name }}</td>
-											<td>{{ $user->surname }}</td>
-											<td>{{ \App\Models\Translate::whereId(\App\Models\School::whereId($user->school_id)->value('name'))->value('ru') }}</td>
 
                                             <td>
                                                 <form action="{{ route('users.destroy',$user->id) }}" method="POST">

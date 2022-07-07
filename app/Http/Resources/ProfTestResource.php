@@ -21,7 +21,7 @@ class ProfTestResource extends JsonResource
             'title' =>  Translate::find($this->title),
             'question_count'    =>  count(Question::whereTestId($this->id)->get()),
             'type'  =>  $this->type,
-            'questions' =>  QuestionResource::collection(Question::whereTestId($this->id)->orderBy('queue', 'desc')->get()),
+            'questions' =>  QuestionResource::collection(Question::whereTestId($this->id)->get()),
         ];
     }
 }

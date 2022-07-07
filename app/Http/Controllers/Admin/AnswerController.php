@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
+use App\Models\Sphere;
 use App\Models\Question;
 use App\Models\Translate;
 use Illuminate\Http\Request;
@@ -28,8 +29,9 @@ class AnswerController extends Controller
     public function create(Request $request)
     {
         $question = Question::find($request['id']);
+        $spheres = Sphere::get();
 
-        return view('admin.answer.create', ['question' => $question]);
+        return view('admin.answer.create', ['question' => $question, 'spheres' => $spheres]);
     }
 
     /**
@@ -49,9 +51,10 @@ class AnswerController extends Controller
             'question_id'   =>  $request['question_id'],
             'title'     =>  $translate['id'],
             'is_correct'    =>  $request['is_correct'] ? true : false,
+            'sphere_id'     =>  $request['sphere_id'],
         ]);
 
-        return redirect()->route('prof-tests.index');
+        return redirect()->route('prof-tests.index')->with('success', 'Успешно добавлено');
     }
 
     /**
@@ -74,8 +77,9 @@ class AnswerController extends Controller
     public function edit($id)
     {
         $answer = Answer::find($id);
+        $spheres = Sphere::get();
 
-        return view('admin.answer.edit', compact('answer'));
+        return view('admin.answer.edit', compact('answer', 'spheres'));
     }
 
     /**
@@ -83,11 +87,22 @@ class AnswerController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $answer = Answer::find($id);
+        Translate::find($answer->title)->update([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'    =>  $request['title_en'],
+        ]);
+        $answer->update([
+            'is_correct'    =>  $request['is_correct'] ? true : false,
+            'sphere_id'     =>  $request['sphere_id'] ?? $answer->sphere_id,
+        ]);
+
+        return redirect()->route('prof-tests.edit', Answer::whereId($id)->value('question_id'))->with('success', 'Успешно обновлен');
     }
 
     /**
@@ -98,6 +113,8 @@ class AnswerController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+        Answer::find($id)->delete();
+
+        return redirect()->route('prof-tests.index')->with('success', 'Успешно удалено');
     }
 }

@@ -100,3 +100,10 @@
         <p>Футер документы </p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{route('spheres.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>Сферы</p>
+    </a>
+</li>

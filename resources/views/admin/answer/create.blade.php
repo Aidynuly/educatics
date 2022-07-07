@@ -53,12 +53,22 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="card-body">
+                                    <label for="sphere_id">Выберите сферу:</label>
+                                    <select id="sphere_id" class="form-control" name="sphere_id">
+                                        @foreach($spheres as $sphere)
+                                            <option value="{{$sphere->id}}">{{\App\Models\Translate::whereId($sphere->title)->value('ru')}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="card-body">
                                     <label for="is_correct">Правильный ответ</label>
                                     <input type="checkbox" name="is_correct" id="is_correct">
                                 </div>
-                                <div class="box-footer mt20">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+                            </div>
+                            <div class="box-footer mt20">
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>

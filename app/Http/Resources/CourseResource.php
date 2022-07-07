@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\CourseIntro;
 use App\Models\CourseVideo;
 use App\Models\Translate;
+use App\Models\Sphere;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CourseResource extends JsonResource
@@ -27,8 +28,8 @@ class CourseResource extends JsonResource
             'background_color'  => $this->background_color,
             'icon'      =>  $this->icon,
             'trailer'   =>  $this->trailer,
+            'sphere'   =>  Sphere::find($this->sphere_id),
             'intros'    =>  CourseIntroTitleResource::collection(CourseIntro::whereCourseId($this->id)->get()),
-//            'intros'    =>  CourseIntro::whereCourseId($this->id)->get(),
         ];
     }
 }

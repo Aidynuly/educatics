@@ -38,6 +38,7 @@
                                         <th>Название</th>
                                         <th>Описание</th>
 										<th>Цена</th>
+										<th>Сфера</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -49,7 +50,17 @@
 											<td>{{ App\Models\Translate::whereId($course->title)->value('ru') }}</td>
 											<td>{{ App\Models\Translate::whereId($course->description)->value('ru') }}</td>
 											<td>{{ $course->price }}</td>
-
+                                            @if($course->sphere_id == 2)
+                                                <td>Склонность к работе с людьми</td>
+                                            @elseif($course->sphere_id == 3 )
+                                                <td>Сфера умственного труда</td>
+                                            @elseif($course->sphere_id == 4)
+                                                <td>Склонность к техническим</td>
+                                            @elseif($course->sphere_id == 5)
+                                                <td>Склонность к материальным</td>
+                                            @else
+                                                <td>Сфера не выбрана</td>
+                                            @endif
                                             <td>
                                                 <form action="{{ route('courses.destroy',$course->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('courses.show',$course->id) }}"><i class="fa fa-fw fa-eye"></i></a>

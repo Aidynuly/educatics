@@ -6,8 +6,10 @@ use App\Models\Course;
 use App\Http\Controllers\Controller;
 use App\Models\CourseIntro;
 use App\Models\Translate;
+use App\Models\Sphere;
 use App\Models\UserCourse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use function redirect;
 use function request;
 use function view;
@@ -38,8 +40,9 @@ class CourseController extends Controller
     public function create()
     {
         $course = new Course();
+        $spheres = Sphere::get();
 
-        return view('admin.course.create', compact('course'));
+        return view('admin.course.create', compact('course', 'spheres'));
     }
 
     /**
@@ -75,6 +78,7 @@ class CourseController extends Controller
             'price' =>  $request['price'],
             'background_color'  =>  $request['background_color'],
             'icon'      =>  $icon ?? null,
+            'sphere_id' =>  $request['sphere_id']
         ]);
 
         return redirect()->route('courses.index')
@@ -105,8 +109,9 @@ class CourseController extends Controller
     public function edit($id)
     {
         $course = Course::find($id);
+        $spheres = Sphere::get();
 
-        return view('admin.course.edit', compact('course'));
+        return view('admin.course.edit', compact('course', 'spheres'));
     }
 
     /**
@@ -142,6 +147,7 @@ class CourseController extends Controller
             'price'             =>  $request['price'],
             'icon'          =>  $icon ?? $course->icon,
             'certificate'       =>  $name ?? $course->certificate,
+            'sphere_id'     =>  $request['sphere_id'] ?? $course->sphere_id,
         ]);
 
         return redirect()->route('courses.index')

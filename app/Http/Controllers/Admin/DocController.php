@@ -47,7 +47,7 @@ class DocController extends Controller
         if ($request['doc']) {
             $path = $this->uploadDocument($request->file('doc'));
         }
-        $video = CourseDoc::create([
+        $doc = CourseDoc::create([
             'course_intro_id'   =>  $request['course_intro_id'],
             'path'  =>  $path ?? null,
         ]);

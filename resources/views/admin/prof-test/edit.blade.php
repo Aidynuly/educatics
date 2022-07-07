@@ -43,7 +43,7 @@
                                                 <div class="active tab-pane" id="russian">
                                                     <div class="form-group">
                                                         <label for="ru">RU</label>
-                                                        <input type="text" class="form-control" id="ru" name="title_ru" placeholder="{{\App\Models\Translate::whereId($question->title)->value('ru')}}">
+                                                        <input type="text" class="form-control" id="ru" name="title_ru" value="{{\App\Models\Translate::whereId($question->title)->value('ru')}}">
                                                         @if($errors->has('ru'))
                                                             <span class="text-danger">{{$errors->first('title_ru')}}</span>
                                                         @endif
@@ -52,7 +52,7 @@
                                                 <div class="tab-pane" id="kazakh">
                                                     <div class="form-group" id="kz">
                                                         <label for="ru">KZ</label>
-                                                        <input type="text" class="form-control" id="ru" name="title_kz" placeholder="{{\App\Models\Translate::whereId($question->title)->value('kz')}}">
+                                                        <input type="text" class="form-control" id="ru" name="title_kz" value="{{\App\Models\Translate::whereId($question->title)->value('kz')}}">
                                                         @if($errors->has('ru'))
                                                             <span class="text-danger">{{$errors->first('title_kz')}}</span>
                                                         @endif
@@ -61,7 +61,7 @@
                                                 <div class="tab-pane" id="english">
                                                     <div class="form-group" id="en">
                                                         <label for="ru">EN</label>
-                                                        <input type="text" class="form-control" id="ru" name="title_en" placeholder="{{\App\Models\Translate::whereId($question->title)->value('en')}}">
+                                                        <input type="text" class="form-control" id="ru" name="title_en" value="{{\App\Models\Translate::whereId($question->title)->value('en')}}">
                                                         @if($errors->has('ru'))
                                                             <span class="text-danger">{{$errors->first('title_en')}}</span>
                                                         @endif
@@ -97,6 +97,7 @@
                                                                 <th>#</th>
                                                                 <th>Описание</th>
                                                                 <th>Правильный ответ</th>
+                                                                <th>Сфера</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -110,6 +111,10 @@
                                                                     @else
                                                                         <td>Нет</td>
                                                                     @endif
+                                                                    <td>
+                                                                        {{\App\Models\Translate::whereId(App\Models\Sphere::where('id', $answer->sphere_id)->value('title'))->value('ru')}}
+                                                                    </td>
+
                                                                     <td>
                                                                         <form action="{{route('answers.destroy', $answer->id)}}" method="post">
                                                                             @csrf
@@ -130,6 +135,7 @@
                                                                 <th>#</th>
                                                                 <th>Описание</th>
                                                                 <th>Правильный ответ</th>
+                                                                <th>Сфера</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -143,6 +149,9 @@
                                                                 @else
                                                                     <td>Нет</td>
                                                                 @endif
+                                                                <td>
+                                                                    {{\App\Models\Translate::whereId(App\Models\Sphere::where('id', $answer->sphere_id)->value('title'))->value('ru')}}
+                                                                </td>
                                                                 <td>
                                                                     <form action="{{route('answers.destroy', $answer->id)}}" method="post">
                                                                         @csrf
@@ -163,6 +172,7 @@
                                                                 <th>#</th>
                                                                 <th>Описание</th>
                                                                 <th>Правильный ответ</th>
+                                                                <th>Сфера</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -176,6 +186,9 @@
                                                                 @else
                                                                     <td>Нет</td>
                                                                 @endif
+                                                                <td>
+                                                                    {{\App\Models\Translate::whereId(App\Models\Sphere::where('id', $answer->sphere_id)->value('title'))->value('ru')}}
+                                                                </td>
                                                                 <td>
                                                                     <form action="{{route('answers.destroy', $answer->id)}}" method="post">
                                                                         @csrf

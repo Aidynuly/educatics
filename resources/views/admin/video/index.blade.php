@@ -47,7 +47,7 @@
                                 @foreach ($videos as $video)
                                     <tr>
                                         <td>{{ $video->id }}</td>
-                                        <td>{{ App\Models\Translate::whereId(\App\Models\Course::whereId($course)->value('title'))->value('ru') }}</td>
+                                        <td>{{ $intro->id }}</td>
                                         <td>{{ \App\Models\Video::whereId($video->video_id)->value('name') }}</td>
                                         <td>{{ \App\Models\Video::whereId($video->video_id)->value('link') }}</td>
                                         <td>

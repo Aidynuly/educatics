@@ -52,7 +52,10 @@ class Course extends Model
         'price',
         'certificate',
         'background_color',
-        'icon'
+        'icon',
+        'created_at',
+        'updated_at',
+        'sphere_id',
     ];
 
 

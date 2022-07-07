@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Tariff;
 use App\Models\UserCourse;
+use App\Http\Resources\UserCourseResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -28,7 +29,9 @@ class UserResource extends JsonResource
             'school_name'   =>  $this->school_name,
             'session_id'    =>  $this->session_id,
             'school'    =>  $this->school_id,
-            'courses'   =>  UserCourse::whereUserId($this->id)->get(),
+            'courses'   =>  UserCourseResource::collection(UserCourse::whereUserId($this->id)->get()),
+            'deadline'  =>  $this->deadline,
+            'count' =>  $this->count,
         ];
     }
 }

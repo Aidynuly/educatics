@@ -37,7 +37,8 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                 <tr>
-                                    <th>#</th>
+                                    <th>Очередь</th>
+                                    <th>Айди вопроса</th>
                                     <th>Вопрос</th>
                                     <th></th>
                                 </tr>
@@ -45,6 +46,7 @@
                                 <tbody>
                                 @foreach ($questions as $question)
                                     <tr>
+                                        <td>{{ $loop->index + 1 }}</td>
                                         <td>{{ $question->id }}</td>
                                         <td>{{ \App\Models\Translate::whereId($question->title)->value('ru') }}</td>
                                         <td>

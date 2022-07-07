@@ -17,9 +17,9 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('tariffs.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
+{{--                                <a href="{{ route('tariffs.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">--}}
+{{--                                  {{ __('Create New') }}--}}
+{{--                                </a>--}}
                               </div>
                         </div>
                     </div>
@@ -34,11 +34,13 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
+                                        <th>#</th>
 
-										<th>Title</th>
-										<th>Description</th>
-										<th>Price</th>
+										<th>Название</th>
+										<th>Описание</th>
+										<th>Цена</th>
+										<th>Количество курсов</th>
+										<th>Скидка</th>
 
                                         <th></th>
                                     </tr>
@@ -51,10 +53,12 @@
 											<td>{{ \App\Models\Translate::whereId($tariff->title)->value('ru') }}</td>
 											<td>{{ \App\Models\Translate::whereId($tariff->description)->value('ru') }}</td>
 											<td>{{ $tariff->price }}</td>
+											<td>{{ $tariff->count }}</td>
+											<td>{{ $tariff->discount }}%</td>
 
                                             <td>
                                                 <form action="{{ route('tariffs.destroy',$tariff->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('tariffs.show',$tariff->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
+{{--                                                    <a class="btn btn-sm btn-primary " href="{{ route('tariffs.show',$tariff->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>--}}
                                                     <a class="btn btn-sm btn-success" href="{{ route('tariffs.edit',$tariff->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                     @csrf
                                                     @method('DELETE')

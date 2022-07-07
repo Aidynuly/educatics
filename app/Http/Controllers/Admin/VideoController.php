@@ -117,7 +117,9 @@ class VideoController extends Controller
     {
         $video = CourseVideo::find($id);
         $intro = $video->course_intro_id;
+        Video::find($video->video_id)->delete();
         $video->delete();
+
 
         return redirect()->route('video.show', $intro)->with('success', 'Успешно удален');
     }

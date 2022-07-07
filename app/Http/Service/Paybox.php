@@ -10,6 +10,8 @@ class Paybox
     const SECRET_KEY = 'CmAKMPDUfIm0aOOm';
     const MERCHANT_ID = '542526';
     const INIT_ROUTE = 'init_payment.php';
+    const SUCCESS_URL = 'https://jaryk-back.test-nomad.kz/api/success-payment/';
+    const REJECT_URL = 'https://jaryk-back.test-nomad.kz/api/reject-payment/';
     private $data;
 
     public function __construct(array $data)
@@ -19,6 +21,8 @@ class Paybox
 
     public function initPay()
     {
+        $this->data['pg_success_url'] = self::SUCCESS_URL . $this->data['pg_order_id'] . '/' . $this->data['tariff_id'];
+        $this->data['pg_reject_url'] = self::REJECT_URL . $this->data['pg_order_id'] . '/' . $this->data['tariff_id'];
         $this->data['pg_merchant_id'] = self::MERCHANT_ID;
         $requestForSignature = $this->makeFlatParamsArray($this->data);
 

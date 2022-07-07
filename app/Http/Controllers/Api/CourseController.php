@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseIntroResource;
 use App\Http\Resources\CourseResource;
+use App\Http\Resources\CourseLangResource;
 use App\Http\Resources\CourseVideoResource;
 use App\Http\Resources\TestResource;
 use App\Models\Course;
 use App\Models\CourseIntro;
 use App\Models\CourseVideo;
+use App\Models\Tariff;
 use App\Models\Test;
 use Illuminate\Http\Request;
 
@@ -18,6 +20,21 @@ class CourseController extends Controller
     public function get(Request $request)
     {
         return self::response(200, CourseResource::collection(Course::get()), 'success');
+    }
+
+    public function byTariff(Request $request)
+    {
+        $request->validate([
+            'lang'  =>  'required',
+            'tariff_id' =>  'required|exists:tariffs,id'
+        ]);
+        $tariff = Tariff::find($request['tariff_id']);
+        return response()->json([
+            'data'  => CourseLangResource::collection(Course::get()),
+            'message' => 'success',
+            'tariff_id' =>  (int)$request['tariff_id'],
+            'count' =>  $tariff->count,
+        ]);
     }
 
     public function byId(Request $request)

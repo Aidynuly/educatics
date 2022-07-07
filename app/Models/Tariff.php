@@ -43,7 +43,15 @@ class Tariff extends Model
      *
      * @var array
      */
-    protected $fillable = ['title','description','price'];
+    protected $fillable = [
+        'title',
+        'description',
+        'price',
+        'count',
+        'background_color',
+        'created_at',
+        'updated_at',
+    ];
 
 
     /**

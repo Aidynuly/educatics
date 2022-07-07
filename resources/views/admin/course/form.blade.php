@@ -120,11 +120,18 @@
             {{Form::file('certificate', ['class' => 'form-control' . ($errors->has('kz') ? ' is-invalid' : ''), 'placeholder' => 'Сертификат' ])}}
             {!! $errors->first('certificate', '<div class="invalid-feedback">:message</div>')!!}
         </div>
-
         <div class="form-group">
             {{Form::label('Выберите файл, чтобы загрузить иконку')}}
             {{Form::file('icon', ['class' => 'form-control' . ($errors->has('kz') ? ' is-invalid' : ''), 'placeholder' => 'Иконка' ])}}
             {!! $errors->first('icon', '<div class="invalid-feedback">:message</div>')!!}
+        </div>
+        <div class="form-group">
+            <label for="sphere">Выберите сферу</label>
+            <select class="form-control" id="sphere" name="sphere_id">
+                @foreach($spheres as $sphere)
+                    <option value="{{$sphere->id}}">{{$sphere->id}}.{{\App\Models\Translate::whereId($sphere->title)->value('ru')}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="box-footer mt20">
