@@ -16,7 +16,9 @@
                         <div class="form-group">
                             <label for="ru">RU</label>
 {{--                            <textarea type="text" class="ckeditor form-control" id="ru" name="title_ru" placeholder="Введите название:"></textarea>--}}
-                            <textarea type="text" class=" form-control" id="ru" name="title_ru" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class="form-control" id="ru" name="title_ru" placeholder="Введите название:">
+                                {{isset($intro->title) ? \App\Models\Translate::where('id', $intro->title)->value('ru') : ''}}
+                            </textarea>
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('title_ru')}}</span>
                             @endif
@@ -25,7 +27,9 @@
                     <div class="tab-pane" id="kazakh">
                         <div class="form-group" id="kz">
                             <label for="ru">KZ</label>
-                            <textarea type="text" class=" form-control" id="ru" name="title_kz" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class="form-control" id="ru" name="title_kz" placeholder="Введите название:">
+                                {{isset($intro->title) ? \App\Models\Translate::where('id', $intro->title)->value('kz') : ''}}
+                            </textarea>
 {{--                            <textarea type="text" class="ckeditor form-control" id="ru" name="title_kz" placeholder="Введите название:"></textarea>--}}
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('title_kz')}}</span>
@@ -35,7 +39,9 @@
                     <div class="tab-pane" id="english">
                         <div class="form-group" id="en">
                             <label for="ru">EN</label>
-                            <textarea type="text" class="form-control" id="ru" name="title_en" placeholder="Введите название:"></textarea>
+                            <textarea type="text" class="form-control" id="ru" name="title_en" placeholder="Введите название:">
+                                {{isset($intro->title) ? \App\Models\Translate::where('id', $intro->title)->value('en') : ''}}
+                            </textarea>
 {{--                            <textarea type="text" class="ckeditor form-controlntrol" id="ru" name="title_en" placeholder="Введите название:"></textarea>--}}
                             @if($errors->has('ru'))
                                 <span class="text-danger">{{$errors->first('title_en')}}</span>

@@ -1,7 +1,7 @@
 @extends('layouts.app-form')
 
 @section('template_title')
-    Tests
+    Questions
 @endsection
 
 @section('content')
@@ -13,20 +13,20 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Тесты') }}
+                                {{ __('Вопросы') }}
                             </span>
 
+                            <form action="{{route('test.show', $test->course_intro_id)}}" method="get">
+                                <button type="submit" class="btn btn-info btn-sm">Назад</button>
+                            </form>
+
                             <div class="float-right">
-                                <form action="{{route('test.create')}}" method="post">
-                                    @method('get')
-                                    <input type="hidden" name="intro_id" id="intro_id" value="{{$introId}}">
-                                    <button class="btn btn-primary" type="submit">{{ __('Создать новый') }}</button>
+                                <form method="get" action="{{route('questions.create')}}">
+                                    <input type="hidden" value="{{$test->id}}" name="test_id">
+                                    <button class="btn btn-primary btn-sm float-right" type="submit">Создать новый</button>
                                 </form>
-{{--                                <a href="{{ route('test.create', $introId) }}" class="btn btn-primary btn-sm float-right"  data-placement="left">--}}
-{{--                                    <input type="hidden" name="intro_id" id="intro_id" value="{{$introId}}">--}}
-{{--                                    {{ __('Создать новый') }}--}}
-{{--                                </a>--}}
                             </div>
+
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -40,26 +40,23 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>#</th>
-                                        <th>Название теста</th>
+                                        <th>Очередь</th>
+                                        <th>Айди вопроса</th>
+                                        <th>Вопрос</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($tests as $test)
+                                @foreach ($questions as $question)
                                     <tr>
-                                        <td>{{ $test->id }}</td>
-                                        <td>{{ \App\Models\Translate::whereId($test->title)->value('ru') }}</td>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td>{{ $question->id }}</td>
+                                        <td>{{ \App\Models\Translate::whereId($question->title)->value('ru') }}</td>
                                         <td>
-                                            <form action="{{route('test.index')}}" method="get">
-                                                <input type="hidden" value="{{$test->id}}" name="test_id">
-
-                                                <button type="submit" class="btn btn-info btn-sm">Вопросы</button>
-                                            </form>
-                                            <form action="{{route('test.destroy', $test->id)}}" method="POST">
-                                                <a class="btn btn-sm btn-success" href="{{route('test.edit', $test->id)}}"><i class="fa fa-fw fa-edit"></i></a>
+                                            <form action="{{route('prof-tests.destroy', $question->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
+                                                <a class="btn btn-sm btn-success" href="{{route('questions.edit', $question->id)}}"><i class="fa fa-fw fa-edit"></i></a>
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                             </form>
                                         </td>

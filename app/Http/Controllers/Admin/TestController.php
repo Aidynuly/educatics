@@ -20,9 +20,12 @@ class TestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $test = Test::find($request->test_id);
+        $questions = Question::whereTestId($test->id)->get();
 
+        return view('admin.test.questions', compact('questions', 'test'));
     }
 
     /**
@@ -70,14 +73,18 @@ class TestController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
         $tests = Test::whereCourseIntroId($id)->get();
         $intro = CourseIntro::find($id);
 
-        return view('admin.test.index', ['tests' => $tests, 'courseId' => $intro['course_id'], 'introId' => $id]);
+        return view('admin.test.index', [
+            'tests' => $tests,
+            'courseId' => $intro['course_id'],
+            'introId' => $id
+        ]);
     }
 
     /**

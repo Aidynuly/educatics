@@ -107,3 +107,17 @@
         <p>Сферы</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{route('reviews.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>Отзывы</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{route('faq.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>FAQ</p>
+    </a>
+</li>

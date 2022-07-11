@@ -22,7 +22,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::get();
+        $employees = Employee::paginate(10);
 
         return view('admin.employee.index', compact('employees'));
     }

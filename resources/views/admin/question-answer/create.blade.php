@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('answers.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('question-answer.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" value="{{$question['id']}}" name="question_id">
                             <div class="box box-info padding-1">
@@ -58,14 +58,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <label for="sphere_id">Выберите сферу:</label>
-                                    <select id="sphere_id" class="form-control" name="sphere_id">
-                                        @foreach($spheres as $sphere)
-                                            <option value="{{$sphere->id}}">{{\App\Models\Translate::whereId($sphere->title)->value('ru')}}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                                 <div class="card-body">
                                     <label for="is_correct">Правильный ответ</label>

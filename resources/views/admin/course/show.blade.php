@@ -11,10 +11,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">Show Course</span>
+                            <span class="card-title">Посмотреть курс</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('courses.index') }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ route('courses.index') }}"> Назад</a>
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@
                                 <p class="text-muted"> {{\App\Models\Translate::whereId($course->description)->value('ru')}}</p>
                                 <br>
                                 <div class="text-muted">
-                                    <p class="text-sm">Категории</p>
+                                    <p class="text-sm" style="color: #27ff86">Категории</p>
                                         @foreach($intros as $intro)
                                             <b class="d-block">{{\App\Models\Translate::whereId($intro->title)->value('ru')}}</b>
                                         @endforeach
@@ -104,7 +104,7 @@
                                 <h5 class="mt-5 text-muted">Project files</h5>
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> {{$course->certificate}}</a>
+                                        <a href="{{url($course->certificate)}}" class="btn-link text-secondary" download><i class="far fa-fw fa-file-word"></i> {{$course->certificate}}</a>
                                     </li>
                                 </ul>
                                 <div class="text-center mt-5 mb-3">

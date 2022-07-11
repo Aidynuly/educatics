@@ -58,7 +58,13 @@
                                         <td>{{ $feedback->age }}</td>
                                         <td>{{ \App\Models\City::whereId($feedback->city_id)->value('title') }}</td>
                                         <td>{{ $feedback->school_name }}</td>
-                                        <td>{{ $feedback->status }}</td>
+                                        @if($feedback->status == 'in_process')
+                                            <td>В процессе</td>
+                                        @elseif($feedback->status == 'accept')
+                                            <td>Обработан</td>
+                                        @else
+                                            <td>Отменен</td>
+                                        @endif
                                         <td>{{ $feedback->created_at }}</td>
                                         <td>
                                             <form action="{{ route('feedback.destroy',$feedback->id) }}" method="POST">
@@ -72,6 +78,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-center">
+                                {{ $feedbacks->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

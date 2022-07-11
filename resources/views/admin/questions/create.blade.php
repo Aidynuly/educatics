@@ -1,7 +1,7 @@
 @extends('layouts.app-form')
 
 @section('template_title')
-    Create answer
+    Create question
 @endsection
 
 @section('content')
@@ -13,20 +13,19 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Create answer for the question</span>
-                        <div class="float-right">
-                            <form method="get" action="{{route('questions.edit', $question['id'])}}">
-                                <button class="btn btn-success btn-sm float-right" type="submit">Назад</button>
-                            </form>
-                        </div>
+                        <span class="card-title">Создание вопросы для {{\App\Models\Translate::whereId($test->title)->value('ru')}}</span>
+                        <form method="get" action="{{route('test.index')}}">
+                            <input type="hidden" name="test_id" id="test_id" value="{{$test->id}}">
+                            <button class="btn btn-success btn-sm float-right" type="submit">Назад</button>
+                        </form>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('answers.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('questions.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" value="{{$question['id']}}" name="question_id">
+                            <input type="hidden" name="test_id" value="{{$test->id}}">
                             <div class="box box-info padding-1">
                                 <div class="box-body">
-                                    <label>Название ответа</label>
+                                    <label>Название вопроса</label>
                                     <div class="card-body">
                                         <div class="card-header">
                                             <ul class="nav nav-pills">
@@ -40,36 +39,33 @@
                                                 <div class="active tab-pane" id="russian">
                                                     <div class="form-group">
                                                         <label for="ru">RU</label>
-                                                        <input type="text" class="form-control" id="ru" name="title_ru" placeholder="Placeholder" required>
+                                                        <input type="text" class="form-control" id="ru" name="title_ru" placeholder="Placeholder">
+                                                        @if($errors->has('ru'))
+                                                            <span class="text-danger">{{$errors->first('title_ru')}}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="kazakh">
                                                     <div class="form-group" id="kz">
                                                         <label for="ru">KZ</label>
-                                                        <input type="text" class="form-control" id="ru" name="title_kz" placeholder="Placeholder" required>
+                                                        <input type="text" class="form-control" id="ru" name="title_kz" placeholder="Placeholder">
+                                                        @if($errors->has('ru'))
+                                                            <span class="text-danger">{{$errors->first('title_kz')}}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="english">
                                                     <div class="form-group" id="en">
                                                         <label for="ru">EN</label>
-                                                        <input type="text" class="form-control" id="ru" name="title_en" placeholder="Placeholder" required>
+                                                        <input type="text" class="form-control" id="ru" name="title_en" placeholder="Placeholder">
+                                                        @if($errors->has('ru'))
+                                                            <span class="text-danger">{{$errors->first('title_en')}}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <label for="sphere_id">Выберите сферу:</label>
-                                    <select id="sphere_id" class="form-control" name="sphere_id">
-                                        @foreach($spheres as $sphere)
-                                            <option value="{{$sphere->id}}">{{\App\Models\Translate::whereId($sphere->title)->value('ru')}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="card-body">
-                                    <label for="is_correct">Правильный ответ</label>
-                                    <input type="checkbox" name="is_correct" id="is_correct">
                                 </div>
                             </div>
                             <div class="box-footer mt20">

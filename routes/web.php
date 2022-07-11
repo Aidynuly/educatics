@@ -44,4 +44,8 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('feedback', \App\Http\Controllers\Admin\FeedbackController::class);
     Route::resource('footer-doc', \App\Http\Controllers\Admin\FooterDocController::class);
     Route::resource('spheres', \App\Http\Controllers\Admin\SphereController::class);
+    Route::resource('reviews', \App\Http\Controllers\Admin\ReviewController::class);
+    Route::resource('questions',  \App\Http\Controllers\Admin\QuestionController::class);
+    Route::resource('question-answer', \App\Http\Controllers\Admin\QuestionAnswerController::class);
+    Route::resource('faq',  \App\Http\Controllers\Admin\FaqController::class);
 });

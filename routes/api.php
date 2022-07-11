@@ -58,6 +58,9 @@ Route::get('success-payment/{user}/{tariff}', [PaymentController::class, 'succes
 Route::get('reject-payment/{user}/{tariff}', [PaymentController::class, 'reject']);
 Route::get('by-session-id', [\App\Http\Controllers\Api\ProfTestController::class, 'bySession']);
 
+Route::get('reviews', [ApiController::class, 'reviews']);
+Route::get('faq', [ApiController::class, 'faq']);
+
 Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         $request->validate([

@@ -3,22 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
-use App\Models\Feedback;
+use App\Models\Answer;
+use App\Models\Question;
+use App\Models\Test;
+use App\Models\Translate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class FeedbackController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $feedbacks = Feedback::paginate(10);
-
-        return view('admin.feedback.index', compact('feedbacks'));
+        //
     }
 
     /**
@@ -26,9 +27,11 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $test = Test::find($request['test_id']);
+
+        return view('admin.questions.create', compact('test'));
     }
 
     /**
@@ -39,7 +42,22 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = Translate::create([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'        =>  $request['title_en'],
+        ]);
+
+        $test = Test::find($request['test_id']);
+
+        Question::create([
+            'test_id'   =>  $request['test_id'],
+            'title'     =>  $title->id,
+            'image'     =>  'var/test/image',
+            'created_at'    =>  Carbon::now(),
+        ]);
+
+        return redirect()->route('test.show',$test['course_intro_id'])->with('success', 'Успешно добавлено');
     }
 
     /**
@@ -57,14 +75,14 @@ class FeedbackController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $feedback = Feedback::find($id);
-        $cities = City::get();
+        $question = Question::find($id);
+        $answers = Answer::whereQuestionId($question->id)->get();
 
-        return view('admin.feedback.edit', compact('feedback', 'cities'));
+        return view('admin.questions.edit', compact('question', 'answers'));
     }
 
     /**
@@ -76,16 +94,7 @@ class FeedbackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Feedback::find($id)->update([
-            'name'  =>  $request['name'],
-            'surname'  =>  $request['surname'],
-            'age'   =>  $request['age'],
-            'city_id'   =>  $request['city_id'],
-            'status'    =>  $request['status'],
-            'login' =>  $request['login'],
-        ]);
-
-        return redirect()->route('feedback.index')->with('Успешно обновлено');
+        //
     }
 
     /**
@@ -96,8 +105,6 @@ class FeedbackController extends Controller
      */
     public function destroy($id)
     {
-        Feedback::find($id)->delete();
-
-        return redirect()->route('feedback.index')->with('Успешно удалено');
+        //
     }
 }
