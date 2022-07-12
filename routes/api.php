@@ -68,6 +68,9 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
         ]);
         return new \App\Http\Resources\UserResource($request->user());
     });
+
+    Route::post('/update-session-id', [AuthController::class, 'updateSession']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/payment', [PaymentController::class, 'payment']);
 

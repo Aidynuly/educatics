@@ -68,4 +68,17 @@ class AuthController extends Controller
         return self::response(400, null, 'Старый пароль неверный');
     }
 
+    public function updateSession(Request $request)
+    {
+        $request->validate([
+            'session_id'    =>  'required'
+        ]);
+        $user = auth()->user();
+        $user->update([
+            'session_id'    =>  $request['session_id'],
+        ]);
+
+        return self::response(202, null, 'success');
+    }
+
 }
