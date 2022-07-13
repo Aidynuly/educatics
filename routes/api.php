@@ -66,6 +66,7 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
         $request->validate([
             'lang'  =>  'required',
         ]);
+        
         return new \App\Http\Resources\UserResource($request->user());
     });
 

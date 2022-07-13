@@ -51,6 +51,7 @@ class Tariff extends Model
         'background_color',
         'created_at',
         'updated_at',
+        'discount'
     ];
 
 

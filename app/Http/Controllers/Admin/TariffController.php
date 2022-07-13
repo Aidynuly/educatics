@@ -61,7 +61,7 @@ class TariffController extends Controller
         $tariff = Tariff::create([
             'title' =>  $title['id'],
             'description'   =>  $description['id'],
-            'price' =>  $request['price']
+            'price' =>  $request['price'],
         ]);
 
         return redirect()->route('tariffs.index')
@@ -116,7 +116,8 @@ class TariffController extends Controller
 
         $tariff->update([
             'price' =>  $request['price'],
-            'count' =>  $request['count'] ?? $tariff['count']
+            'count' =>  $request['count'] ?? $tariff['count'],
+            'discount'  =>  $request['discount'],
         ]);
 
         return redirect()->route('tariffs.index')
