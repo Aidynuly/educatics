@@ -23,7 +23,7 @@ class CourseIntroResource extends JsonResource
             'title' =>  Translate::find($this->title),
             'course_id' =>  $this->course_id,
             'videos'    =>  CourseVideoResource::collection(CourseVideo::where('course_intro_id', $this->id)->get()),
-            'tests'     =>  TestResource::collection(Test::whereCourseIntroId($this->id)->get()),
+            'tests'     =>  new TestResource(Test::whereCourseIntroId($this->id)->first()),
             'docs'      =>  CourseDoc::where('course_intro_id', $this->id)->get(),
         ];
     }

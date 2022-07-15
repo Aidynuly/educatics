@@ -29,6 +29,7 @@ class CourseResource extends JsonResource
             'icon'      =>  $this->icon,
             'trailer'   =>  $this->trailer,
             'sphere'   =>  Sphere::find($this->sphere_id),
+            'count_intro'   =>  CourseIntro::whereCourseId($this->id)->count(),
             'intros'    =>  CourseIntroTitleResource::collection(CourseIntro::whereCourseId($this->id)->get()),
         ];
     }

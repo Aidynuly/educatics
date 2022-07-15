@@ -21,6 +21,8 @@ Route::get('/', function () {
 Route::get('/admin', [AdminController::class, 'loginPage'])->name('login');
 Route::post('login', [AdminController::class, 'login'])->name('admin.login');
 
+Route::get('/pdf-download', [AdminController::class, 'pdf']);
+
 Route::middleware('admin.auth')->group(function () {
     Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
     Route::get('main', [AdminController::class, 'main'])->name('admin.main');

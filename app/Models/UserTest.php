@@ -33,6 +33,10 @@ class UserTest extends Model
 {
     use HasFactory;
 
+    const STATUS_IN_PROCESS = 'in_process';
+    const STATUS_FINISHED = 'finished';
+    const STATUS_DECLINED = 'declined';
+
     protected $fillable = [
         'user_id',
         'question_id',
@@ -41,5 +45,6 @@ class UserTest extends Model
         'created_at',
         'updated_at',
         'test_id',
+        'status'
     ];
 }

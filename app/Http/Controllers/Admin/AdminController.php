@@ -9,6 +9,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -48,5 +50,13 @@ class AdminController extends Controller
         }
 
         return view('admin.login');
+    }
+
+    public function pdf(Request $request)
+    {
+        $pdf = PDF::loadView('certificate.pdf');
+        $path = Storage::put('public/pdf/invoice-1.pdf', $pdf->output());
+        $url = basename($path);
+        dd($url);
     }
 }

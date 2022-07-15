@@ -66,7 +66,7 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
         $request->validate([
             'lang'  =>  'required',
         ]);
-        
+
         return new \App\Http\Resources\UserResource($request->user());
     });
 
@@ -85,7 +85,7 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::prefix('course')->group(function () {
         Route::post('/answer', [\App\Http\Controllers\Api\UserController::class, 'submit']);
         Route::post('/test/finish', [\App\Http\Controllers\Api\UserController::class, 'finish']);
-
+        Route::get('/test/results', [\App\Http\Controllers\Api\UserController::class, 'testResults']);
         Route::post('/video', [\App\Http\Controllers\Api\VideoController::class, 'get']);
     });
 });
