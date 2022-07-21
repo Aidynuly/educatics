@@ -51,14 +51,68 @@
                 @endif
             </div>
         </div>
+        <label>Текст скидки</label>
+        <div class="card-body">
+            <div class="card-header">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#discount_ru" data-toggle="tab">Russian</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#discount_en" data-toggle="tab">English</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#discount_kz" data-toggle="tab">Kazakh</a></li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="active tab-pane" id="discount_ru">
+                        <div class="form-group">
+                            <label for="discount_ru">RU</label>
+                            <textarea type="text" class="ckeditor form-control" id="discount_ru" name="discount_ru" placeholder="Введите название:">
+                                {{isset($tariff->discount_text) ? \App\Models\Translate::where('id', $tariff->discount_text)->value('ru') : ''}}
+                            </textarea>
+                            @if($errors->has('discount_ru'))
+                                <span class="text-danger">{{$errors->first('discount_ru')}}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="discount_kz">
+                        <div class="form-group" id="discount_kz">
+                            <label for="discount_kz">KZ</label>
+                            <textarea type="text" class="ckeditor form-control" id="discount_kz" name="discount_kz" placeholder="Введите название:">
+                                {{isset($tariff->discount_text) ? \App\Models\Translate::where('id', $tariff->discount_text)->value('kz') : ''}}
+                            </textarea>
+                            @if($errors->has('discount_kz'))
+                                <span class="text-danger">{{$errors->first('discount_kz')}}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="discount_en">
+                        <div class="form-group" id="discount_en">
+                            <label for="discount_en">EN</label>
+                            <textarea type="text" class="ckeditor form-control" id="discount_en" name="discount_en" placeholder="Введите название:">
+                                {{isset($tariff->discount_text) ? \App\Models\Translate::where('id', $tariff->discount_text)->value('en') : ''}}
+                            </textarea>
+
+                            @if($errors->has('discount_en'))
+                                <span class="text-danger">{{$errors->first('discount_en')}}</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <div class="form-group">
-            {{ Form::label('price') }}
+            {{ Form::label('Цена') }}
             {{ Form::text('price', $tariff->price, ['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Price']) }}
             {!! $errors->first('price', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             <label for="count">Количество курсов:</label>
             <input type="text" class="form-control" name="count" id="count" value="{{$tariff->count}}">
+        </div>
+        <div class="form-group">
+            <label for="old_price">Старая цена:</label>
+            <input type="text" class="form-control" name="old_price" id="old_price" value="{{$tariff->old_price}}">
         </div>
         <div class="form-group">
             <label for="discount">Скидка:</label>

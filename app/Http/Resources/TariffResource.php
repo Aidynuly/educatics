@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Translate;
+use App\Models\TariffText;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TariffResource extends JsonResource
@@ -25,7 +26,11 @@ class TariffResource extends JsonResource
             'background_color'  =>  $this->background_color,
             'discount'  =>  $this->discount,
             'created_at'    =>  $this->created_at,
-            'old_price'     =>  ($this->price * 100) / (100 - $this->discount)
+            'old_price'     =>  $this->old_price,
+            'discount_text' =>  Translate::whereId($this->discount_text)->value($lang),
+            'texts' =>  TariffText::join('translates as text', 'text.id', 'tariff_texts.text')
+                ->where('tariff_texts.tariff_id', $this->id)
+                ->select('tariff_texts.id','text.'.$lang.' as text')->get(),
         ];
     }
 }

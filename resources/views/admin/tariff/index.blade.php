@@ -35,13 +35,12 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>#</th>
-
 										<th>Название</th>
 										<th>Описание</th>
 										<th>Цена</th>
+										<th>Старая цена</th>
 										<th>Количество курсов</th>
 										<th>Скидка</th>
-
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -49,20 +48,20 @@
                                     @foreach ($tariffs as $tariff)
                                         <tr>
                                             <td>{{ $tariff->id }}</td>
-
 											<td>{{ \App\Models\Translate::whereId($tariff->title)->value('ru') }}</td>
 											<td>{{ \App\Models\Translate::whereId($tariff->description)->value('ru') }}</td>
 											<td>{{ $tariff->price }}</td>
+											<td>{{ $tariff->old_price }}</td>
 											<td>{{ $tariff->count }}</td>
 											<td>{{ $tariff->discount }}%</td>
 
                                             <td>
                                                 <form action="{{ route('tariffs.destroy',$tariff->id) }}" method="POST">
-{{--                                                    <a class="btn btn-sm btn-primary " href="{{ route('tariffs.show',$tariff->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>--}}
-                                                    <a class="btn btn-sm btn-success" href="{{ route('tariffs.edit',$tariff->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('tariffs.show',$tariff->id) }}"><i class="fa fa-fw fa-eye"></i></a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('tariffs.edit',$tariff->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+{{--                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>--}}
                                                 </form>
                                             </td>
                                         </tr>

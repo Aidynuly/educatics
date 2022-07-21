@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tariff;
+use App\Models\TariffText;
 use App\Models\Translate;
 use Illuminate\Http\Request;
 use function redirect;
@@ -62,6 +63,7 @@ class TariffController extends Controller
             'title' =>  $title['id'],
             'description'   =>  $description['id'],
             'price' =>  $request['price'],
+            'old_price' =>  $request['old_price'],
         ]);
 
         return redirect()->route('tariffs.index')
@@ -77,8 +79,9 @@ class TariffController extends Controller
     public function show($id)
     {
         $tariff = Tariff::find($id);
+        $texts = TariffText::where('tariff_id', $id)->get();
 
-        return view('admin.tariff.show', compact('tariff'));
+        return view('admin.tariff.show', compact('tariff', 'texts'));
     }
 
     /**
@@ -113,11 +116,16 @@ class TariffController extends Controller
             'kz'    =>  $request->description_kz,
             'en'    =>  $request->description_en,
         ]);
-
+        Translate::find($tariff->discount_text)->update([
+            'ru'    =>  $request->discount_ru,
+            'kz'    =>  $request->discount_kz,
+            'en'    =>  $request->discount_en,
+        ]);
         $tariff->update([
             'price' =>  $request['price'],
             'count' =>  $request['count'] ?? $tariff['count'],
             'discount'  =>  $request['discount'],
+            'old_price' =>  $request['old_price'],
         ]);
 
         return redirect()->route('tariffs.index')

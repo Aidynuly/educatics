@@ -73,7 +73,6 @@
                         </div>
                     </div>
                 </div>
-                {!! $reviews->links() !!}
             </div>
         </div>
     </div>

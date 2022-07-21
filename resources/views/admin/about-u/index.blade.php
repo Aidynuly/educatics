@@ -36,7 +36,6 @@
                                     <tr>
                                         <th>#</th>
 
-										<th>Description</th>
 										<th>RU</th>
 										<th>KZ</th>
 										<th>EN</th>
@@ -48,17 +47,15 @@
                                     @foreach ($aboutUs as $aboutU)
                                         <tr>
                                             <td>{{ $aboutU->id }}</td>
-											<td></td>
 											<td>{{\App\Models\Translate::whereId($aboutU->description)->value('ru')}}</td>
 											<td>{{\App\Models\Translate::whereId($aboutU->description)->value('kz')}}</td>
 											<td>{{\App\Models\Translate::whereId($aboutU->description)->value('en')}}</td>
-
                                             <td>
                                                 <form action="{{ route('about-us.destroy',$aboutU->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-success" href="{{ route('about-us.edit',$aboutU->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('about-us.edit',$aboutU->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>

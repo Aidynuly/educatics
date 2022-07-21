@@ -51,24 +51,8 @@ class Tariff extends Model
         'background_color',
         'created_at',
         'updated_at',
-        'discount'
+        'discount',
+        'old_price',
+        'discount_text',
     ];
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function translate()
-    {
-        return $this->hasOne('App\Translate', 'id', 'description');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function users()
-    {
-        return $this->hasMany('App\User', 'tariff_id', 'id');
-    }
-
 }

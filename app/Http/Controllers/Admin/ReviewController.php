@@ -20,10 +20,9 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::paginate();
+        $reviews = Review::get();
 
-        return view('admin.review.index', compact('reviews'))
-            ->with('i', (request()->input('page', 1) - 1) * $reviews->perPage());
+        return view('admin.review.index', compact('reviews'));
     }
 
     /**
@@ -108,9 +107,27 @@ class ReviewController extends Controller
      */
     public function update(Request $request, Review $review)
     {
-        request()->validate(Review::$rules);
+        Translate::find($review->title)->update([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'    =>  $request['title_en'],
+        ]);
+        Translate::find($review->description)->update([
+            'ru'    =>  $request['description_ru'],
+            'kz'    =>  $request['description_kz'],
+            'en'    =>  $request['description_en'],
+        ]);
 
-        $review->update($request->all());
+        if (isset($request->image)) {
+            $path = $this->uploadImage($request->file('image'));
+        }
+
+        $review->update([
+            'type'  =>  $request['type'] ?? $review->type,
+            'name'  =>  $request['name'] ?? $review->name,
+            'school_name'   =>  $request['school_name'] ?? $review->school_name,
+            'image'     =>  $path ?? $review['image'],
+        ]);
 
         return redirect()->route('reviews.index')
             ->with('success', 'Review updated successfully');
