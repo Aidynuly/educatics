@@ -44,6 +44,14 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $count
+ * @property string $school_name
+ * @property string|null $session_id
+ * @property string|null $deadline
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeadline($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereSchoolName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereSessionId($value)
  */
 class User extends Authenticatable
 {
@@ -60,13 +68,13 @@ class User extends Authenticatable
         'phone',
         'name',
         'surname',
-        'school_id',
         'school_name',
         'created_at',
         'updated_at',
         'session_id',
         'deadline',
-        'count'
+        'count',
+        'city_id'
     ];
 
     static $rules = [
@@ -77,18 +85,9 @@ class User extends Authenticatable
         'phone' => 'required',
         'name' => 'required',
         'surname' => 'required',
-        'school_id' => 'required',
     ];
 
     protected $perPage = 20;
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function school()
-    {
-        return $this->hasOne('App\School', 'id', 'school_id');
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

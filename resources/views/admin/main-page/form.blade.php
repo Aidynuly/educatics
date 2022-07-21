@@ -101,6 +101,14 @@
         <input type="text" class="form-control" id="url" name="video_url" placeholder="Введите ссылку:" value="{{isset($mainPage->video_url) ? $mainPage->video_url : ''}}">
     </div>
     <div class="form-group">
+        <label for="block">Выберите блок:</label>
+        <select class="form-control" name="block" id="block">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+    <div class="form-group">
         <label for="icon">Загрузите иконку:</label>
         <input type="file" class="form-control" id="icon" name="icon">
     </div>

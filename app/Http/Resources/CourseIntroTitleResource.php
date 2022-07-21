@@ -15,9 +15,11 @@ class CourseIntroTitleResource extends JsonResource
      */
     public function toArray($request)
     {
+        $lang = $request->lang;
+
         return [
             'id'    =>  $this->id,
-            'title' =>  Translate::find($this->title),
+            'title' =>  isset($lang) ? Translate::whereId($this->title)->value($lang) :Translate::find($this->title),
         ];
     }
 }

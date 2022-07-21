@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ProfTestAnswer whereSessionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfTestAnswer whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $status
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfTestAnswer whereStatus($value)
  */
 class ProfTestAnswer extends Model
 {

@@ -48,7 +48,9 @@
                                         <tr>
                                             <td>{{ $employee->id }}</td>
 {{--											<td>{{ $employee->image }}</td>--}}
-                                            <td><img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"></td>
+                                            <td>
+                                                <img src="{{url("$employee->image")}}" class="img-circle elevation-2" width="150px" height="100px">
+                                            </td>
 											<td>{{ $employee->name }}</td>
 											<td>{{ $employee->surname }}</td>
 											<td>{{ $employee->position }}</td>

@@ -13,12 +13,12 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Sphere') }}
+                                {{ __('Сферы') }}
                             </span>
 
                              <div class="float-right">
                                 <a href="{{ route('spheres.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                  {{ __('Создать новый') }}
                                 </a>
                               </div>
                         </div>
@@ -36,9 +36,9 @@
                                     <tr>
                                         <th>#</th>
 
-										<th>Title</th>
-										<th>Description</th>
-										<th>Icon</th>
+										<th>Название</th>
+										<th>Описание</th>
+										<th>Картинка</th>
 
                                         <th></th>
                                     </tr>

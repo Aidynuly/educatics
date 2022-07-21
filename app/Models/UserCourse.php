@@ -29,4 +29,16 @@ use Illuminate\Database\Eloquent\Model;
 class UserCourse extends Model
 {
     use HasFactory;
+
+    const STATUS_IN_PROCESS = 'in_process';
+    const STATUS_FINISHED = 'finished';
+    const STATUS_DECLINED = 'declined';
+
+    protected $fillable = [
+        'user_id',
+        'course_id',
+        'status',
+        'created_at',
+        'updated_at',
+    ];
 }

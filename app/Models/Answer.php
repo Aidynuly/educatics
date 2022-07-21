@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int|null $queue
  * @method static \Illuminate\Database\Eloquent\Builder|Answer whereQueue($value)
+ * @property int|null $sphere_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Answer whereSphereId($value)
  */
 class Answer extends Model
 {

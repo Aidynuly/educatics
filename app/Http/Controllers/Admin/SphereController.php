@@ -20,7 +20,7 @@ class SphereController extends Controller
      */
     public function index()
     {
-        $spheres = Sphere::paginate();
+        $spheres = Sphere::get();
 
         return view('admin.sphere.index', compact('spheres'));
     }

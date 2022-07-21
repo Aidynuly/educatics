@@ -15,12 +15,15 @@ class MainPageResource extends JsonResource
      */
     public function toArray($request)
     {
+        $lang = $request->lang;
+
         return [
             'id'    =>  $this->id,
-            'title' =>  Translate::find($this->title),
-            'description'   =>  Translate::find($this->description),
+            'title' =>  Translate::whereId($this->title)->value($lang),
+            'description' =>  Translate::whereId($this->description)->value($lang),
             'icon'  =>  $this->icon,
-            'video_url' =>  $this->video_url
+            'video_url' =>  $this->video_url,
+            'block' =>  $this->block,
         ];
     }
 }

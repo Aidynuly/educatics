@@ -25,6 +25,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $count
+ * @property string|null $background_color
+ * @property int $discount
+ * @property string|null $old_price
+ * @property int|null $discount_text
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereBackgroundColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereDiscount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereDiscountText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereOldPrice($value)
  */
 class Tariff extends Model
 {

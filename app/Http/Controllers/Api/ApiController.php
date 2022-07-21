@@ -21,7 +21,25 @@ class ApiController extends Controller
 {
     public function about(Request $request)
     {
-        return self::response(200, AboutUs::get(), 'success');
+        $request->validate([
+            'lang'  =>  'required',
+        ]);
+        $data['first_block'] = AboutUs::join('translates as title', 'title.id', 'about_us.title')
+            ->join('translates as description', 'description.id', 'about_us.description')
+            ->where('about_us.block', 'first')
+            ->select('about_us.id','title.'.$request->lang.' as title','description.'.$request->lang.' as description', 'about_us.image')
+            ->first();
+        $data['second_block'] = AboutUs::join('translates as title', 'title.id', 'about_us.title')
+            ->where('about_us.block', 'second')
+            ->select('about_us.id','title.'.$request->lang.' as title','about_us.image')
+            ->first();
+
+        $data['third_block'] = AboutUs::join('translates as title', 'title.id', 'about_us.title')
+            ->where('about_us.block', 'third')
+            ->select('about_us.id','title.'.$request->lang.' as title','about_us.image')
+            ->first();
+
+        return self::response(200, $data, 'success');
     }
 
     public function article(Request $request)
@@ -45,7 +63,14 @@ class ApiController extends Controller
 
     public function main(Request $request)
     {
-        return self::response(200, MainPageResource::collection(Mainpage::get()), 'success');
+        $request->validate([
+            'lang'  =>  'required',
+        ]);
+        $data['first_block'] = new MainPageResource(Mainpage::where('block', 1)->first());
+        $data['second_block'] = new MainPageResource(Mainpage::where('block', 2)->first());
+        $data['third_block'] = new MainPageResource(Mainpage::where('block', 3)->first());
+
+        return self::response(200, $data, 'success');
     }
 
     public function footer(Request $request)

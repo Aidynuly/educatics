@@ -60,6 +60,8 @@ Route::get('by-session-id', [\App\Http\Controllers\Api\ProfTestController::class
 
 Route::get('reviews', [ApiController::class, 'reviews']);
 Route::get('faq', [ApiController::class, 'faq']);
+Route::get('statistics-student', [\App\Http\Controllers\Api\StatisticsController::class, 'students']);
+Route::get('statistics-course', [\App\Http\Controllers\Api\StatisticsController::class, 'course']);
 
 Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {

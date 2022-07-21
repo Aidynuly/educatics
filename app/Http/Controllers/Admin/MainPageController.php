@@ -12,7 +12,7 @@ class MainPageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class MainPageController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -35,7 +35,7 @@ class MainPageController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -60,6 +60,7 @@ class MainPageController extends Controller
             'description'   =>  $description->id,
             'video_url'     =>  $request['video_url'],
             'icon'      =>  $icon ?? null,
+            'block'     =>  $request['block'],
         ]);
 
         return redirect()->route('main-page.index')->with('success', 'Успешно добавлено');
@@ -80,7 +81,7 @@ class MainPageController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
@@ -94,7 +95,7 @@ class MainPageController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -117,7 +118,8 @@ class MainPageController extends Controller
 
         $mainPage->update([
             'video_url'     =>  $request['video_url'] ?? $mainPage->video_url,
-            'icon'      =>  $icon ?? null,
+            'icon'      =>  $icon ?? $mainPage->icon,
+            'block'     =>  $request['block'],
         ]);
 
         return redirect()->route('main-page.index')->with('success', 'Успешно обновлено');
@@ -127,7 +129,7 @@ class MainPageController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {

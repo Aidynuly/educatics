@@ -36,14 +36,12 @@ class AboutUs extends Model
      *
      * @var array
      */
-    protected $fillable = ['description'];
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function translate()
-    {
-        return $this->hasOne('App\Translate', 'id', 'description');
-    }
+    protected $fillable = [
+        'title',
+        'image',
+        'description',
+        'created_at',
+        'updated_at',
+        'block'
+    ];
 }

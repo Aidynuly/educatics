@@ -13,12 +13,12 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('About U') }}
+                                {{ __('Раздел о нас') }}
                             </span>
 
                              <div class="float-right">
                                 <a href="{{ route('about-us.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                  {{ __('Создать новый') }}
                                 </a>
                               </div>
                         </div>
@@ -35,11 +35,9 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>#</th>
-
-										<th>RU</th>
-										<th>KZ</th>
-										<th>EN</th>
-
+                                        <th>Название</th>
+										<th>Описание</th>
+										<th>Блок</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -47,9 +45,17 @@
                                     @foreach ($aboutUs as $aboutU)
                                         <tr>
                                             <td>{{ $aboutU->id }}</td>
+											<td>{{\App\Models\Translate::whereId($aboutU->title)->value('ru')}}</td>
 											<td>{{\App\Models\Translate::whereId($aboutU->description)->value('ru')}}</td>
-											<td>{{\App\Models\Translate::whereId($aboutU->description)->value('kz')}}</td>
-											<td>{{\App\Models\Translate::whereId($aboutU->description)->value('en')}}</td>
+											<td>
+                                                @if($aboutU->block == 'first')
+                                                    Первый
+                                                @elseif($aboutU->block == 'second')
+                                                    Второй
+                                                @else
+                                                    Третий
+                                                @endif
+                                            </td>
                                             <td>
                                                 <form action="{{ route('about-us.destroy',$aboutU->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-success" href="{{ route('about-us.edit',$aboutU->id) }}"><i class="fa fa-fw fa-edit"></i></a>

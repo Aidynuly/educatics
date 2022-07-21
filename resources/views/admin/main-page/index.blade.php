@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Main page') }}
+                                {{ __('Главная страница') }}
                             </span>
 
                              <div class="float-right">
@@ -39,6 +39,7 @@
 										<th>Описание</th>
 										<th>Иконка</th>
 										<th>Ссылка на видео</th>
+										<th>Блок</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -52,6 +53,7 @@
                                                 <img src="https://jaryk-back.test-nomad.kz/{{$page->icon}}" class="img-circle elevation-2" width="300px" height="150px" alt="User Image">
                                             </td>
                                             <td>{{ $page->video_url }}</td>
+                                            <td>{{ $page->block }}</td>
                                             <td>
                                                 <form action="{{ route('main-page.destroy',$page->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-success" href="{{ route('main-page.edit',$page->id) }}"><i class="fa fa-fw fa-edit"></i></a>

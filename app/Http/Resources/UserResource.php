@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Answer;
+use App\Models\City;
 use App\Models\ProfTestAnswer;
 use App\Models\Tariff;
 use App\Models\Sphere;
@@ -38,11 +39,15 @@ class UserResource extends JsonResource
         if (count($vals) > 0) {
             $value = max($vals);
             $id = array_search($value, $vals);
-            $sphere = Sphere::join('translates as title', 'title.id', 'spheres.title')->join('translates as desc', 'desc.id', 'spheres.description')
-                ->where('spheres.id', $id)->select('spheres.id', 'title.ru as title', 'desc.ru as description', 'spheres.icon')->first();
+            $sphere = Sphere::join('translates as title', 'title.id', 'spheres.title')
+                ->join('translates as desc', 'desc.id', 'spheres.description')
+                ->where('spheres.id', $id)
+                ->select('spheres.id', 'title.ru as title', 'desc.ru as description', 'spheres.icon')
+                ->first();
         }
         $profTest['answers'] = ProfTestAnswerResource::collection($outputs);
         $profTest['correct_count'] = $data['correctCount'];
+
         return [
             'id'    =>  $this->id,
             'type'  =>  $this->type,
@@ -54,12 +59,12 @@ class UserResource extends JsonResource
             'surname'   =>  $this->surname,
             'school_name'   =>  $this->school_name,
             'session_id'    =>  $this->session_id,
-            'school'    =>  $this->school_id,
             'courses'   =>  UserCourseResource::collection(UserCourse::whereUserId($this->id)->get()),
             'deadline'  =>  $this->deadline,
             'count' =>  $this->count,
             'prof_test' =>  $profTest,
             'sphere'        =>  $sphere ?? null,
+            'city'      =>  new CityResource(City::find($this->city_id)),
         ];
     }
 }

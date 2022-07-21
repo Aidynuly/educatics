@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\AboutUs;
 use App\Http\Controllers\Controller;
+use App\Models\Mainpage;
 use App\Models\Translate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use function redirect;
 use function request;
@@ -47,9 +49,27 @@ class AboutUController extends Controller
      */
     public function store(Request $request)
     {
-        $translate = Translate::create($request->all());
+        $title = Translate::create([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'    =>  $request['title_en'],
+        ]);
+
+        $description = Translate::create([
+            'ru'    =>  $request['description_ru'],
+            'kz'    =>  $request['description_kz'],
+            'en'    =>  $request['description_en'],
+        ]);
+
+        if ($request['icon']) {
+            $icon = $this->uploadImage($request->file('icon'));
+        }
         $aboutU = AboutUs::create([
-            'description'   =>  $translate->id,
+            'title'     =>  $title->id,
+            'description'   =>  $description->id,
+            'image'     =>  $icon ?? null,
+            'created_at'    =>  Carbon::now(),
+            'block' =>  $request['block']
         ]);
 
         return redirect()->route('about-us.index')
@@ -78,6 +98,7 @@ class AboutUController extends Controller
     public function edit($id)
     {
         $aboutU = AboutUs::find($id);
+
         return view('admin.about-u.edit', compact('aboutU'));
     }
 
@@ -86,11 +107,29 @@ class AboutUController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  Translate $aboutU
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Translate $aboutU)
+    public function update(Request $request, AboutUs $aboutU)
     {
-        $aboutU->update($request->all());
+        $title = Translate::find($aboutU->title)->update([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'    =>  $request['title_en'],
+        ]);
+
+        $description = Translate::find($aboutU->description)->update([
+            'ru'    =>  $request['description_ru'],
+            'kz'    =>  $request['description_kz'],
+            'en'    =>  $request['description_en'],
+        ]);
+
+        if ($request['icon']) {
+            $icon = $this->uploadImage($request->file('icon'));
+        }
+        $aboutU->update([
+            'icon'      =>  $icon ?? $aboutU->icon,
+            'block'     =>  $request['block'],
+        ]);
 
         return redirect()->route('about-us.index')
             ->with('success', 'AboutU updated successfully');

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseIntro;
 use App\Models\Tariff;
 use App\Models\User;
 use App\Models\Basket;
 use App\Models\UserCourse;
+use App\Models\UserCourseIntro;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Service\Paybox;
@@ -53,6 +55,13 @@ class PaymentController extends Controller
                     'status'        =>  'in_process',
                     'created_at'    =>  Carbon::now(),
                 ]);
+                $intros = CourseIntro::whereCourseId($basket['course_id'])->get();
+                foreach ($intros as $intro) {
+                    UserCourseIntro::insert([
+                        'course_intro_id'   =>  $intro->id,
+                        'user_id'   =>  $user,
+                    ]);
+                }
             }
         }
         return view('emails.success');

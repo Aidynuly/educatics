@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|UserTest whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserTest whereUserId($value)
  * @mixin \Eloquent
+ * @property string $status
+ * @method static \Illuminate\Database\Eloquent\Builder|UserTest whereStatus($value)
  */
 class UserTest extends Model
 {

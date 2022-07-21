@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -46,5 +47,12 @@ class Controller extends BaseController
         } catch (\RuntimeException $exception) {
             dd($exception->getMessage());
         }
+    }
+
+    protected function getProcentFromUser($count)
+    {
+        $userCount = User::count();
+
+        return ($count * 100) / $userCount;
     }
 }

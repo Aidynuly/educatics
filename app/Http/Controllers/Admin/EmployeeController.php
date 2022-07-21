@@ -42,14 +42,19 @@ class EmployeeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        if ($request->image) {
-            $request->image = $this->uploadImage($request['image']);
+        if ($request->hasFile('image')) {
+            $img = $this->uploadImage($request->file('image'));
         }
-        $employee = Employee::create($request->all());
+        $employee = Employee::create([
+            'name'  =>  $request['name'],
+            'surname'   =>  $request->surname,
+            'position'  =>  $request->position,
+            'image'     =>  $img ?? null,
+        ]);
 
         return redirect()->route('employees.index')
             ->with('success', 'Employee created successfully.');
@@ -86,11 +91,19 @@ class EmployeeController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  Employee $employee
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Employee $employee)
     {
-        $employee->update($request->all());
+        if ($request->hasFile('image')) {
+            $img = $this->uploadImage($request->file('image'));
+        }
+        $employee->update([
+            'name'  =>  $request['name'],
+            'surname'   =>  $request->surname,
+            'position'  =>  $request->position,
+            'image'     =>  $img ?? $employee->image,
+        ]);
 
         return redirect()->route('employees.index')
             ->with('success', 'Employee updated successfully');

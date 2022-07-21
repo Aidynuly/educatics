@@ -27,6 +27,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $background_color
+ * @property string|null $trailer
+ * @property int|null $sphere_id
+ * @property string|null $icon
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereBackgroundColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereIcon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereSphereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereTrailer($value)
  */
 class Course extends Model
 {
