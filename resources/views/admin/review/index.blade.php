@@ -48,7 +48,13 @@
                                 @foreach ($reviews as $review)
                                     <tr>
                                         <td>{{ $review->id }}</td>
-                                        <td><img src="{{url($review->image)}}" class="img-circle elevation-2" alt="User Image" width="150px" height="150px"></td>
+                                        <td>
+                                            @if(isset($review->image))
+                                            <img src="{{url($review->image)}}" class="img-circle elevation-2" alt="User Image" width="150px" height="150px">
+                                            @else
+
+                                            @endif
+                                        </td>
                                         @if($review->type == 'children')
                                             <td>Ученик</td>
                                         @else

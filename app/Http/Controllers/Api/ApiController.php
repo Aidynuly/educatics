@@ -7,6 +7,7 @@ use App\Http\Resources\ArticleResource;
 use App\Http\Resources\MainPageResource;
 use App\Models\AboutUs;
 use App\Models\Article;
+use App\Models\Event;
 use App\Models\Faq;
 use App\Models\Social;
 use App\Models\Review;
@@ -93,11 +94,16 @@ class ApiController extends Controller
             'lang'  =>  'required',
         ]);
         $lang = $request->lang;
-        $reviews = Review::join('translates as title', 'title.id', 'reviews.title')->join('translates as desc', 'desc.id', 'reviews.description')
+        $data['parent'] = Review::join('translates as title', 'title.id', 'reviews.title')->join('translates as desc', 'desc.id', 'reviews.description')
+            ->where('reviews.type', 'parent')
+            ->select('reviews.id', 'reviews.name', 'reviews.school_name', 'reviews.image', 'title.'.$lang. ' as title', 'desc.'.$lang. ' as description', 'reviews.created_at')
+            ->get();
+        $data['children'] = Review::join('translates as title', 'title.id', 'reviews.title')->join('translates as desc', 'desc.id', 'reviews.description')
+            ->where('reviews.type', 'children')
             ->select('reviews.id', 'reviews.name', 'reviews.school_name', 'reviews.image', 'title.'.$lang. ' as title', 'desc.'.$lang. ' as description', 'reviews.created_at')
             ->get();
 
-        return self::response(200, $reviews, 'success');
+        return self::response(200, $data, 'success');
     }
 
     public function faq(Request $request)
@@ -111,5 +117,18 @@ class ApiController extends Controller
             ->get();
 
         return self::response(200, $faqs, 'success');
+    }
+
+    public function events(Request $request)
+    {
+        $request->validate([
+            'lang'  =>  'required',
+        ]);
+        $lang = $request->lang;
+        $events = Event::join('translates as title', 'title.id', 'events.title')->join('translates as desc', 'desc.id', 'events.description')
+            ->select('events.id','title.'.$lang. ' as title', 'desc.'.$lang. ' as description','events.date', 'events.image')
+            ->get();
+
+        return self::response(200, $events, 'success');
     }
 }

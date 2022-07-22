@@ -121,3 +121,10 @@
         <p>FAQ</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{route('events.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-school"></i>
+        <p>Мероприятия</p>
+    </a>
+</li>

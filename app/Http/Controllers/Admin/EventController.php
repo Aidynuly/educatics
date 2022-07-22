@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Review;
-use App\Models\Translate;
-use Illuminate\Http\Request;
+use App\Models\Event;
 use App\Http\Controllers\Controller;
+use App\Models\Translate;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use function redirect;
+use function request;
+use function view;
 
 /**
- * Class ReviewController
+ * Class EventController
  * @package App\Http\Controllers
  */
-class ReviewController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +24,10 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::get();
+        $events = Event::paginate();
 
-        return view('admin.review.index', compact('reviews'));
+        return view('admin.event.index', compact('events'))
+            ->with('i', (request()->input('page', 1) - 1) * $events->perPage());
     }
 
     /**
@@ -32,8 +37,9 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        $review = new Review();
-        return view('admin.review.create', compact('review'));
+        $event = new Event();
+
+        return view('admin.event.create', compact('event'));
     }
 
     /**
@@ -46,30 +52,27 @@ class ReviewController extends Controller
     {
         $title = Translate::create([
             'ru'    =>  $request['title_ru'],
-            'kz'    =>  $request['title_kz'],
             'en'    =>  $request['title_en'],
+            'kz'    =>  $request['title_kz'],
         ]);
         $description = Translate::create([
             'ru'    =>  $request['description_ru'],
             'kz'    =>  $request['description_kz'],
             'en'    =>  $request['description_en'],
         ]);
-
-        if (isset($request->image)) {
+        if ($request->hasFile('image')) {
             $path = $this->uploadImage($request->file('image'));
         }
-
-        $review = Review::create([
-            'type'  =>  $request['type'],
-            'name'  =>  $request['name'],
+        $date = Carbon::parse($request->input('date'));
+        $event = Event::create([
             'title' =>  $title->id,
             'description'   =>  $description->id,
-            'school_name'   =>  $request['school_name'],
-            'image' =>  $path ?? null,
+            'image' =>  $path,
+            'date'      =>  $date,
         ]);
 
-        return redirect()->route('reviews.index')
-            ->with('success', 'Review created successfully.');
+        return redirect()->route('events.index')
+            ->with('success', 'Event created successfully.');
     }
 
     /**
@@ -80,9 +83,9 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $review = Review::find($id);
+        $event = Event::find($id);
 
-        return view('admin.review.show', compact('review'));
+        return view('admin.event.show', compact('event'));
     }
 
     /**
@@ -93,44 +96,44 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
-        $review = Review::find($id);
+        $event = Event::find($id);
 
-        return view('admin.review.edit', compact('review'));
+        return view('admin.event.edit', compact('event'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Review $review
+     * @param  Event $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, Event $event)
     {
-        Translate::find($review->title)->update([
+        Translate::find($event->title)->update([
             'ru'    =>  $request['title_ru'],
-            'kz'    =>  $request['title_kz'],
             'en'    =>  $request['title_en'],
+            'kz'    =>  $request['title_kz'],
         ]);
-        Translate::find($review->description)->update([
+        Translate::find($event->description)->update([
             'ru'    =>  $request['description_ru'],
             'kz'    =>  $request['description_kz'],
             'en'    =>  $request['description_en'],
         ]);
-
-        if (isset($request->image)) {
+        if ($request->hasFile('image')) {
             $path = $this->uploadImage($request->file('image'));
         }
+        if (isset($request['date'])) {
+            $date = Carbon::parse($request->input('date'));
+        }
 
-        $review->update([
-            'type'  =>  $request['type'] ?? $review->type,
-            'name'  =>  $request['name'] ?? $review->name,
-            'school_name'   =>  $request['school_name'] ?? $review->school_name,
-            'image'     =>  $path ?? $review['image'],
+        $event->update([
+            'image' =>  $path ?? $event->image,
+            'date'  =>  $date ?? $event->date,
         ]);
 
-        return redirect()->route('reviews.index')
-            ->with('success', 'Review updated successfully');
+        return redirect()->route('events.index')
+            ->with('success', 'Event updated successfully');
     }
 
     /**
@@ -140,9 +143,9 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        $review = Review::find($id)->delete();
+        $event = Event::find($id)->delete();
 
-        return redirect()->route('reviews.index')
-            ->with('success', 'Review deleted successfully');
+        return redirect()->route('events.index')
+            ->with('success', 'Event deleted successfully');
     }
 }

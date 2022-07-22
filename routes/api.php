@@ -62,6 +62,7 @@ Route::get('reviews', [ApiController::class, 'reviews']);
 Route::get('faq', [ApiController::class, 'faq']);
 Route::get('statistics-student', [\App\Http\Controllers\Api\StatisticsController::class, 'students']);
 Route::get('statistics-course', [\App\Http\Controllers\Api\StatisticsController::class, 'course']);
+Route::get('events', [ApiController::class, 'events']);
 
 Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {

@@ -51,4 +51,5 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('questions',  \App\Http\Controllers\Admin\QuestionController::class);
     Route::resource('question-answer', \App\Http\Controllers\Admin\QuestionAnswerController::class);
     Route::resource('faq',  \App\Http\Controllers\Admin\FaqController::class);
+    Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
 });
