@@ -20,7 +20,7 @@
                                 <a href="{{ route('courses.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('СОЗДАТЬ НОВЫЙ') }}
                                 </a>
-                              </div>
+                             </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -84,3 +84,4 @@
         </div>
     </div>
 @endsection
+`

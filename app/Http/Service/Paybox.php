@@ -21,8 +21,8 @@ class Paybox
 
     public function initPay()
     {
-        $this->data['pg_success_url'] = self::SUCCESS_URL . $this->data['pg_order_id'] . '/' . $this->data['tariff_id'];
-        $this->data['pg_reject_url'] = self::REJECT_URL . $this->data['pg_order_id'] . '/' . $this->data['tariff_id'];
+        $this->data['pg_success_url'] = self::SUCCESS_URL . $this->data['pg_order_id'] . '/' . $this->data['tariff_id'] . '/' . $this->data['transaction_id'];
+        $this->data['pg_reject_url'] = self::REJECT_URL . $this->data['pg_order_id'] . '/' . $this->data['tariff_id'] . '/' . $this->data['transaction_id'];
         $this->data['pg_merchant_id'] = self::MERCHANT_ID;
         $requestForSignature = $this->makeFlatParamsArray($this->data);
 

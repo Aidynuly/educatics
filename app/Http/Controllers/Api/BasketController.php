@@ -76,7 +76,6 @@ class BasketController extends Controller
             'total_price'   =>  $totalPrice,
             'tariff_id'     =>  Basket::where('user_id', $user->id)->value('tariff_id'),
         ]);
-//        return self::response(200, BasketResource::collection($baskets), 'success');
     }
 
     public function clear(Request $request)

@@ -52,4 +52,9 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('question-answer', \App\Http\Controllers\Admin\QuestionAnswerController::class);
     Route::resource('faq',  \App\Http\Controllers\Admin\FaqController::class);
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
+    Route::resource('course-page', \App\Http\Controllers\Admin\CoursePageController::class);
+    Route::resource('prof-test-page', \App\Http\Controllers\Admin\ProfTestPageController::class);
+    Route::resource('event-page', \App\Http\Controllers\Admin\EventPageController::class);
+    Route::resource('footer', \App\Http\Controllers\Admin\FooterController::class);
+    Route::resource('transactions', \App\Http\Controllers\Admin\TransactionController::class);
 });

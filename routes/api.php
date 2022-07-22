@@ -54,8 +54,8 @@ Route::get('socials', [ApiController::class, 'socials']);
 Route::get('main-page', [ApiController::class, 'main']);
 Route::get('get-footer', [ApiController::class, 'footer']);
 
-Route::get('success-payment/{user}/{tariff}', [PaymentController::class, 'success']);
-Route::get('reject-payment/{user}/{tariff}', [PaymentController::class, 'reject']);
+Route::get('success-payment/{user}/{tariff}/{transaction}', [PaymentController::class, 'success']);
+Route::get('reject-payment/{user}/{tariff}/{transaction}', [PaymentController::class, 'reject']);
 Route::get('by-session-id', [\App\Http\Controllers\Api\ProfTestController::class, 'bySession']);
 
 Route::get('reviews', [ApiController::class, 'reviews']);
@@ -63,6 +63,9 @@ Route::get('faq', [ApiController::class, 'faq']);
 Route::get('statistics-student', [\App\Http\Controllers\Api\StatisticsController::class, 'students']);
 Route::get('statistics-course', [\App\Http\Controllers\Api\StatisticsController::class, 'course']);
 Route::get('events', [ApiController::class, 'events']);
+Route::get('course-page', [ApiController::class, 'coursePage']);
+Route::get('prof-test-page',[ApiController::class, 'profTest']);
+Route::get('event-page',[ApiController::class, 'eventPage']);
 
 Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
