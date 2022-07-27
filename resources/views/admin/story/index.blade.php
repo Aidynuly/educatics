@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-Sphere
+Личные истории
 @endsection
 
 @section('content')
@@ -13,13 +13,13 @@ Sphere
                     <div style="display: flex; justify-content: space-between; align-items: center;">
 
                         <span id="card_title">
-                            {{ __('Сферы') }}
+                            {{ __('Личные истории') }}
                         </span>
 
                         <div class="float-right">
-                            <a href="{{ route('spheres.create') }}" class="btn btn-primary btn-sm float-right"
+                            <a href="{{ route('stories.create') }}" class="btn btn-primary btn-sm float-right"
                                 data-placement="left">
-                                {{ __('Создать новый') }}
+                                {{ __('Создать новую историю') }}
                             </a>
                         </div>
                     </div>
@@ -45,14 +45,14 @@ Sphere
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($spheres as $sphere)
+                                @foreach ($stories as $story)
                                 <tr>
-                                    <td>{{ $sphere->id }}</td>
+                                    <td>{{ $story->id }}</td>
 
-                                    <td>{{ \App\Models\Translate::whereId($sphere->title)->value('ru') }}</td>
-                                    <td>{{ \App\Models\Translate::whereId($sphere->description)->value('ru') }}</td>
+                                    <td>{{ \App\Models\Translate::whereId($story->title)->value('ru') }}</td>
+                                    <td>{{ \App\Models\Translate::whereId($story->description)->value('ru') }}</td>
                                     <td>
-                                        <img src="https://jaryk-back.test-nomad.kz/{{ $sphere->icon }}" width="200px"
+                                        <img src="https://jaryk-back.test-nomad.kz/{{ $story->image }}" width="200px"
                                             height="100px">
                                     </td>
 
