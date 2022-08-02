@@ -20,8 +20,8 @@ class UserCourseResource extends JsonResource
         $course = Course::find($this->course_id);
         return [
             'id'    =>  $this->course_id,
-            'title' =>  Translate::whereId($course->title)->value($lang),
-            'description' =>  Translate::whereId($course->description)->value($lang),
+            'title' =>  isset($lang) ? Translate::whereId($course->title)->value($lang) : Translate::find($course->title),
+            'description' =>  isset($description) ? Translate::whereId($course->description)->value($lang) : Translate::find($course->description),
             'price' =>  $course->price,
             'certificate'   =>  $course->certificate,
             'background_color'  =>  $course->background_color,

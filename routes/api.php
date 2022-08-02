@@ -78,8 +78,6 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
         return new \App\Http\Resources\UserResource($request->user());
     });
 
-    Route::patch('update-password', [\App\Http\Controllers\Api\AuthController::class, 'updatePassword']);
-
     Route::get('intros-by-course', [CourseController::class, 'intros']);
     Route::get('my-courses', [\App\Http\Controllers\Api\UserController::class, 'myCourses']);
 
@@ -94,6 +92,7 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::get('/baskets', [\App\Http\Controllers\Api\BasketController::class, 'get']);
     Route::get('/basket-courses', [\App\Http\Controllers\Api\BasketController::class, 'courses']);
     Route::post('/reset-password', [AuthController::class, 'reset']);
+    Route::post('/update-user', [AuthController::class, 'update']);
 
     Route::prefix('course')->group(function () {
         Route::post('/answer', [\App\Http\Controllers\Api\UserController::class, 'submit']);

@@ -81,4 +81,28 @@ class AuthController extends Controller
         return self::response(202, null, 'success');
     }
 
+    public function update(Request $request)
+    {
+        $request->validate([
+            'age'       =>  'required',
+            'login' =>  'required',
+            'phone' =>  'required',
+            'name'  =>  'required',
+            'surname'   =>  'required',
+            'school_name'   =>  'required',
+            'city_id'   =>  'required|exists:cities,id',
+        ]);
+        $user = auth()->user();
+        $user->update([
+            'age'       =>  $request['age'],
+            'login' =>   $request['login'],
+            'phone' =>   $request['phone'],
+            'name'  =>  $request['name'],
+            'surname'   =>  $request['surname'],
+            'school_name'   =>   $request['school_name'],
+            'city_id'   =>   $request['city_id'],
+        ]);
+
+        return self::response(200, new UserResource(auth()->user()),'success');
+    }
 }

@@ -28,7 +28,6 @@ class UserResource extends JsonResource
 
         $answers = ProfTestAnswer::whereSessionId($this->session_id)->where('is_correct', true)->pluck('answer_id')->toArray();
         $spheres = [];
-
         foreach ($answers as $answer) {
             $ab = Answer::whereId($answer)->whereNotNull('sphere_id')->first();
             if (isset($ab->sphere_id)) {
