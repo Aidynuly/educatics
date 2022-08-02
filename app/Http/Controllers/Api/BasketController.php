@@ -28,7 +28,7 @@ class BasketController extends Controller
         }
         if (Basket::where('user_id', $user->id)->where('tariff_id', '!=', $request['tariff_id'])->where('status', 'in_process')->exists()) {
             return response()->json([
-                'message' => 'У вас уже есть курсы. Очистите корзину!',
+                'message' => 'У вас уже есть другой тариф. Очистите корзину!',
             ], 400);
         }
         if (Basket::whereUserId($user->id)->where('tariff_id', $request['tariff_id'])->where('status', 'in_process')->exists()) {

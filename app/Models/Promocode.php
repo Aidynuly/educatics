@@ -36,5 +36,8 @@ class Promocode extends Model
         'procent',
         'created_at',
         'updated_at',
+        'status',
+        'interval',
+        'deadline',
     ];
 }

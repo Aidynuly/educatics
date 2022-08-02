@@ -94,6 +94,8 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::post('/reset-password', [AuthController::class, 'reset']);
     Route::post('/update-user', [AuthController::class, 'update']);
 
+    Route::post('/promocode', [PaymentController::class, 'promocode']);
+
     Route::prefix('course')->group(function () {
         Route::post('/answer', [\App\Http\Controllers\Api\UserController::class, 'submit']);
         Route::post('/test/finish', [\App\Http\Controllers\Api\UserController::class, 'finish']);

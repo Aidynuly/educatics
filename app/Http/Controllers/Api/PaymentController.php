@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\CourseIntro;
+use App\Models\Promocode;
 use App\Models\Tariff;
 use App\Models\Transaction;
 use App\Models\User;
@@ -95,5 +96,30 @@ class PaymentController extends Controller
         ]);
 
         return self::response(200, User::find($user), 'success');
+    }
+
+    public function promocode(Request $request)
+    {
+        $request->validate([
+            'promocode' => 'required',
+            'tariff_id' =>  'required|exists:tariffs,id'
+        ]);
+        $user = auth()->user();
+        $tariff = Tariff::find($request['tariff_id']);
+        $price = $tariff->price;
+        if (Promocode::whereCode($request['promocode'])->exists()) {
+            $promocode = Promocode::whereCode($request['promocode'])->first();
+            $discount = ($price * $promocode->procent) / 100;
+            $price = $price - $discount;
+            $promocode->update([
+                'status'    =>  'used'
+            ]);
+            return response()->json([
+                'price' =>  $tariff->price,
+                'new_price' =>  $price,
+            ],200);
+        }
+
+        return self::response(400, null, 'promocode not found');
     }
 }
