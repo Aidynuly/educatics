@@ -83,23 +83,27 @@
         <p>Мероприятия</p>
     </a>
     <a href="{{route('course-page.index')}}" class="nav-link active">
-        <i class="nav-icon fas fa-school"></i>
+        <i class="nav-icon fas fa-book"></i>
         <p>Страница курсы</p>
     </a>
     <a href="{{route('prof-test-page.index')}}" class="nav-link active">
-        <i class="nav-icon fas fa-school"></i>
+        <i class="nav-icon fas fa-question"></i>
         <p>Страница проф теста</p>
     </a>
     <a href="{{route('event-page.index')}}" class="nav-link active">
-        <i class="nav-icon fas fa-school"></i>
+        <i class="nav-icon fas fa-info-circle"></i>
         <p>Страница мероприятии</p>
     </a>
     <a href="{{route('footer.index')}}" class="nav-link active">
-        <i class="nav-icon fas fa-school"></i>
+        <i class="nav-icon fas fa-info"></i>
         <p>Футер</p>
     </a>
     <a href="{{route('transactions.index')}}" class="nav-link active">
-        <i class="nav-icon fas fa-school"></i>
+        <i class="nav-icon fas fa-dolly-flatbed"></i>
         <p>Транзакции</p>
+    </a>
+    <a href="{{route('promocodes.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-dollar-sign"></i>
+        <p>Промокоды</p>
     </a>
 </li>

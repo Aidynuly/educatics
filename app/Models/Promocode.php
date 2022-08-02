@@ -29,4 +29,12 @@ use Illuminate\Database\Eloquent\Model;
 class Promocode extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'code',
+        'procent',
+        'created_at',
+        'updated_at',
+    ];
 }

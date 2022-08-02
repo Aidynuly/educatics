@@ -58,4 +58,5 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('event-page', \App\Http\Controllers\Admin\EventPageController::class);
     Route::resource('footer', \App\Http\Controllers\Admin\FooterController::class);
     Route::resource('transactions', \App\Http\Controllers\Admin\TransactionController::class);
+    Route::resource('promocodes', \App\Http\Controllers\Admin\PromocodeController::class);
 });

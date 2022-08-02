@@ -16,6 +16,6 @@ class Footer extends Model
         'description',
         'image',
         'block',
-        'link'
+        'link',
     ];
 }
