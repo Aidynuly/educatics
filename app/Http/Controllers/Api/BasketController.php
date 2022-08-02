@@ -59,10 +59,11 @@ class BasketController extends Controller
     {
         $request->validate([
             'lang' => 'required',
-            'tariff_id' => 'required|exists:tariffs,id'
         ]);
         $user = auth()->user();
-        Basket::whereUserId($user->id)->where('tariff_id', $request['tariff_id'])->where('status', 'in_process')->delete();
+        if (isset($request['tariff_id'])) {
+            Basket::whereUserId($user->id)->where('tariff_id', $request['tariff_id'])->where('status', 'in_process')->delete();
+        }
         $baskets = Basket::where('user_id', $user->id)->where('status', 'in_process')->get();
         $totalPrice = 0;
         if (count($baskets) < 0) {

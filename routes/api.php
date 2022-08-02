@@ -76,6 +76,8 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
         return new \App\Http\Resources\UserResource($request->user());
     });
 
+    Route::patch('update-password', [\App\Http\Controllers\Api\AuthController::class, 'updatePassword']);
+
     Route::get('intros-by-course', [CourseController::class, 'intros']);
     Route::get('my-courses', [\App\Http\Controllers\Api\UserController::class, 'myCourses']);
 
