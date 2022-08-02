@@ -16,19 +16,19 @@ class BasketController extends Controller
     public function add(Request $request)
     {
         $request->validate([
-            'tariff_id' =>  'required|exists:tariffs,id',
-            'courses' =>  'required|array',
+            'tariff_id' => 'required|exists:tariffs,id',
+            'courses' => 'required|array',
         ]);
         $user = auth()->user();
         $tariff = Tariff::find($request['tariff_id']);
         if ($tariff->count < count($request['courses'])) {
             return response()->json([
-                'message'   =>  'Количество курсов не совпадает с количеством тарифа'
+                'message' => 'Количество курсов не совпадает с количеством тарифа'
             ], 400);
         }
         if (Basket::where('user_id', $user->id)->where('tariff_id', '!=', $request['tariff_id'])->exists()) {
             return response()->json([
-                'message'   =>  'У вас уже есть курсы',
+                'message' => 'У вас уже есть курсы',
             ], 400);
         }
         foreach ($request['courses'] as $course) {
@@ -48,7 +48,7 @@ class BasketController extends Controller
     public function delete(Request $request)
     {
         $request->validate([
-            'basket_id' =>  'required|exists:baskets,id',
+            'basket_id' => 'required|exists:baskets,id',
         ]);
         Basket::find($request['basket_id'])->delete();
 
@@ -58,23 +58,25 @@ class BasketController extends Controller
     public function get(Request $request)
     {
         $request->validate([
-            'lang'  =>  'required'
+            'lang' => 'required',
+            'tariff_id' => 'required|exists:tariffs,id'
         ]);
         $user = auth()->user();
-        $baskets = Basket::where('user_id', $user->id)->where('status','in_process')->get();
+        Basket::whereUserId($user->id)->where('tariff_id', $request['tariff_id'])->where('status', 'in_process')->delete();
+        $baskets = Basket::where('user_id', $user->id)->where('status', 'in_process')->get();
         $totalPrice = 0;
         if (count($baskets) < 0) {
             return self::response(400, null, 'В корзине пусто');
         }
-        foreach ($baskets as $basket) {
-            $totalPrice += Course::whereId($basket->course_id)->value('price');
-        }
+        $tariff = Basket::where('user_id', $user->id)->where('status', 'in_process')->first();
+        $totalPrice += Tariff::whereId($tariff->tariff_id)->value('price');
+
         return response()->json([
-            'data'  =>  BasketResource::collection($baskets),
-            'message'  =>  'success',
-            'status'        =>  200,
-            'total_price'   =>  $totalPrice,
-            'tariff_id'     =>  Basket::where('user_id', $user->id)->value('tariff_id'),
+            'data' => BasketResource::collection($baskets),
+            'message' => 'success',
+            'status' => 200,
+            'total_price' => $totalPrice,
+            'tariff_id' => Basket::where('user_id', $user->id)->value('tariff_id'),
         ]);
     }
 
@@ -84,7 +86,19 @@ class BasketController extends Controller
         Basket::where('user_id', $user->id)->delete();
 
         return response()->json([
-            'message'   =>  'success',
-        ],200);
+            'message' => 'success',
+        ], 200);
+    }
+
+    public function courses(Request $request)
+    {
+        $request->validate([
+            'lang'  =>  'required',
+            'tariff_id' =>  'required|exists:tariffs,id'
+        ]);
+        $user = auth()->user();
+        $courses = Basket::whereUserId($user->id)->where('tariff_id', $request['tariff_id'])->where('status', 'in_process')->pluck('course_id')->toArray();
+
+        return self::response(200, $courses, 'success');
     }
 }

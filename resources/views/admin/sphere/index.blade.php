@@ -52,8 +52,8 @@ Sphere
                                     <td>{{ \App\Models\Translate::whereId($sphere->title)->value('ru') }}</td>
                                     <td>{{ \App\Models\Translate::whereId($sphere->description)->value('ru') }}</td>
                                     <td>
-                                        <img src="https://jaryk-back.test-nomad.kz/{{ $sphere->icon }}" width="200px"
-                                            height="100px">
+                                        <img src="{{url("$sphere->icon")}}" width="200px"
+                                            height="100px" alt="Image">
                                     </td>
 
                                     <td>
@@ -61,13 +61,10 @@ Sphere
                                             {{-- <a class="btn btn-sm btn-primary "
                                                 href="{{ route('spheres.show',$sphere->id) }}"><i
                                                     class="fa fa-fw fa-eye"></i></a>--}}
-                                            <a class="btn btn-sm btn-success"
-                                                href="{{ route('spheres.edit',$sphere->id) }}"><i
-                                                    class="fa fa-fw fa-edit"></i></a>
+                                            <a class="btn btn-sm btn-success" href="{{ route('spheres.edit',$sphere->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                             @csrf
                                             @method('DELETE')
-                                            {{-- <button type="submit" class="btn btn-danger btn-sm"><i
-                                                    class="fa fa-fw fa-trash"></i></button>--}}
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Tariff') }}
+                                {{ __('Тарифы') }}
                             </span>
 
                              <div class="float-right">

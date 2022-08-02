@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Translate;
+use App\Models\UserCourseIntro;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CourseIntroTitleResource extends JsonResource
@@ -16,10 +17,11 @@ class CourseIntroTitleResource extends JsonResource
     public function toArray($request)
     {
         $lang = $request->lang;
-
+        $user = auth()->user();
         return [
             'id'    =>  $this->id,
             'title' =>  isset($lang) ? Translate::whereId($this->title)->value($lang) :Translate::find($this->title),
+            'status'    =>  isset($user) ? UserCourseIntro::where('user_id', $user->id)->where('id', $this->id)->value('status') : 0,
         ];
     }
 }

@@ -76,6 +76,9 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
         return new \App\Http\Resources\UserResource($request->user());
     });
 
+    Route::get('intros-by-course', [CourseController::class, 'intros']);
+    Route::get('my-courses', [\App\Http\Controllers\Api\UserController::class, 'myCourses']);
+
     Route::post('/update-session-id', [AuthController::class, 'updateSession']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -85,7 +88,7 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::delete('/destroy-from-basket', [\App\Http\Controllers\Api\BasketController::class, 'delete']);
     Route::delete('/clear-basket', [\App\Http\Controllers\Api\BasketController::class, 'clear']);
     Route::get('/baskets', [\App\Http\Controllers\Api\BasketController::class, 'get']);
-
+    Route::get('/basket-courses', [\App\Http\Controllers\Api\BasketController::class, 'courses']);
     Route::post('/reset-password', [AuthController::class, 'reset']);
 
     Route::prefix('course')->group(function () {

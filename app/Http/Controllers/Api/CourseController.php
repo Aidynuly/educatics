@@ -79,4 +79,18 @@ class CourseController extends Controller
 
         return self::response(200, new CourseIntroResource(CourseIntro::find($request['course_intro_id'])), 'success');
     }
+
+    public function intros(Request $request)
+    {
+        $request->validate([
+            'lang'  =>  'required',
+            'course_id'   =>  'required|exists:courses,id'
+        ],[
+            'course_id.exists'    =>  'Неправильный курс айди'
+        ]);
+        $user = auth()->user();
+        $course = Course::find($request['course_id']);
+
+        return self::response(200, new CourseResource($course), 'success');
+    }
 }

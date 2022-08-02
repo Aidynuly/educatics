@@ -18,7 +18,7 @@ class TestResource extends JsonResource
     {
         return [
             'id'    =>  $this->id,
-            'title' =>  Translate::find($this->title),
+            'title' =>   isset($request->lang) ? Translate::whereId($this->title)->value($request->lang) : Translate::find($this->title),
             'course_intro_id'   =>  $this->course_intro_id,
             'questions' =>  $questions = QuestionResource::collection(Question::whereTestId($this->id)->get()),
             'count' =>  count($questions),

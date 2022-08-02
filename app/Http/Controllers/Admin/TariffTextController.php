@@ -96,6 +96,8 @@ class TariffTextController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TariffText::find($id)->delete();
+
+        return redirect()->route('tariffs.index')->with('success', 'Успешно удалено');
     }
 }

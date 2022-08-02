@@ -17,7 +17,7 @@ class AnswerResource extends JsonResource
     {
         return [
             'id'    =>  $this->id,
-            'title' =>  Translate::find($this->title),
+            'title' =>   isset($request->lang) ? Translate::whereId($this->title)->value($request->lang) : Translate::find($this->title),
             'is_correct'    =>  boolval($this->is_correct),
         ];
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\User;
+use App\Models\UserCourse;
 use App\Models\UserTest;
 use Carbon\Carbon;
 use Carbon\Traits\Week;
@@ -87,5 +88,15 @@ class UserController extends Controller
         $answers = UserTest::whereTestId($request->test_id)->where('user_id', $user->id)->get();
 
         return self::response(200, UserTestResource::collection($answers), 'success');
+    }
+
+    public function myCourses(Request $request)
+    {
+        $request->validate([
+            'lang'  =>  'required',
+        ]);
+        $user = auth()->user();
+        $lang = $request->lang;
+        $courses = UserCourse::whereUserId($user->id)->pluck('course_id')->get();
     }
 }

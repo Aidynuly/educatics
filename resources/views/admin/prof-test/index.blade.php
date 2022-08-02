@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Questions') }}
+                                {{ __('Проф тест вопросы') }}
                             </span>
 
                             <div class="float-right">
@@ -36,12 +36,12 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
-                                <tr>
-                                    <th>Очередь</th>
-                                    <th>Айди вопроса</th>
-                                    <th>Вопрос</th>
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <th>Очередь</th>
+                                        <th>Айди вопроса</th>
+                                        <th>Вопрос</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($questions as $question)
