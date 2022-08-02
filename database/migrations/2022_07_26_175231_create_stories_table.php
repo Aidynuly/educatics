@@ -19,11 +19,6 @@ return new class extends Migration
             $table->foreignId('title')->constrained('translates')->cascadeOnDelete();
             $table->foreignId('description')->nullable()->constrained('translates')->cascadeOnDelete();
             $table->string('image')->nullable();
-            $table->string('link')->nullable();
-            $table->string('whatsapp')->nullable();
-            $table->string('telegram')->nullable();
-            $table->string('instagram')->nullable();
-            $table->string('facebook')->nullable();
         });
     }
 

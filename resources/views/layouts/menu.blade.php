@@ -42,6 +42,10 @@
         <i class="nav-icon fas fa-table"></i>
         <p>Про нас</p>
     </a>
+    <a href="{{route('stories.index')}}" class="nav-link active">
+        <i class="nav-icon fas fa-table"></i>
+        <p>Истории</p>
+    </a>
     <a href="{{route('prof-tests.index')}}" class="nav-link active">
         <i class="nav-icon fas fa-school"></i>
         <p>Проф тест</p>

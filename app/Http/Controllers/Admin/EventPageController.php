@@ -98,7 +98,7 @@ class EventPageController extends Controller
             'block' =>  $request['icon'] ?? $page->block,
         ]);
 
-        return redirect()->route('event-page.index')->with('success','Успешно обновлено');
+        return redirect()->route('event-page.index')->with('success', 'Успешно обновлено');
     }
 
     /**

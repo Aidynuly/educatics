@@ -37,6 +37,7 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('tariffs', \App\Http\Controllers\Admin\TariffController::class);
     Route::resource('tariff-texts', \App\Http\Controllers\Admin\TariffTextController::class);
     Route::resource('about-us', \App\Http\Controllers\Admin\AboutUController::class);
+    Route::resource('stories', \App\Http\Controllers\Admin\StoryController::class);
     Route::resource('prof-tests', \App\Http\Controllers\Admin\ProfTestController::class);
     Route::resource('answers', \App\Http\Controllers\Admin\AnswerController::class);
     Route::resource('video', \App\Http\Controllers\Admin\VideoController::class);

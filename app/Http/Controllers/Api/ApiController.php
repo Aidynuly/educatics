@@ -19,6 +19,8 @@ use App\Models\Mainpage;
 use App\Models\Contact;
 use App\Models\SocialNetwork;
 use App\Models\Doc;
+use App\Models\Employee;
+use App\Models\Story;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -31,18 +33,13 @@ class ApiController extends Controller
         ]);
         $data['first_block'] = AboutUs::join('translates as title', 'title.id', 'about_us.title')
             ->join('translates as description', 'description.id', 'about_us.description')
-            ->where('about_us.block', 'first')
             ->select('about_us.id', 'title.' . $request->lang . ' as title', 'description.' . $request->lang . ' as description', 'about_us.image')
             ->first();
-        $data['second_block'] = AboutUs::join('translates as title', 'title.id', 'about_us.title')
-            ->where('about_us.block', 'second')
-            ->select('about_us.id', 'title.' . $request->lang . ' as title', 'about_us.image')
-            ->first();
+        $data['employees'] = Employee::select('name', 'surname', 'position', 'image')->get();
 
-        $data['third_block'] = AboutUs::join('translates as title', 'title.id', 'about_us.title')
-            ->where('about_us.block', 'third')
-            ->select('about_us.id', 'title.' . $request->lang . ' as title', 'about_us.image')
-            ->first();
+        $data['stories'] = Story::join('translates as title', 'title.id', 'stories.title')
+            ->join('translates as description', 'description.id', 'stories.description')
+            ->select('title.' . $request->lang . ' as title', 'description.' . $request->lang . ' as description', 'image', 'stories.created_at')->get();
 
         return self::response(200, $data, 'success');
     }
@@ -182,7 +179,6 @@ class ApiController extends Controller
         $lang = $request->lang;
         $data['main'] = EventPage::join('translates as title', 'title.id', 'event_pages.title')
             ->join('translates as desc', 'desc.id', 'event_pages.description')
-            ->where('block', 'first')
             ->select('event_pages.id', 'title.' . $lang . ' as title', 'desc.' . $lang . ' as description', 'event_pages.image',)
             ->first();
 

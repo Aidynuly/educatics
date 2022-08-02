@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Mainpage;
 use App\Models\Translate;
 use Carbon\Carbon;
+use File;
 use Illuminate\Http\Request;
 use function redirect;
 use function request;
@@ -61,13 +62,13 @@ class AboutUController extends Controller
             'en'    =>  $request['description_en'],
         ]);
 
-        if ($request['icon']) {
-            $icon = $this->uploadImage($request->file('icon'));
+        if ($request['image']) {
+            $image = $this->uploadImage($request->file('image'));
         }
         $aboutU = AboutUs::create([
             'title'     =>  $title->id,
             'description'   =>  $description->id,
-            'image'     =>  $icon ?? null,
+            'image'     =>  $image ?? null,
             'created_at'    =>  Carbon::now(),
             'block' =>  $request['block']
         ]);
@@ -123,12 +124,14 @@ class AboutUController extends Controller
             'en'    =>  $request['description_en'],
         ]);
 
-        if ($request['icon']) {
-            $icon = $this->uploadImage($request->file('icon'));
+        if ($request['image']) {
+            if (File::exists($aboutU->image)) {
+                File::delete($aboutU->image);
+            }
+            $image = $this->uploadImage($request->file('image'));
         }
         $aboutU->update([
-            'icon'      =>  $icon ?? $aboutU->icon,
-            'block'     =>  $request['block'],
+            'image'      =>  $image ?? $aboutU->image,
         ]);
 
         return redirect()->route('about-us.index')

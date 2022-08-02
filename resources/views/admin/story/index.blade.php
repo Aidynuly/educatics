@@ -57,17 +57,17 @@
                                     </td>
 
                                     <td>
-                                        <form action="{{ route('spheres.destroy',$sphere->id) }}" method="POST">
+                                        <form action="{{ route('stories.destroy',$story->id) }}" method="POST">
                                             {{-- <a class="btn btn-sm btn-primary "
                                                 href="{{ route('spheres.show',$sphere->id) }}"><i
                                                     class="fa fa-fw fa-eye"></i></a>--}}
                                             <a class="btn btn-sm btn-success"
-                                                href="{{ route('spheres.edit',$sphere->id) }}"><i
+                                                href="{{ route('stories.edit',$story->id) }}"><i
                                                     class="fa fa-fw fa-edit"></i></a>
                                             @csrf
                                             @method('DELETE')
-                                            {{-- <button type="submit" class="btn btn-danger btn-sm"><i
-                                                    class="fa fa-fw fa-trash"></i></button>--}}
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class="fa fa-fw fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>
