@@ -21,8 +21,8 @@ class SphereResource extends JsonResource
         $lang = $request->lang;
         return [
             'id'    =>  $this->id,
-            'title' =>  Translate::whereId($this->title)->value($lang),
-            'description'   =>  Translate::whereId($this->description)->value($lang),
+            'title' =>  isset($lang) ? Translate::whereId($this->title)->value($lang) : Translate::find($this->title),
+            'description' =>  isset($lang) ? Translate::whereId($this->description)->value($lang) : Translate::find($this->description),
             'icon'      =>  $this->icon,
             'courses'   =>  CourseLangResource::collection(Course::where('sphere_id', $this->id)->get()),
             'created_at'    =>  $this->created_at,

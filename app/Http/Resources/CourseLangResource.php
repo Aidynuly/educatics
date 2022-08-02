@@ -18,8 +18,8 @@ class CourseLangResource extends JsonResource
         $lang = $request->lang;
         return [
             'id'    =>  $this->id,
-            'title' =>  Translate::whereId($this->title)->value($lang),
-            'description'   =>  Translate::whereId($this->description)->value($lang),
+            'title' =>  isset($lang) ? Translate::whereId($this->title)->value($lang) : Translate::find($this->title),
+            'description'   => isset($lang) ? Translate::whereId($this->description)->value($lang) : Translate::find($this->title),
             'price' =>  $this->price,
             'certificate'   =>  $this->certificate,
             'background_color'  =>  $this->background_color,

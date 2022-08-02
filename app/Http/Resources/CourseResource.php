@@ -30,7 +30,8 @@ class CourseResource extends JsonResource
             'background_color'  => $this->background_color,
             'icon'      =>  $this->icon,
             'trailer'   =>  $this->trailer,
-            'sphere'   =>  Sphere::find($this->sphere_id),
+            'sphere'   =>  isset($lang) ? Sphere::join('translates as title', 'title.id', 'spheres.title')->join('translates as desc', 'desc.id', 'spheres.description')->where('spheres.id', $this->sphere_id)
+                ->select('spheres.id','title.'.$lang.' as title','desc.'.$lang.' as description')->first() : Sphere::find($this->sphere_id),
             'count_intro'   =>  CourseIntro::whereCourseId($this->id)->count(),
             'intros'    =>  CourseIntroTitleResource::collection(CourseIntro::whereCourseId($this->id)->get()),
         ];

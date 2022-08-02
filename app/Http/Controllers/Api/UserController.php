@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CourseResource;
 use App\Models\Answer;
+use App\Models\Course;
 use App\Models\Question;
 use App\Models\User;
 use App\Models\UserCourse;
@@ -97,6 +99,14 @@ class UserController extends Controller
         ]);
         $user = auth()->user();
         $lang = $request->lang;
-        $courses = UserCourse::whereUserId($user->id)->pluck('course_id')->get();
+        $courses = UserCourse::whereUserId($user->id)->pluck('course_id')->toArray();
+        $arr = [];
+        if (count($courses) > 0) {
+            foreach ($courses as $course) {
+                $arr[] = new CourseResource(Course::find($course));
+            }
+        }
+
+        return self::response(200, $arr, 'success');
     }
 }
