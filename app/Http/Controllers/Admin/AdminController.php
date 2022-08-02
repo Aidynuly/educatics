@@ -54,7 +54,7 @@ class AdminController extends Controller
 
     public function pdf(Request $request)
     {
-        $pdf = PDF::loadView('certificate.pdf');
+        $pdf = PDF::loadView('index');
         $path = Storage::put('public/pdf/invoice-1.pdf', $pdf->output());
         $url = basename($path);
         dd($url);

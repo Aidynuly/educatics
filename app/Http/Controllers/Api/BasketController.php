@@ -26,9 +26,9 @@ class BasketController extends Controller
                 'message' => 'Количество курсов не совпадает с количеством тарифа'
             ], 400);
         }
-        if (Basket::where('user_id', $user->id)->where('tariff_id', '!=', $request['tariff_id'])->exists()) {
+        if (Basket::where('user_id', $user->id)->where('tariff_id', $request['tariff_id'])->where('status', 'in_process')->exists()) {
             return response()->json([
-                'message' => 'У вас уже есть курсы',
+                'message' => 'У вас уже есть курсы. Очистите корзину!',
             ], 400);
         }
         foreach ($request['courses'] as $course) {

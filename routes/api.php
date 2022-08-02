@@ -67,6 +67,8 @@ Route::get('course-page', [ApiController::class, 'coursePage']);
 Route::get('prof-test-page',[ApiController::class, 'profTest']);
 Route::get('event-page',[ApiController::class, 'eventPage']);
 
+Route::get('certificate', [\App\Http\Controllers\Admin\CertificateController::class, 'get']);
+
 Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         $request->validate([
