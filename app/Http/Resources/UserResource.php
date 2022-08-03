@@ -64,6 +64,7 @@ class UserResource extends JsonResource
             'prof_test' =>  $profTest,
             'sphere'        =>  $sphere ?? null,
             'city'      =>  new CityResource(City::find($this->city_id)),
+            'image' =>  $this->image,
         ];
     }
 }

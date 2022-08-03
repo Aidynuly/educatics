@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+Route::get('/', [AdminController::class, 'loginPage']);
 Route::get('/admin', [AdminController::class, 'loginPage'])->name('login');
 Route::post('login', [AdminController::class, 'login'])->name('admin.login');
 
@@ -61,4 +61,5 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('footer', \App\Http\Controllers\Admin\FooterController::class);
     Route::resource('transactions', \App\Http\Controllers\Admin\TransactionController::class);
     Route::resource('promocodes', \App\Http\Controllers\Admin\PromocodeController::class);
+    Route::resource('contacts', \App\Http\Controllers\Admin\ContactController::class);
 });

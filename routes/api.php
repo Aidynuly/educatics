@@ -93,7 +93,7 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
     Route::get('/basket-courses', [\App\Http\Controllers\Api\BasketController::class, 'courses']);
     Route::post('/reset-password', [AuthController::class, 'reset']);
     Route::post('/update-user', [AuthController::class, 'update']);
-
+    Route::post('/upload-image',[AuthController::class, 'upload']);
     Route::post('/promocode', [PaymentController::class, 'promocode']);
 
     Route::prefix('course')->group(function () {

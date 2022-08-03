@@ -105,4 +105,16 @@ class AuthController extends Controller
 
         return self::response(200, new UserResource(auth()->user()),'success');
     }
+
+    public function upload(Request $request)
+    {
+        $request->validate(['image' => 'required']);
+        $user = auth()->user();
+        $path = $this->uploadImage($request->file('image'));
+        $user->update([
+            'image' =>  $path,
+        ]);
+
+        return self::response(202, new UserResource(auth()->user()), 'success');
+    }
 }

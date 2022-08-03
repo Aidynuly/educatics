@@ -24,4 +24,6 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    protected $fillable = ['type','phone','icon'];
 }

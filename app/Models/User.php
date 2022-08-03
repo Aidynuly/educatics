@@ -74,7 +74,8 @@ class User extends Authenticatable
         'session_id',
         'deadline',
         'count',
-        'city_id'
+        'city_id',
+        'image',
     ];
 
     static $rules = [

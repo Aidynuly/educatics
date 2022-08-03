@@ -52,7 +52,10 @@
                             <strong>School Id:</strong>
                             {{ $user->school_id }}
                         </div>
-
+                        <div class="form-group">
+                            <label for="image">Фото:</label><br>
+                            <img src="{{url("$user->image")}}" id="image" class="img-circle elevation-2" width="150px" height="100px">
+                        </div>
                     </div>
                 </div>
             </div>

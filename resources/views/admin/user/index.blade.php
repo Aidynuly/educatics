@@ -18,7 +18,7 @@
 
                              <div class="float-right">
                                 <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                  {{ __('Создать новый') }}
                                 </a>
                               </div>
                         </div>
@@ -35,6 +35,7 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>#</th>
+                                        <th>Картинка</th>
 										<th>Тип</th>
                                         <th>Имя</th>
                                         <th>Фамилия</th>
@@ -49,6 +50,9 @@
                                     @foreach ($users as $user)
                                         <tr>
                                             <td>{{ $user->id }}</td>
+                                            <td>
+                                                <img src="{{url("$user->image")}}" class="img-circle elevation-2" width="150px" height="100px">
+                                            </td>
                                             @if($user->type == 'parent')
 											    <td>Взрослый</td>
                                             @else
