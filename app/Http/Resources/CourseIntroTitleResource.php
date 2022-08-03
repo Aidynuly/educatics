@@ -21,7 +21,7 @@ class CourseIntroTitleResource extends JsonResource
         return [
             'id'    =>  $this->id,
             'title' =>  isset($lang) ? Translate::whereId($this->title)->value($lang) :Translate::find($this->title),
-            'status'    =>  isset($user) ? UserCourseIntro::where('user_id', $user->id)->where('course_intro_id', $this->id)->value('status') : null,
+            'status'    =>  isset($user) ? UserCourseIntro::where('user_id', $user->id)->where('course_intro_id', $this->id)->value('status') : false,
             'type'  =>  $this->type,
         ];
     }

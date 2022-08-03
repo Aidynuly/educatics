@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Course
+    Курсы
 @endsection
 
 @section('content')
@@ -37,7 +37,6 @@
                                         <th>#</th>
                                         <th>Название</th>
                                         <th>Описание</th>
-										<th>Цена</th>
 										<th>Сфера</th>
                                         <th></th>
                                     </tr>
@@ -49,7 +48,6 @@
 
 											<td>{{ App\Models\Translate::whereId($course->title)->value('ru') }}</td>
 											<td>{{ App\Models\Translate::whereId($course->description)->value('ru') }}</td>
-											<td>{{ $course->price }}</td>
                                             @if($course->sphere_id == 2)
                                                 <td>Склонность к работе с людьми</td>
                                             @elseif($course->sphere_id == 3 )
@@ -84,4 +82,3 @@
         </div>
     </div>
 @endsection
-`
