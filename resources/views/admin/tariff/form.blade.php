@@ -101,6 +101,46 @@
             </div>
 
         </div>
+        <label>Курс текст:</label>
+        <div class="card-body">
+            <div class="card-header">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#russian_course" data-toggle="tab">Russian</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#english_course" data-toggle="tab">English</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#kazakh_course" data-toggle="tab">Kazakh</a></li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="active tab-pane" id="russian_course">
+                        <div class="form-group">
+                            <label for="russian_course">RU</label>
+                            <textarea type="text" class="ckeditor form-control" id="russian_course" name="course_text_ru" placeholder="Введите название:">
+                                {{isset($tariff->course_text) ? \App\Models\Translate::where('id', $tariff->course_text)->value('ru') : ''}}
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="kazakh_course">
+                        <div class="form-group" id="kazakh_course">
+                            <label for="kazakh_course">KZ</label>
+                            <textarea type="text" class="ckeditor form-control" id="kazakh_course" name="course_text_kz" placeholder="Введите название:">
+                                 {{isset($tariff->course_text) ? \App\Models\Translate::where('id', $tariff->course_text)->value('kz') : ''}}
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="english_course">
+                        <div class="form-group" id="english_course">
+                            <label for="english_course">EN</label>
+                            <textarea type="text" class="ckeditor form-control" id="english_course" name="course_text_en" placeholder="Введите название:">
+                                 {{isset($tariff->course_text) ? \App\Models\Translate::where('id', $tariff->course_text)->value('en') : ''}}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <div class="form-group">
             {{ Form::label('Цена') }}
             {{ Form::text('price', $tariff->price, ['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Price']) }}

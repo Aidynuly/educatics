@@ -104,6 +104,6 @@
         <input type="file" class="form-control" name="icon" id="icon">
     </div>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Принять</button>
     </div>
 </div>

@@ -58,9 +58,6 @@ Sphere
 
                                     <td>
                                         <form action="{{ route('spheres.destroy',$sphere->id) }}" method="POST">
-                                            {{-- <a class="btn btn-sm btn-primary "
-                                                href="{{ route('spheres.show',$sphere->id) }}"><i
-                                                    class="fa fa-fw fa-eye"></i></a>--}}
                                             <a class="btn btn-sm btn-success" href="{{ route('spheres.edit',$sphere->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                             @csrf
                                             @method('DELETE')
@@ -74,7 +71,6 @@ Sphere
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

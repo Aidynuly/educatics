@@ -64,5 +64,6 @@ class Tariff extends Model
         'discount',
         'old_price',
         'discount_text',
+        'course_text'
     ];
 }

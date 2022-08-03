@@ -58,12 +58,18 @@ class TariffController extends Controller
             'kz'    =>  $request->description_kz,
             'en'    =>  $request->description_en,
         ]);
+        $courseText = Translate::create([
+            'ru'    =>  $request->course_text_ru,
+            'kz'    =>  $request->course_text_kz,
+            'en'    =>  $request->course_text_en,
+        ]);
 
         $tariff = Tariff::create([
             'title' =>  $title['id'],
             'description'   =>  $description['id'],
             'price' =>  $request['price'],
             'old_price' =>  $request['old_price'],
+            'course_text'   =>  $courseText->id,
         ]);
 
         return redirect()->route('tariffs.index')
@@ -121,11 +127,26 @@ class TariffController extends Controller
             'kz'    =>  $request->discount_kz,
             'en'    =>  $request->discount_en,
         ]);
+        if (isset($tariff->course_text)) {
+            Translate::find($tariff->course_text)->update([
+                'ru' => $request->course_text_ru,
+                'kz' => $request->course_text_kz,
+                'en' => $request->course_text_en,
+            ]);
+        } else {
+            $courseText = Translate::create([
+                'ru'    =>  $request->course_text_ru,
+                'kz'    =>  $request->course_text_kz,
+                'en'    =>  $request->course_text_en,
+            ]);
+        }
+
         $tariff->update([
             'price' =>  $request['price'],
             'count' =>  $request['count'] ?? $tariff['count'],
             'discount'  =>  $request['discount'],
             'old_price' =>  $request['old_price'],
+            'course_text'   =>  isset($courseText) ? $courseText->id : $tariff->course_text,
         ]);
 
         return redirect()->route('tariffs.index')

@@ -28,6 +28,7 @@ class TariffResource extends JsonResource
             'created_at'    =>  $this->created_at,
             'old_price'     =>  $this->old_price,
             'discount_text' =>  Translate::whereId($this->discount_text)->value($lang),
+            'course_text' =>  Translate::whereId($this->course_text)->value($lang),
             'texts' =>  TariffText::join('translates as text', 'text.id', 'tariff_texts.text')
                 ->where('tariff_texts.tariff_id', $this->id)
                 ->select('tariff_texts.id','text.'.$lang.' as text')->get(),

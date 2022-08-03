@@ -78,7 +78,8 @@ class CourseController extends Controller
             'price' =>  $request['price'],
             'background_color'  =>  $request['background_color'],
             'icon'      =>  $icon ?? null,
-            'sphere_id' =>  $request['sphere_id']
+            'sphere_id' =>  $request['sphere_id'],
+            'trailer'   =>  $request['trailer'],
         ]);
 
         return redirect()->route('courses.index')
@@ -148,6 +149,7 @@ class CourseController extends Controller
             'icon'          =>  $icon ?? $course->icon,
             'certificate'       =>  $name ?? $course->certificate,
             'sphere_id'     =>  $request['sphere_id'] ?? $course->sphere_id,
+            'trailer'       =>  $request['trailer'] ?? $course->trailer,
         ]);
 
         return redirect()->route('courses.index')
