@@ -31,6 +31,7 @@ class CourseResource extends JsonResource
             'title' =>  isset($lang) ? Translate::whereId($this->title)->value($lang) : Translate::find($this->title),
             'description' =>  isset($lang) ? Translate::whereId($this->description)->value($lang) : Translate::find($this->description),
             'price'     =>  $this->price,
+            'queue' =>  $this->queue,
             'certificate'   =>  $this->certificate,
             'created_at'    =>  $this->created_at,
             'background_color'  => $this->background_color,

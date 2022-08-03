@@ -120,6 +120,10 @@
             <input type="text" class="form-control" name="trailer" id="trailer" value="{{isset($course->trailer) ? $course->trailer : null}}">
         </div>
         <div class="form-group">
+            <label for="queue">Очередь курса:</label>
+            <input type="text" class="form-control" name="queue" id="queue" value="{{isset($course->queue) ? $course->queue : null}}">
+        </div>
+        <div class="form-group">
             {{Form::label('Выберите файл, чтобы загрузить сертификат')}}
             {{Form::file('certificate', ['class' => 'form-control' . ($errors->has('kz') ? ' is-invalid' : ''), 'placeholder' => 'Сертификат' ])}}
             {!! $errors->first('certificate', '<div class="invalid-feedback">:message</div>')!!}

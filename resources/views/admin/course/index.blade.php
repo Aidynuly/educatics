@@ -38,6 +38,7 @@
                                         <th>Название</th>
                                         <th>Описание</th>
 										<th>Сфера</th>
+										<th>Очередь</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -59,6 +60,9 @@
                                             @else
                                                 <td>Сфера не выбрана</td>
                                             @endif
+                                            <td>
+                                                {{$course->queue}}
+                                            </td>
                                             <td>
                                                 <form action="{{ route('courses.destroy',$course->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('courses.show',$course->id) }}"><i class="fa fa-fw fa-eye"></i></a>

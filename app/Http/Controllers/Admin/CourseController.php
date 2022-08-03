@@ -27,7 +27,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate(10);
+        $courses = Course::orderBy('queue','asc')->paginate(10);
 
         return view('admin.course.index', compact('courses'));
     }
@@ -80,6 +80,7 @@ class CourseController extends Controller
             'icon'      =>  $icon ?? null,
             'sphere_id' =>  $request['sphere_id'],
             'trailer'   =>  $request['trailer'],
+            'queue'     =>  $request['queue'],
         ]);
 
         return redirect()->route('courses.index')
@@ -150,6 +151,7 @@ class CourseController extends Controller
             'certificate'       =>  $name ?? $course->certificate,
             'sphere_id'     =>  $request['sphere_id'] ?? $course->sphere_id,
             'trailer'       =>  $request['trailer'] ?? $course->trailer,
+            'queue'     =>  $request['queue'] ?? $course->queue,
         ]);
 
         return redirect()->route('courses.index')

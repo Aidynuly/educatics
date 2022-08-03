@@ -19,7 +19,7 @@ class CourseController extends Controller
 {
     public function get(Request $request)
     {
-        return self::response(200, CourseResource::collection(Course::get()), 'success');
+        return self::response(200, CourseResource::collection(Course::orderBy('queue','asc')->get()), 'success');
     }
 
     public function byTariff(Request $request)
@@ -30,7 +30,7 @@ class CourseController extends Controller
         ]);
         $tariff = Tariff::find($request['tariff_id']);
         return response()->json([
-            'data'  => CourseLangResource::collection(Course::get()),
+            'data'  => CourseLangResource::collection(Course::orderBy('queue','asc')->get()),
             'message' => 'success',
             'tariff_id' =>  (int)$request['tariff_id'],
             'count' =>  $tariff->count,
