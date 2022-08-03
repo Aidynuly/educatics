@@ -18,10 +18,10 @@
         <i class="nav-icon fas fa-city"></i>
         <p>Города</p>
     </a>
-    <a href="{{route('schools.index')}}" class="nav-link active">
-        <i class="nav-icon fas fa-school"></i>
-        <p>Школы</p>
-    </a>
+{{--    <a href="{{route('schools.index')}}" class="nav-link active">--}}
+{{--        <i class="nav-icon fas fa-school"></i>--}}
+{{--        <p>Школы</p>--}}
+{{--    </a>--}}
     <a href="{{route('courses.index')}}" class="nav-link active">
         <i class="nav-icon fas fa-book-reader"></i>
         <p>Список курсов</p>

@@ -22,7 +22,6 @@ class TestResource extends JsonResource
             'course_intro_id'   =>  $this->course_intro_id,
             'questions' =>  $questions = QuestionResource::collection(Question::whereTestId($this->id)->get()),
             'count' =>  count($questions),
-            'type'  =>  $this->type,
         ];
     }
 }

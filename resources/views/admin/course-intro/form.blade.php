@@ -93,15 +93,17 @@
 {{--                    </div>--}}
 {{--                </div>--}}
 {{--            </div>--}}
-{{--        </div>--}}
+
         <div class="form-group">
-            {{Form::label('Выберите файл, чтобы загрузить сертификат')}}
-            {{Form::file('certificate', ['class' => 'form-control' . ($errors->has('kz') ? ' is-invalid' : ''), 'placeholder' => 'Сертификат' ])}}
-            {!! $errors->first('certificate', '<div class="invalid-feedback">:message</div>')!!}
+            <label for="type">Выберите тип:</label>
+            <select name="type" id="type" class="form-control">
+                <option value="course">Курсовый</option>
+                <option value="final">Финальный</option>
+            </select>
         </div>
 
     </div>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Принять</button>
     </div>
 </div>

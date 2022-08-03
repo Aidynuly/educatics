@@ -26,6 +26,7 @@ class UserTestResource extends JsonResource
             'is_correct'    =>  boolval($this->is_correct),
             'status'    =>  $this->status,
             'created_at'    =>  $this->created_at,
+            'correct_answer'    =>  Translate::whereId(Answer::whereQuestionId($this->question_id)->where('is_correct', true)->value('title'))->value($lang),
         ];
     }
 }

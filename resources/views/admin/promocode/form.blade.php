@@ -16,8 +16,12 @@
             {{ Form::text('procent', $promocode->procent, ['class' => 'form-control' . ($errors->has('procent') ? ' is-invalid' : ''), 'placeholder' => 'Процест в сумме']) }}
             {!! $errors->first('procent', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-
+        <div>
+            <label for="interval">Интервал:</label>
+            <input type="text" class="form-control" name="interval" id="interval" value="{{isset($promocode->interval) ? $promocode->interval : 0}}">
+        </div>
     </div>
+    <br>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Принять</button>
     </div>

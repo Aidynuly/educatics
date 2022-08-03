@@ -136,7 +136,6 @@
                                                             <th>#</th>
                                                             <th>Описание</th>
                                                             <th>Правильный ответ</th>
-                                                            <th>Сфера</th>
                                                             <th></th>
                                                         </tr>
                                                         </thead>
@@ -150,9 +149,6 @@
                                                                 @else
                                                                     <td>Нет</td>
                                                                 @endif
-                                                                <td>
-                                                                    {{\App\Models\Translate::whereId(App\Models\Sphere::where('id', $answer->sphere_id)->value('title'))->value('ru')}}
-                                                                </td>
                                                                 <td>
                                                                     <form action="{{route('question-answer.destroy', $answer->id)}}" method="post">
                                                                         @csrf
@@ -173,7 +169,6 @@
                                                             <th>#</th>
                                                             <th>Описание</th>
                                                             <th>Правильный ответ</th>
-                                                            <th>Сфера</th>
                                                             <th></th>
                                                         </tr>
                                                         </thead>
@@ -187,9 +182,6 @@
                                                                 @else
                                                                     <td>Нет</td>
                                                                 @endif
-                                                                <td>
-                                                                    {{\App\Models\Translate::whereId(App\Models\Sphere::where('id', $answer->sphere_id)->value('title'))->value('ru')}}
-                                                                </td>
                                                                 <td>
                                                                     <form action="{{route('question-answer.destroy', $answer->id)}}" method="post">
                                                                         @csrf

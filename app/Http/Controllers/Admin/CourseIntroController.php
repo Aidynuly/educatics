@@ -49,16 +49,13 @@ class CourseIntroController extends Controller
             'kz'    =>  $request['title_kz'],
             'en'    =>  $request['title_en'],
         ]);
-//        $description = Translate::create([
-//            'ru'    =>  $request['description_ru'],
-//            'kz'    =>  $request['description_kz'],
-//            'en'    =>  $request['description_en'],
-//        ]);
-        $intro = CourseIntro::create([
+
+        CourseIntro::create([
             'title' =>  $title['id'],
             'created_at'    =>  Carbon::now(),
             'updated_at'    =>  Carbon::now(),
             'course_id' =>  $request['course_id'],
+            'type'  =>  $request['type'],
         ]);
 
         return redirect()->route('course-intros.show', $request['course_id'])->with('success', 'Успешно создан');
@@ -108,6 +105,10 @@ class CourseIntroController extends Controller
             'ru'    =>  $request['title_ru'],
             'kz'    =>  $request['title_kz'],
             'en'    =>  $request['title_en'],
+        ]);
+
+        $intro->update([
+            'type'  =>  $request['type'],
         ]);
 
         return redirect()->route('course-intros.show', $intro->course_id)->with('success', 'updated');

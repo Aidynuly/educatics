@@ -15,7 +15,10 @@
                             <span id="card_title">
                                 {{ __('Тесты') }}
                             </span>
-
+                            <form method="get" action="{{route('course-intros.show', $courseId)}}">
+                                <input type="hidden" name="" id="" value="">
+                                <button class="btn btn-success btn-sm float-right" type="submit">Назад</button>
+                            </form>
                             <div class="float-right">
                                 <form action="{{route('test.create')}}" method="post">
                                     @method('get')

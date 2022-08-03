@@ -22,6 +22,7 @@ class CourseIntroResource extends JsonResource
 
         return [
             'id'    =>  $this->id,
+            'type'  =>  $this->type,
             'title' => isset($request->lang) ? Translate::whereId($this->title)->value($request->lang) : Translate::find($this->title),
             'course_id' =>  $this->course_id,
             'videos'    =>  CourseVideoResource::collection(CourseVideo::where('course_intro_id', $this->id)->get()),

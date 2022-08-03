@@ -39,6 +39,7 @@
                                     <th>#</th>
                                     <th>Курс</th>
                                     <th>Название категории</th>
+                                    <th>Тип</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -47,7 +48,14 @@
                                     <tr>
                                         <td>{{ $intro->id }}</td>
                                         <td>{{ App\Models\Translate::whereId(\App\Models\Course::whereId($intro->course_id)->value('title'))->value('ru') }}</td>
-                                        <td>{{ App\Models\Translate::whereId($intro->title)->value('ru') }}</td>
+                                        <td>{{ App\Models\Translate::whereId($intro->title)->value('ru') }}
+                                        <td>
+                                            @if($intro->type == 'course')
+                                                Курсовый
+                                            @else
+                                                Финальный
+                                            @endif
+                                        </td>
                                         <td>
                                             <form action="{{route('course-intros.destroy', $intro->id)}}" method="POST">
                                                 <a class="btn btn-sm btn-primary " href="{{route('video.show', $intro->id)}}">Видео</a>

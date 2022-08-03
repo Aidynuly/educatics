@@ -39,6 +39,8 @@
 										<th>Промокод</th>
 										<th>Процент</th>
 										<th>Статус</th>
+                                        <th>Интервал</th>
+                                        <th>Дедлайн</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -56,6 +58,8 @@
                                                     Использован
                                                 @endif
                                             </td>
+                                            <td>{{$promocode->interval}}</td>
+                                            <td>{{$promocode->deadline}}</td>
                                             <td>
                                                 <form action="{{ route('promocodes.destroy',$promocode->id) }}" method="POST">
                                                     @csrf

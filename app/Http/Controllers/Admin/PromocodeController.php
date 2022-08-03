@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Promocode;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use function redirect;
 use function request;
@@ -46,7 +47,14 @@ class PromocodeController extends Controller
      */
     public function store(Request $request)
     {
-        $promocode = Promocode::create($request->all());
+        Promocode::create([
+            'title' =>  $request['title'],
+            'code'  =>  $request['code'],
+            'procent'   =>  $request['procent'],
+            'interval'  =>  $request['interval'],
+            'created_at'    =>  Carbon::now(),
+            'deadline'  =>  Carbon::now()->addMonths($request['interval']),
+        ]);
 
         return redirect()->route('promocodes.index')
             ->with('success', 'Promocode created successfully.');
