@@ -7,8 +7,10 @@ use App\Http\Resources\CourseResource;
 use App\Models\Answer;
 use App\Models\Course;
 use App\Models\Question;
+use App\Models\Test;
 use App\Models\User;
 use App\Models\UserCourse;
+use App\Models\UserCourseIntro;
 use App\Models\UserTest;
 use Carbon\Carbon;
 use Carbon\Traits\Week;
@@ -55,10 +57,15 @@ class UserController extends Controller
         $tests = UserTest::where('user_id', $user['id'])->where('test_id', $request['test_id'])->get();
         $countCorrect = $questions * 50 / 100;
         $answers = UserTest::where('user_id', $user['id'])->where('test_id', $request['test_id'])->where('is_correct', true)->get();
+        $test = Test::find($request['test_id']);
         if (count($answers) >= $countCorrect) {
             UserTest::whereTestId($request->test_id)->where('user_id', $user['id'])->update([
                 'status'    =>  UserTest::STATUS_FINISHED
             ]);
+            UserCourseIntro::where('user_id', $user->id)->where('course_intro_id', $test->course_intro_id)->update([
+                'status'    =>  UserCourseIntro::STATUS_FINISHED
+            ]);
+
             return response()->json([
                 'data' => [
                     'count_answers' => count($tests),
@@ -72,7 +79,12 @@ class UserController extends Controller
             UserTest::whereTestId($request->test_id)->where('user_id', $user['id'])->update([
                 'status'    =>  UserTest::STATUS_DECLINED
             ]);
+            UserCourseIntro::where('user_id', $user->id)->where('course_intro_id', $test->course_intro_id)->update([
+                'status'    =>  UserCourseIntro::STATUS_DECLINED
+            ]);
+
             $data['count_correct'] = count($answers);
+
             return self::response(400, $data, 'Не набрал больше 50%');
         }
     }

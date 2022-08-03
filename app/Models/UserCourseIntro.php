@@ -9,6 +9,10 @@ class UserCourseIntro extends Model
 {
     use HasFactory;
 
+    const STATUS_IN_PROCESS = 'in_process';
+    const STATUS_FINISHED = 'finished';
+    const STATUS_DECLINED = 'declined';
+
     public $timestamps = false;
 
     protected $fillable = [
