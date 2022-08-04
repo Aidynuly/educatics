@@ -48,6 +48,10 @@
             {!! $errors->first('school_name', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+            <label for="image">Выберите аватарку:</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+        <div class="form-group">
             <label for="city_id">Выберите город:</label>
             <select name="city_id" class="form-control" id="city_id">
                 @foreach($cities as $city)

@@ -64,7 +64,6 @@
                                 @else
                                     <p class="text-muted">Города нет</p>
                                 @endif
-                                <p class="text-muted">{{\App\Models\Translate::whereId(\App\Models\City::whereId($user->city_id)->value('title'))->value('ru')}}</p>
                                 <hr>
                                 <strong><i class="fas fa-map-marker-alt mr-1"></i> Дедлайн</strong>
                                 @if($user->deadline)

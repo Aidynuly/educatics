@@ -53,11 +53,17 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $user = User::create($request->all());
+        if ($request->hasFile('image')) {
+            $path = $this->uploadImage($request->file('image'));
+            $user->update([
+                'image' =>  $path
+            ]);
+        }
 
         return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
@@ -105,6 +111,12 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $user->update($request->all());
+        if ($request->hasFile('image')) {
+            $path = $this->uploadImage($request->file('image'));
+            $user->update([
+                'image' =>  $path
+            ]);
+        }
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');
