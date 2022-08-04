@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Basket;
+use App\Models\City;
 use App\Models\School;
 use App\Models\Tariff;
+use App\Models\Transaction;
 use App\Models\User;
+use App\Models\UserCourse;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Compound;
 use function redirect;
@@ -40,8 +44,9 @@ class UserController extends Controller
         $user = new User();
         $tariffs = Tariff::get();
         $schools = School::get();
+        $cities = City::get();
 
-        return view('admin.user.create', ['user' => $user, 'tariffs' => $tariffs, 'schools' => $schools]);
+        return view('admin.user.create', ['user' => $user, 'tariffs' => $tariffs, 'schools' => $schools, 'cities' => $cities]);
     }
 
     /**
@@ -62,13 +67,16 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
         $user = User::find($id);
+        $transactions = Transaction::whereUserId($id)->get();
+        $baskets = Basket::whereUserId($id)->where('status', Basket::STATUS_IN_PROCESS)->get();
+        $courses = UserCourse::whereUserId($id)->get();
 
-        return view('admin.user.show', compact('user'));
+        return view('admin.user.show', compact('user', 'transactions', 'baskets', 'courses'));
     }
 
     /**
@@ -82,8 +90,9 @@ class UserController extends Controller
         $user = User::find($id);
         $tariffs = Tariff::get();
         $schools = School::get();
+        $cities = City::get();
 
-        return view('admin.user.edit', ['user' => $user, 'tariffs' => $tariffs, 'schools' => $schools]);
+        return view('admin.user.edit', ['user' => $user, 'tariffs' => $tariffs, 'schools' => $schools, 'cities' => $cities]);
     }
 
     /**

@@ -31,7 +31,7 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         if (!Auth::attempt($request->only('login', 'password'))) {
-            return self::response(400, null, 'incorrect phone or password');
+            return self::response(400, null, 'Неверный пароль');
         }
 
         $user = User::whereLogin($request['login'])->firstOrFail();

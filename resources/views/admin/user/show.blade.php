@@ -5,60 +5,200 @@
 @endsection
 
 @section('content')
+    <br>
     <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="float-left">
-                            <span class="card-title">Show User</span>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         src="{{url("$user->image")}}" alt="User profile picture">
+                                </div>
+                                <h3 class="profile-username text-center">{{$user->name}} {{$user->surname}}</h3>
+                                <p class="text-muted text-center">
+                                    @if($user->type == 'parent')
+                                        Родитель
+                                    @else
+                                        Ученик
+                                    @endif
+                                </p>
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <b>Логин</b> <a class="float-right">{{$user->login}}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Возраст</b> <a class="float-right">{{$user->age}}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Номер</b> <a class="float-right">{{$user->phone}}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Название школы:</b> <a class="float-right">{{$user->school_name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+
+
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Тариф</h3>
+                            </div>
+
+                            <div class="card-body">
+                                <strong><i class="fas fa-book mr-1"></i> Тип тарифа</strong>
+                                @if($user->tariff_id)
+                                    <p class="text-muted">{{ \App\Models\Translate::whereId(\App\Models\Tariff::whereId($user->tariff_id)->value('title'))->value('ru')}}</p>
+                                @else
+                                    <p class="text-muted">Тарифа нет</p>
+                                @endif
+                                <hr>
+                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Город</strong>
+                                @if($user->city_id)
+                                    <p class="text-muted">{{\App\Models\Translate::whereId(\App\Models\City::whereId($user->city_id)->value('title'))->value('ru')}}</p>
+                                @else
+                                    <p class="text-muted">Города нет</p>
+                                @endif
+                                <p class="text-muted">{{\App\Models\Translate::whereId(\App\Models\City::whereId($user->city_id)->value('title'))->value('ru')}}</p>
+                                <hr>
+                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Дедлайн</strong>
+                                @if($user->deadline)
+                                    <p class="text-muted">{{$user->deadline}}</p>
+                                @else
+                                    <p class="text-muted">Тарифа нет</p>
+                                @endif
+
+                                <hr>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="card-body">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header p-2">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#activity" data-toggle="tab">Транзакции</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#timeline" data-toggle="tab">Курсы</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#settings" data-toggle="tab">Корзина</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="activity">
 
-                        <div class="form-group">
-                            <strong>Type:</strong>
-                            {{ $user->type }}
+                                        <div class="post">
+                                            @foreach($transactions as $transaction)
+                                                <div class="user-block">
+                                                    <span class="username">
+                                                        <a href="#">{{\App\Models\User::whereId($transaction->user_id)->value('name')}} {{\App\Models\User::whereId($transaction->user_id)->value('surname')}}</a>
+                                                        <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i>Дата транзакции:</a>
+                                                    </span>
+                                                    <span class="description">{{$transaction->created_at}}</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Статус:</label>
+                                                    @if($transaction->status == 'in_process')
+                                                        <p id="status">В процессе</p>
+                                                    @elseif($transaction->status == 'success')
+                                                        <p id="status">Успешно</p>
+                                                    @else
+                                                        <p id="status">Отменен</p>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Цена:</label>
+                                                    <p>{{$transaction->price}}</p>
+                                                </div>
+                                                <hr>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="timeline">
+                                        <div class="post">
+                                            @foreach($courses as $course)
+                                                <div class="user-block">
+                                                    <span class="username">
+                                                            <a href="#">{{\App\Models\User::whereId($course->user_id)->value('name')}} {{\App\Models\User::whereId($course->user_id)->value('surname')}}</a>
+                                                            <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i>Дата начала:</a>
+                                                    </span>
+                                                    <span class="description">{{$course->created_at}}</span>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="status">Название курса:</label>
+                                                    <p>{{\App\Models\Translate::whereId(\App\Models\Course::whereId($course->course_id)->value('title'))->value('ru')}}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Статус:</label>
+                                                    @if($course->status == 'in_process')
+                                                        <p id="status">В процессе</p>
+                                                    @elseif($transaction->status == 'finished')
+                                                        <p id="status">Успешно</p>
+                                                    @else
+                                                        <p id="status">Отменен</p>
+                                                    @endif
+                                                </div>
+                                                <hr>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="settings">
+                                        <div class="post">
+                                            @foreach($baskets as $basket)
+                                                <div class="user-block">
+                                                    <span class="username">
+                                                            <a href="#">{{\App\Models\User::whereId($basket->user_id)->value('name')}} {{\App\Models\User::whereId($basket->user_id)->value('surname')}}</a>
+                                                            <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i>Дата добавление:</a>
+                                                    </span>
+                                                    <span class="description">{{$basket->created_at}}</span>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="status">Название курса:</label>
+                                                    <p>{{\App\Models\Translate::whereId(\App\Models\Course::whereId($basket->course_id)->value('title'))->value('ru')}}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Название тарифа:</label>
+                                                    <p>{{\App\Models\Translate::whereId(\App\Models\Tariff::whereId($basket->tariff_id)->value('title'))->value('ru')}}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Статус:</label>
+                                                    @if($basket->status == 'in_process')
+                                                        <p id="status">В процессе</p>
+                                                    @elseif($transaction->status == 'success')
+                                                        <p id="status">Успешно</p>
+                                                    @else
+                                                        <p id="status">Отменен</p>
+                                                    @endif
+                                                </div>
+                                                <hr>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <strong>Tariff Id:</strong>
-                            {{ $user->tariff_id }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Age:</strong>
-                            {{ $user->age }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Login:</strong>
-                            {{ $user->login }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Phone:</strong>
-                            {{ $user->phone }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Name:</strong>
-                            {{ $user->name }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Surname:</strong>
-                            {{ $user->surname }}
-                        </div>
-                        <div class="form-group">
-                            <strong>School Id:</strong>
-                            {{ $user->school_id }}
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Фото:</label><br>
-                            <img src="{{url("$user->image")}}" id="image" class="img-circle elevation-2" width="150px" height="100px">
-                        </div>
+
                     </div>
+
                 </div>
+
             </div>
-        </div>
+        </section>
     </section>
 @endsection

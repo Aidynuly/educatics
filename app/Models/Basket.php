@@ -31,6 +31,10 @@ class Basket extends Model
 {
     use HasFactory;
 
+    const STATUS_IN_PROCESS = 'in_process';
+    const STATUS_SUCCESS = 'success';
+    const STATUS_REJECT = 'reject';
+
     protected $fillable = [
         'user_id',
         'tariff_id',
