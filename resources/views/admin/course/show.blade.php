@@ -33,16 +33,16 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="info-box bg-light">
                                             <div class="info-box-content">
-                                                <span class="info-box-text text-center text-muted">Количество студентов</span>
-                                                <span class="info-box-number text-center text-muted mb-0">123</span>
+                                                <span class="info-box-text text-center text-muted">Общее количество студентов</span>
+                                                <span class="info-box-number text-center text-muted mb-0">{{$count}}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="info-box bg-light">
                                             <div class="info-box-content">
-                                                <span class="info-box-text text-center text-muted">Количество уроков</span>
-                                                <span class="info-box-number text-center text-muted mb-0">123</span>
+                                                <span class="info-box-text text-center text-muted">Количество разделов</span>
+                                                <span class="info-box-number text-center text-muted mb-0">{{count($intros)}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -62,7 +62,7 @@
                                                 {{\App\Models\Translate::whereId($course->description)->value('en')}}
                                             </p>
                                         </div>
-
+                                        <br>
                                         <div class="post">
                                             <div class="user-block">
                                                 <span class="username"><a href="#">На русском</a></span>
@@ -94,6 +94,9 @@
                             <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                                 <h3 class="text-primary"><i class="fas fa-paint-brush"></i>{{\App\Models\Translate::whereId($course->title)->value('ru')}}</h3>
                                 <p class="text-muted"> {{\App\Models\Translate::whereId($course->description)->value('ru')}}</p>
+                                <p>Количество студентов, которые учатся:  <span style="color: orange">{{count($countInProcess)}}</span></p>
+                                <p>Количество студентов, которые закончили: <span style="color: #27ff86">{{count($countFinished)}}</span></p>
+                                <p>Количество студентов, которые отклонили: <span style="color: red">{{count($countDeclined)}}</span></p>
                                 <br>
                                 <div class="text-muted">
                                     <p class="text-sm" style="color: #27ff86">Категории</p>

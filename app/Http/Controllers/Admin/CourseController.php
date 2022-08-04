@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseIntro;
 use App\Models\Translate;
 use App\Models\Sphere;
+use App\Models\User;
 use App\Models\UserCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -97,9 +98,12 @@ class CourseController extends Controller
     {
         $course = Course::find($id);
         $intros = CourseIntro::whereCourseId($id)->get();
-        $count = UserCourse::whereCourseId($id)->get();
+        $countInProcess = UserCourse::whereCourseId($id)->where('status', UserCourse::STATUS_IN_PROCESS)->get();
+        $countFinished = UserCourse::whereCourseId($id)->where('status', UserCourse::STATUS_FINISHED)->get();
+        $countDeclined = UserCourse::whereCourseId($id)->where('status', UserCourse::STATUS_DECLINED)->get();
+        $count = UserCourse::whereCourseId($id)->count();
 
-        return view('admin.course.show', compact('course'), compact('intros'));
+        return view('admin.course.show', compact('course', 'intros','countInProcess', 'countFinished', 'countDeclined', 'count'));
     }
 
     /**
