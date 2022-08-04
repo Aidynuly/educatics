@@ -51,9 +51,9 @@
                                             <td>
                                                 <img src="{{url("$employee->image")}}" class="img-circle elevation-2" width="150px" height="100px">
                                             </td>
-											<td>{{ $employee->name }}</td>
-											<td>{{ $employee->surname }}</td>
-											<td>{{ $employee->position }}</td>
+											<td>{{\App\Models\Translate::whereId($employee->name)->value('ru') }}</td>
+											<td>{{\App\Models\Translate::whereId($employee->surname)->value('ru') }}</td>
+											<td>{{\App\Models\Translate::whereId($employee->position)->value('ru') }}</td>
 											<td>{{ $employee->created_at }}</td>
                                             <td>
                                                 <form action="{{ route('employees.destroy',$employee->id) }}" method="POST">

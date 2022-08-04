@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Employee;
 use App\Http\Controllers\Controller;
+use App\Models\Translate;
+use FontLib\Table\Type\name;
 use Illuminate\Http\Request;
 use function redirect;
 use function request;
@@ -49,11 +51,26 @@ class EmployeeController extends Controller
         if ($request->hasFile('image')) {
             $img = $this->uploadImage($request->file('image'));
         }
+        $name = Translate::create([
+            'ru'    =>  $request['name_ru'],
+            'kz'    =>  $request['name_kz'],
+            'en'    =>  $request['name_en'],
+        ]);
+        $surname = Translate::create([
+            'ru'    =>  $request['surname_ru'],
+            'kz'    =>  $request['surname_kz'],
+            'en'    =>  $request['surname_en'],
+        ]);
+        $position = Translate::create([
+            'ru'    =>  $request['position_ru'],
+            'kz'    =>  $request['position_kz'],
+            'en'    =>  $request['position_en'],
+        ]);
         $employee = Employee::create([
-            'name'  =>  $request['name'],
-            'surname'   =>  $request->surname,
-            'position'  =>  $request->position,
             'image'     =>  $img ?? null,
+            'name'  =>  $name->id,
+            'surname'   =>  $surname->id,
+            'position'  =>  $position->id,
         ]);
 
         return redirect()->route('employees.index')
@@ -98,11 +115,50 @@ class EmployeeController extends Controller
         if ($request->hasFile('image')) {
             $img = $this->uploadImage($request->file('image'));
         }
+        if (isset($employee->name)) {
+            Translate::find($employee->name)->update([
+                'ru' => $request['name_ru'],
+                'kz' => $request['name_kz'],
+                'en' => $request['name_en'],
+            ]);
+        } else {
+            $name = Translate::create([
+                'ru'    =>  $request['name_ru'],
+                'kz'    =>  $request['name_kz'],
+                'en'    =>  $request['name_en'],
+            ]);
+        }
+        if (isset($employee->surname)) {
+            Translate::find($employee->surname)->update([
+                'ru' => $request['surname_ru'],
+                'kz' => $request['surname_kz'],
+                'en' => $request['surname_en'],
+            ]);
+        } else {
+            $surname = Translate::create([
+                'ru'    =>  $request['surname_ru'],
+                'kz'    =>  $request['surname_kz'],
+                'en'    =>  $request['surname_en'],
+            ]);
+        }
+        if (isset($employee->position)) {
+            Translate::find($employee->position)->update([
+                'ru' => $request['position_ru'],
+                'kz' => $request['position_kz'],
+                'en' => $request['position_en'],
+            ]);
+        } else {
+            $position = Translate::create([
+                'ru'    =>  $request['position_ru'],
+                'kz'    =>  $request['position_kz'],
+                'en'    =>  $request['position_en'],
+            ]);
+        }
         $employee->update([
-            'name'  =>  $request['name'],
-            'surname'   =>  $request->surname,
-            'position'  =>  $request->position,
             'image'     =>  $img ?? $employee->image,
+            'name'      => $employee->name ?? $name->id,
+            'surname'      => $employee->surname ?? $surname->id,
+            'position'      => $employee->position ?? $position->id,
         ]);
 
         return redirect()->route('employees.index')

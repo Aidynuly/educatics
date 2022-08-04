@@ -50,6 +50,8 @@ class Employee extends Model
         'image',
         'name',
         'surname',
-        'position'
+        'position',
+        'created_at',
+        'updated_at',
     ];
 }
