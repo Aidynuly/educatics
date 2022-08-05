@@ -10,8 +10,8 @@ class Paybox
     const SECRET_KEY = 'CmAKMPDUfIm0aOOm';
     const MERCHANT_ID = '542526';
     const INIT_ROUTE = 'init_payment.php';
-    const SUCCESS_URL = 'https://127.0.0.1:8000/api/success-payment/';
-    const REJECT_URL = 'https://127.0.0.1:8000/api/reject-payment/';
+    const SUCCESS_URL = 'https://jaryk-back.test-nomad.kz/api/success-payment/';
+    const REJECT_URL = 'https://jaryk-back.test-nomad.kz/api/reject-payment/';
     private $data;
 
     public function __construct(array $data)

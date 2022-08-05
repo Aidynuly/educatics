@@ -72,7 +72,7 @@ class BasketController extends Controller
         if (count($baskets) < 0) {
             return self::response(400, null, 'В корзине пусто');
         }
-        $tariff = Basket::where('user_id', $user->id)->where('status', 'in_process')->first();
+        $tariff = Basket::where('user_id', $user->id)->where('status', Basket::STATUS_IN_PROCESS)->first();
         $totalPrice += Tariff::whereId($tariff->tariff_id)->value('price');
 
         return response()->json([
@@ -80,7 +80,7 @@ class BasketController extends Controller
             'message' => 'success',
             'status' => 200,
             'total_price' => $totalPrice,
-            'tariff_id' => Basket::where('user_id', $user->id)->value('tariff_id'),
+            'tariff_id' => Basket::where('user_id', $user->id)->where('status', Basket::STATUS_IN_PROCESS)->value('tariff_id'),
         ]);
     }
 
