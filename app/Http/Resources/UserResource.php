@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\ProfTestAnswer;
 use App\Models\Tariff;
 use App\Models\Sphere;
+use App\Models\UserCertificate;
 use App\Models\UserCourse;
 use App\Http\Resources\UserCourseResource;
 use App\Http\Resources\ProfTestAnswerResource;
@@ -65,6 +66,7 @@ class UserResource extends JsonResource
             'sphere'        =>  $sphere ?? null,
             'city'      =>  new CityResource(City::find($this->city_id)),
             'image' =>  $this->image,
+            'certificates'  =>  UserCertificateResource::collection(UserCertificate::where('user_id', $this->id)->get()),
         ];
     }
 }

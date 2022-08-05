@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use App\Models\Tariff;
 use App\Models\Basket;
 use App\Http\Resources\BasketResource;
+use App\Models\UserCourse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\True_;
@@ -21,6 +23,11 @@ class BasketController extends Controller
         ]);
         $user = auth()->user();
         $tariff = Tariff::find($request['tariff_id']);
+        foreach ($request['courses'] as $course) {
+            if (UserCourse::whereUserId($user->id)->where('course_id', $course)->exists()) {
+                return self::response(400, new CourseResource(Course::find($course)), 'Курс уже был куплен!');
+            }
+        }
         if ($tariff->count < count($request['courses'])) {
             return response()->json([
                 'message' => 'Количество курсов не совпадает с количеством тарифа'

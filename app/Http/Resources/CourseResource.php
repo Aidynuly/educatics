@@ -23,8 +23,16 @@ class CourseResource extends JsonResource
         $user = auth()->user();
         $intros = CourseIntro::whereCourseId($this->id)->get();
         if (isset($user)) {
-            $ids = CourseIntro::whereCourseId($this->id)->pluck('id')->toArray();
-//            $finishedCount = UserCourseIntro::where('user_id', $user->id)->whereIn()          количество завершенных курсов
+            $finishedCount = 0;
+            foreach ($intros as $intro) {
+                $userIntro = UserCourseIntro::where('course_intro_id', $intro->id)->where('user_id', $user->id)->first();
+                if (isset($userIntro)) {
+                    if ($userIntro->status == 'finished') {
+                        $finishedCount++;
+                    }
+                }
+            }
+
         }
         return [
             'id'    =>  $this->id,
@@ -41,7 +49,7 @@ class CourseResource extends JsonResource
                 ->select('spheres.id','title.'.$lang.' as title','desc.'.$lang.' as description')->first() : Sphere::find($this->sphere_id),
             'count_intro'   =>  CourseIntro::whereCourseId($this->id)->where('type', 'course')->count(),
             'intros'    =>  CourseIntroTitleResource::collection($intros),
-//            'finished_count'    =>  isset($user) ?
+            'finished_count'    =>  isset($user) ? $finishedCount : null,
         ];
     }
 }
