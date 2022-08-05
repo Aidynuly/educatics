@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Moderator;
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -40,7 +42,20 @@ class AdminController extends Controller
 
     public function main(): Factory|View|Application
     {
-        return view('admin.main');
+        $firstDay = Carbon::now()->startOfMonth()->modify('-1 month')->toDateString();
+        $lastDay = Carbon::now()->endOfMonth()->modify('-1 month')->toDateString();
+        $transactions = Transaction::where('created_at', Carbon::now()->month)->get();
+        $successTransactions = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_SUCCESS)->get();
+        $processTransactions = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_IN_PROCESS)->get();
+        $rejectTransactions = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_REJECT)->get();
+        $successSum = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_SUCCESS)->sum('price');
+        $processSum = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_IN_PROCESS)->sum('price');
+        $rejectSum = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_REJECT)->sum('price');
+
+        return view('admin.main', compact(
+            'firstDay', 'lastDay', 'transactions', 'successTransactions', 'processTransactions', 'rejectTransactions', 'successSum', 'processSum',
+            'rejectSum'
+        ));
     }
 
     public function loginPage(): View|Factory|Application|\Illuminate\Http\RedirectResponse
