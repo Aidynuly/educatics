@@ -117,18 +117,22 @@ class PaymentController extends Controller
         $user = auth()->user();
         $tariff = Tariff::find($request['tariff_id']);
         $price = $tariff->price;
-        if (Promocode::whereCode($request['promocode'])->where('status','in_process')->exists()) {
+        if (Promocode::whereCode($request['promocode'])->exists()) {
             $promocode = Promocode::whereCode($request['promocode'])->first();
-            $discount = ($price * $promocode->procent) / 100;
-            $price = $price - $discount;
+            if ($promocode->status == 'in_process') {
+                $discount = ($price * $promocode->procent) / 100;
+                $price = $price - $discount;
 
-            return response()->json([
-                'price' =>  $tariff->price,
-                'new_price' =>  $price,
-                'discount'  =>  $discount,
-            ],200);
+                return response()->json([
+                    'price' => $tariff->price,
+                    'new_price' => $price,
+                    'discount' => $discount,
+                ], 200);
+            } else {
+                return self::response(400, null, 'Промокод уже используется!');
+            }
         }
 
-        return self::response(400, null, 'promocode not found');
+        return self::response(400, null, 'Промокод не найден!');
     }
 }
