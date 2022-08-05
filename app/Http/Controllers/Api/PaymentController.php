@@ -26,19 +26,26 @@ class PaymentController extends Controller
         ]);
         $user = auth()->user();
         $tariff = Tariff::find($request['tariff_id']);
+        $price = $tariff->price;
+        if (isset($request['promocode'])) {
+            $promocode = Promocode::where('code', $request['promocode'])->first();
+            $discount = ($price * $promocode->procent) / 100;
+            $price = $price - $discount;
+        }
         $transaction = Transaction::create([
             'user_id'   =>  $user->id,
-            'price'     =>  $tariff->price,
+            'price'     =>  $price,
             'interval'  =>  60,
             'created_at'    =>  Carbon::now(),
         ]);
         $req = [
             'pg_salt'   =>  'some random string',
-            'pg_amount' =>  $tariff->price,
+            'pg_amount' =>  $price,
             'pg_description'    =>  'payment',
             'pg_order_id'   =>  "$user->id",
             'tariff_id' =>  $tariff->id,
             'transaction_id'    =>  $transaction->id,
+            'promocode' =>  $request['promocode'],
         ];
         $payment = new Paybox($req);
         $response = $payment->initPay($req);
@@ -46,7 +53,7 @@ class PaymentController extends Controller
         return self::response(200, $response, 'success');
     }
 
-    public function success($user, $tariff, $transaction)
+    public function success($user, $tariff, $transaction, $promocode)
     {
         $tariff = Tariff::find($tariff);
         User::find($user)->update([
@@ -59,6 +66,9 @@ class PaymentController extends Controller
         ]);
         Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->update([
             'status'    =>  'success'
+        ]);
+        Promocode::where('code', $promocode)->update([
+            'status'    =>  'used',
         ]);
         $baskets = Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->get();
         if (count($baskets) > 0 || count($baskets) == 0) {
@@ -81,7 +91,7 @@ class PaymentController extends Controller
         return view('emails.success');
     }
 
-    public function reject($user, $tariff, $transaction)
+    public function reject($user, $tariff, $transaction, $promocode)
     {
         User::find($user)->update([
             'tariff_id' =>  null,
@@ -111,12 +121,11 @@ class PaymentController extends Controller
             $promocode = Promocode::whereCode($request['promocode'])->first();
             $discount = ($price * $promocode->procent) / 100;
             $price = $price - $discount;
-            $promocode->update([
-                'status'    =>  'used'
-            ]);
+
             return response()->json([
                 'price' =>  $tariff->price,
                 'new_price' =>  $price,
+                'discount'  =>  $discount,
             ],200);
         }
 
