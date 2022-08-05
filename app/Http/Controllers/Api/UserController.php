@@ -55,7 +55,7 @@ class UserController extends Controller
         UserTest::whereTestId($request->test_id)->where('user_id', $user['id'])->where('status', UserTest::STATUS_FINISHED)->delete();
         UserTest::whereTestId($request->test_id)->where('user_id', $user['id'])->where('status', UserTest::STATUS_DECLINED)->delete();
         $tests = UserTest::where('user_id', $user['id'])->where('test_id', $request['test_id'])->get();
-        $countCorrect = $questions * 50 / 100;
+        $countCorrect = $questions * 60 / 100;
         $answers = UserTest::where('user_id', $user['id'])->where('test_id', $request['test_id'])->where('is_correct', true)->get();
         $test = Test::find($request['test_id']);
         if (count($answers) >= $countCorrect) {
@@ -85,7 +85,7 @@ class UserController extends Controller
 
             $data['count_correct'] = count($answers);
 
-            return self::response(400, $data, 'Не набрал больше 50%');
+            return self::response(400, $data, 'Не набрал больше 60%');
         }
     }
 
