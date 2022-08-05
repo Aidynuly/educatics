@@ -12,6 +12,6 @@ class CertificateController extends Controller
         $name = 'Name Surname';
         $course = 'Course';
 
-        return view('certificate.index', compact('name', 'course'));
+        return view('index', compact('name', 'course'));
     }
 }

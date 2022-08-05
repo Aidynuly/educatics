@@ -11,29 +11,36 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">Show Transaction</span>
+                            <span class="card-title">Данные транзакции</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('transactions.index') }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ route('transactions.index') }}"> Назад</a>
                         </div>
                     </div>
 
                     <div class="card-body">
 
                         <div class="form-group">
-                            <strong>User Id:</strong>
-                            {{ $transaction->user_id }}
+                            <strong>Пользователь:</strong>
+                            {{ \App\Models\User::whereId($transaction->user_id)->value('name') }}
+                            {{ \App\Models\User::whereId($transaction->user_id)->value('surname') }}
                         </div>
                         <div class="form-group">
-                            <strong>Price:</strong>
+                            <strong>Сумма оплаты:</strong>
                             {{ $transaction->price }}
                         </div>
                         <div class="form-group">
-                            <strong>Status:</strong>
-                            {{ $transaction->status }}
+                            <strong>Статус:</strong>
+                            @if($transaction->status == \App\Models\Transaction::STATUS_IN_PROCESS)
+                                В процессе
+                            @elseif($transaction->status == \App\Models\Transaction::STATUS_SUCCESS)
+                                Успешно
+                            @else
+                                Отказ
+                            @endif
                         </div>
                         <div class="form-group">
-                            <strong>Interval:</strong>
+                            <strong>Интервал на сколько дней:</strong>
                             {{ $transaction->interval }}
                         </div>
 

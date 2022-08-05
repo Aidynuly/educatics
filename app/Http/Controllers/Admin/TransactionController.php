@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Transaction;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use function redirect;
 use function request;
@@ -22,10 +22,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::paginate();
+        $transactions = Transaction::orderBy('created_at','desc')->paginate(20);
 
-        return view('admin.transaction.index', compact('transactions'))
-            ->with('i', (request()->input('page', 1) - 1) * $transactions->perPage());
+        return view('admin.transaction.index', compact('transactions'));
     }
 
     /**
@@ -36,6 +35,7 @@ class TransactionController extends Controller
     public function create()
     {
         $transaction = new Transaction();
+
         return view('admin.transaction.create', compact('transaction'));
     }
 

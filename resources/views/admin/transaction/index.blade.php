@@ -40,6 +40,7 @@
 										<th>Цена</th>
 										<th>Статус</th>
 										<th>Интервал(количество дней)</th>
+										<th>Дата</th>
 
                                         <th></th>
                                     </tr>
@@ -51,8 +52,17 @@
 
 											<td>{{ \App\Models\User::whereId($transaction->user_id)->value('name') }} {{ \App\Models\User::whereId($transaction->user_id)->value('surname')}}</td>
 											<td>{{ $transaction->price }}</td>
-											<td>{{ $transaction->status }}</td>
+											<td>
+                                                @if($transaction->status == \App\Models\Transaction::STATUS_IN_PROCESS)
+                                                    В процессе
+                                                @elseif($transaction->status == \App\Models\Transaction::STATUS_SUCCESS)
+                                                    Успешно
+                                                @else
+                                                    Отказ
+                                                @endif
+                                            </td>
 											<td>{{ $transaction->interval }}</td>
+											<td>{{ $transaction->created_at }}</td>
 
                                             <td>
                                                 <form action="{{ route('transactions.destroy',$transaction->id) }}" method="POST">

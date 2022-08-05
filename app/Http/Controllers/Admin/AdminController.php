@@ -42,18 +42,24 @@ class AdminController extends Controller
 
     public function main(): Factory|View|Application
     {
-        $firstDay = Carbon::now()->startOfMonth()->modify('-1 month')->toDateString();
-        $lastDay = Carbon::now()->endOfMonth()->modify('-1 month')->toDateString();
-        $transactions = Transaction::where('created_at', Carbon::now()->month)->get();
-        $successTransactions = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_SUCCESS)->get();
-        $processTransactions = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_IN_PROCESS)->get();
-        $rejectTransactions = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_REJECT)->get();
-        $successSum = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_SUCCESS)->sum('price');
-        $processSum = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_IN_PROCESS)->sum('price');
-        $rejectSum = Transaction::where('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_REJECT)->sum('price');
+        $firstDay = Carbon::now()->startOfMonth()->toDateString();
+        $lastDay = Carbon::now()->endOfMonth()->toDateString();
+        $transactions = Transaction::whereMonth('created_at', Carbon::now()->month)->get();
+        $successTransactions = Transaction::whereMonth('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_SUCCESS)->get();
+        $processTransactions = Transaction::whereMonth('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_IN_PROCESS)->get();
+        $rejectTransactions = Transaction::whereMonth('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_REJECT)->get();
+        $successSum = Transaction::whereMonth('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_SUCCESS)->sum('price');
+        $processSum = Transaction::whereMonth('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_IN_PROCESS)->sum('price');
+        $rejectSum = Transaction::whereMonth('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_REJECT)->sum('price');
 
         return view('admin.main', compact(
-            'firstDay', 'lastDay', 'transactions', 'successTransactions', 'processTransactions', 'rejectTransactions', 'successSum', 'processSum',
+            'firstDay', 'lastDay',
+            'transactions',
+            'successTransactions',
+            'processTransactions',
+            'rejectTransactions',
+            'successSum',
+            'processSum',
             'rejectSum'
         ));
     }
@@ -69,9 +75,19 @@ class AdminController extends Controller
 
     public function pdf(Request $request)
     {
-        $pdf = PDF::loadView('index');
-        $path = Storage::put('public/pdf/invoice-1.pdf', $pdf->output());
-        $url = basename($path);
-        dd($url);
+//        return \view('pdf');
+        $data = [
+            'name' => 'Name Surname',
+            'course'    =>  'Course',
+            'title' =>  'title',
+            'certificate'   =>  'Сертификат'
+        ];
+        $pdf = PDF::loadView('pdf', $data);
+        $path = $pdf->stream('element.pdf')->header('Content-Type: text/html; charset=utf-8' , 'application/pdf', 'charset=utf-8');
+        $name = rand().'_'.time().'.pdf';
+//        Storage::put('public/pdf/'. $name, $pdf->output());
+        Storage::put('public/pdf/'. $name, $path);
+//
+        return self::response(200, $name, 'success');
     }
 }
