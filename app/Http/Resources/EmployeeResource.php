@@ -21,6 +21,7 @@ class EmployeeResource extends JsonResource
             'surname'  =>  Translate::whereId($this->surname)->value($request->lang),
             'position'  =>  Translate::whereId($this->position)->value($request->lang),
             'created_at'=>  $this->created_at,
+            'image' =>  $this->image,
         ];
     }
 }
