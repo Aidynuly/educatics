@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleResource;
+use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\MainPageResource;
 use App\Models\AboutUs;
 use App\Models\Article;
@@ -35,7 +36,7 @@ class ApiController extends Controller
             ->join('translates as description', 'description.id', 'about_us.description')
             ->select('about_us.id', 'title.' . $request->lang . ' as title', 'description.' . $request->lang . ' as description', 'about_us.image')
             ->first();
-        $data['employees'] = Employee::select('name', 'surname', 'position', 'image')->get();
+        $data['employees'] = EmployeeResource::collection(Employee::get());
 
         $data['stories'] = Story::join('translates as title', 'title.id', 'stories.title')
             ->join('translates as description', 'description.id', 'stories.description')
