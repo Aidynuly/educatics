@@ -67,6 +67,8 @@ class UserResource extends JsonResource
             'city'      =>  new CityResource(City::find($this->city_id)),
             'image' =>  $this->image,
             'certificates'  =>  UserCertificateResource::collection(UserCertificate::where('user_id', $this->id)->get()),
+            'verified_at'   =>  $this->verified_at,
+            'verified'  => isset($this->verified_at),
         ];
     }
 }

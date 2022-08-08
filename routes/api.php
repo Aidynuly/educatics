@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('send-code', [AuthController::class, 'send']);
+Route::post('check-code', [AuthController::class, 'check']);
 Route::get('cities', [CityController::class, 'get']);
 Route::get('tariffs', [CityController::class, 'getTariff']);
 Route::get('schools', [SchoolController::class, 'get']);
@@ -54,8 +56,11 @@ Route::get('socials', [ApiController::class, 'socials']);
 Route::get('main-page', [ApiController::class, 'main']);
 Route::get('get-footer', [ApiController::class, 'footer']);
 
-Route::get('success-payment/{user}/{tariff}/{transaction}/{promocode}', [PaymentController::class, 'success']);
-Route::get('reject-payment/{user}/{tariff}/{transaction}/{promocode}', [PaymentController::class, 'reject']);
+Route::get('success-payment-promocode/{user}/{tariff}/{transaction}/{promocode}', [PaymentController::class, 'successPayment']);
+Route::get('reject-payment/{user}/{tariff}/{transaction}', [PaymentController::class, 'reject']);
+
+Route::get('success-payment/{user}/{tariff}/{transaction}', [PaymentController::class, 'success']);
+
 Route::get('by-session-id', [\App\Http\Controllers\Api\ProfTestController::class, 'bySession']);
 
 Route::get('reviews', [ApiController::class, 'reviews']);

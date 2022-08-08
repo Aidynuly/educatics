@@ -53,7 +53,7 @@ class PaymentController extends Controller
         return self::response(200, $response, 'success');
     }
 
-    public function success($user, $tariff, $transaction, $promocode)
+    public function successPayment($user, $tariff, $transaction, $promocode)
     {
         $tariff = Tariff::find($tariff);
         User::find($user)->update([
@@ -91,7 +91,42 @@ class PaymentController extends Controller
         return view('emails.success');
     }
 
-    public function reject($user, $tariff, $transaction, $promocode)
+    public function success($user, $tariff, $transaction)
+    {
+        $tariff = Tariff::find($tariff);
+        User::find($user)->update([
+            'tariff_id'    =>  $tariff->id,
+            'deadline'      =>  Carbon::now()->addMonths(3),
+            'count'     =>  $tariff->count,
+        ]);
+        Transaction::find($transaction)->update([
+            'status'    =>  Transaction::STATUS_SUCCESS
+        ]);
+        Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->update([
+            'status'    =>  'success'
+        ]);
+        $baskets = Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->get();
+        if (count($baskets) > 0 || count($baskets) == 0) {
+            foreach ($baskets as $basket) {
+                UserCourse::insert([
+                    'user_id'   =>  $user,
+                    'course_id' =>  $basket['course_id'],
+                    'status'        =>  'in_process',
+                    'created_at'    =>  Carbon::now(),
+                ]);
+                $intros = CourseIntro::whereCourseId($basket['course_id'])->get();
+                foreach ($intros as $intro) {
+                    UserCourseIntro::insert([
+                        'course_intro_id'   =>  $intro->id,
+                        'user_id'   =>  $user,
+                    ]);
+                }
+            }
+        }
+        return view('emails.success');
+    }
+
+    public function reject($user, $tariff, $transaction)
     {
         User::find($user)->update([
             'tariff_id' =>  null,

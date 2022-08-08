@@ -76,6 +76,7 @@ class User extends Authenticatable
         'count',
         'city_id',
         'image',
+        'verified_at',
     ];
 
     static $rules = [
