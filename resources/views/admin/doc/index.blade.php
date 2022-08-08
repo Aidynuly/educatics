@@ -15,7 +15,10 @@
                             <span id="card_title">
                                 {{ __('Документы сабкурса') }}
                             </span>
-
+                            <form method="get" action="{{route('course-intros.show', $course->id)}}">
+                                <input type="hidden" name="" id="" value="">
+                                <button class="btn btn-success btn-sm float-right" type="submit">Назад</button>
+                            </form>
                             <div class="float-right">
                                 <form action="{{route('docs.create')}}" method="post">
                                     @method('get')
@@ -38,6 +41,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Курс</th>
+                                    <th>Название</th>
                                     <th>Ссылка на doc</th>
                                     <th></th>
                                 </tr>
@@ -47,6 +51,7 @@
                                     <tr>
                                         <td>{{ $doc->id }}</td>
                                         <td>{{  \App\Models\Translate::whereId(\App\Models\CourseIntro::whereId($doc->course_intro_id)->value('title'))->value('ru') }}</td>
+                                        <td>{{  \App\Models\Translate::whereId($doc->title)->value('ru') }}</td>
                                         <td>{{ $doc->path }}</td>
                                         <td>
                                             <form action="{{route('docs.destroy', $doc->id)}}" method="POST">

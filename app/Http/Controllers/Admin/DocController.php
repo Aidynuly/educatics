@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\CourseIntro;
 use App\Models\CourseVideo;
 use App\Models\CourseDoc;
+use App\Models\Translate;
 use App\Models\Video;
 use Illuminate\Http\Request;
 
@@ -40,16 +41,22 @@ class DocController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         if ($request['doc']) {
             $path = $this->uploadDocument($request->file('doc'));
         }
+        $title = Translate::create([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'    =>  $request['title_en'],
+        ]);
         $doc = CourseDoc::create([
             'course_intro_id'   =>  $request['course_intro_id'],
             'path'  =>  $path ?? null,
+            'title' =>  $title->id,
         ]);
 
         return redirect()->route('docs.show', $request['course_intro_id'])->with('success', 'Успешно добавлено');
@@ -101,8 +108,14 @@ class DocController extends Controller
         if ($request['doc']) {
             $path = $this->uploadDocument($request->file('doc'));
         }
-        $courseVideo = CourseDoc::find($id)->update([
-            'path'  =>  $path ?? null
+        $courseVideo = CourseDoc::find($id);
+        Translate::find($courseVideo->title)->update([
+            'ru'    =>  $request['title_ru'],
+            'kz'    =>  $request['title_kz'],
+            'en'    =>  $request['title_en'],
+        ]);
+        $courseVideo->update([
+            'path'  =>  $path ?? null,
         ]);
 
         return redirect()->route('docs.show', CourseDoc::find($id)->course_intro_id)->with('success', 'Успешно обновлено');

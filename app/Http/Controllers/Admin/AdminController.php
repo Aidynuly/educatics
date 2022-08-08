@@ -75,19 +75,15 @@ class AdminController extends Controller
 
     public function pdf(Request $request)
     {
-//        return \view('pdf');
         $data = [
             'name' => 'Name Surname',
             'course'    =>  'Course',
-            'title' =>  'title',
-            'certificate'   =>  'Сертификат'
         ];
         $pdf = PDF::loadView('pdf', $data);
         $path = $pdf->stream('element.pdf')->header('Content-Type: text/html; charset=utf-8' , 'application/pdf', 'charset=utf-8');
         $name = rand().'_'.time().'.pdf';
-//        Storage::put('public/pdf/'. $name, $pdf->output());
         Storage::put('public/pdf/'. $name, $path);
-//
+
         return self::response(200, $name, 'success');
     }
 }

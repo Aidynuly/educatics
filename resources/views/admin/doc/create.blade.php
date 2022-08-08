@@ -19,6 +19,7 @@
                         <form method="POST" action="{{ route('docs.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="course_intro_id" id="course_intro_id" value="{{$intro['id']}}">
+
                             @include('admin.doc.form')
 
                         </form>

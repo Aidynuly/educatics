@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Storage;
+use PDF;
 
 class Controller extends BaseController
 {
@@ -54,5 +55,20 @@ class Controller extends BaseController
         $userCount = User::count();
 
         return ($count * 100) / $userCount;
+    }
+
+    protected function makeCertificate($name,$surname, $course)
+    {
+        $data = [
+            'name' => $name,
+            'course'    =>  $course,
+            'surname'   =>  $surname,
+        ];
+        $pdf = PDF::loadView('pdf', $data);
+        $path = $pdf->stream('element.pdf')->header('Content-Type: text/html; charset=utf-8' , 'application/pdf', 'charset=utf-8');
+        $name = rand().'_'.time().'.pdf';
+        \Illuminate\Support\Facades\Storage::put('public/pdf/'. $name, $path);
+
+        return 'storage/pdf/' . $name;
     }
 }

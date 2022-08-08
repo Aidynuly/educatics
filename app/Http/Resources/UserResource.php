@@ -4,14 +4,18 @@ namespace App\Http\Resources;
 
 use App\Models\Answer;
 use App\Models\City;
+use App\Models\Course;
+use App\Models\CourseIntro;
 use App\Models\ProfTestAnswer;
 use App\Models\Tariff;
 use App\Models\Sphere;
+use App\Models\Translate;
 use App\Models\UserCertificate;
 use App\Models\UserCourse;
 use App\Http\Resources\UserCourseResource;
 use App\Http\Resources\ProfTestAnswerResource;
 use App\Http\Resources\SphereResource;
+use App\Models\UserCourseIntro;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -48,6 +52,19 @@ class UserResource extends JsonResource
         $profTest['answers'] = ProfTestAnswerResource::collection($outputs);
         $profTest['correct_count'] = $data['correctCount'];
 
+        $userCourses = UserCourse::whereUserId($this->id)->where('status',UserCourse::STATUS_IN_PROCESS)->get()->unique('course_id');
+        $analytics = [];
+        foreach ($userCourses as $key => $value) {
+            $course = Course::find($value['course_id']);
+            $countIntros = CourseIntro::whereCourseId($course->id)->count();
+            $intros = CourseIntro::where('course_id', $course->id)->pluck('id')->toArray();
+            $analytics[$key]['course'] = Translate::whereId($course->title)->value('ru');
+            $analytics[$key]['count_intro'] = $countIntros;
+            $analytics[$key]['finished_count_intro'] = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_FINISHED)->count();
+            $analytics[$key]['process_count_intro'] = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_IN_PROCESS)->count();
+            $analytics[$key]['declined_count_intro'] = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_DECLINED)->count();
+        }
+
         return [
             'id'    =>  $this->id,
             'type'  =>  $this->type,
@@ -59,7 +76,7 @@ class UserResource extends JsonResource
             'surname'   =>  $this->surname,
             'school_name'   =>  $this->school_name,
             'session_id'    =>  $this->session_id,
-            'courses'   =>  UserCourseResource::collection(UserCourse::whereUserId($this->id)->get()),
+            'courses'   =>  UserCourseResource::collection(UserCourse::whereUserId($this->id)->where('status',UserCourse::STATUS_IN_PROCESS)->get()),
             'deadline'  =>  $this->deadline,
             'count' =>  $this->count,
             'prof_test' =>  $profTest,
@@ -69,6 +86,8 @@ class UserResource extends JsonResource
             'certificates'  =>  UserCertificateResource::collection(UserCertificate::where('user_id', $this->id)->get()),
             'verified_at'   =>  $this->verified_at,
             'verified'  => isset($this->verified_at),
+            'course_count'  =>count($userCourses),
+            'analytics'  =>  $analytics,
         ];
     }
 }

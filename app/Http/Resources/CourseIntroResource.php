@@ -6,6 +6,7 @@ use App\Models\CourseVideo;
 use App\Models\CourseDoc;
 use App\Models\Test;
 use App\Models\Translate;
+use App\Models\UserCourseIntro;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CourseIntroResource extends JsonResource
@@ -28,6 +29,7 @@ class CourseIntroResource extends JsonResource
             'videos'    =>  CourseVideoResource::collection(CourseVideo::where('course_intro_id', $this->id)->get()),
             'tests'     =>  new TestResource(Test::whereCourseIntroId($this->id)->first()),
             'docs'      =>  CourseDoc::where('course_intro_id', $this->id)->get(),
+            'status'    =>  isset($user) ? UserCourseIntro::where('course_intro_id', $this->id)->where('user_id', $user->id)->value('status') : false,
         ];
     }
 }

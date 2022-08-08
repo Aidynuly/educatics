@@ -35,7 +35,7 @@ Route::get('course-by-id', [CourseController::class, 'getOne']);
 Route::get('course-intros', [CourseController::class, 'byId']);
 Route::get('course-intro-by-id', [CourseController::class, 'getIntroById']);
 Route::get('course-intro-test', [CourseController::class, 'getTest']);
-Route::get('course-intro-videos', [CourseController::class, 'videos']);
+Route::get('course-intro-videos', [CourseController::class, 'videos'])->middleware('auth:sanctum');
 Route::get('about-us', [ApiController::class, 'about']);
 Route::get('articles', [ApiController::class, 'article']);
 Route::get('employees', [EmployeeController::class, 'get']);

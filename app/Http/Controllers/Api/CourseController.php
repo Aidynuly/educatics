@@ -56,7 +56,6 @@ class CourseController extends Controller
         $request->validate([
             'course_intro_id'   =>  'required|exists:course_intros,id',
         ]);
-
         $intro = CourseIntro::find($request['course_intro_id']);
 
         return self::response(200, new CourseIntroResource($intro), 'success');

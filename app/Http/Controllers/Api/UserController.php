@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
 use App\Models\Answer;
 use App\Models\Course;
+use App\Models\CourseIntro;
 use App\Models\Question;
 use App\Models\Test;
+use App\Models\Translate;
 use App\Models\User;
+use App\Models\UserCertificate;
 use App\Models\UserCourse;
 use App\Models\UserCourseIntro;
 use App\Models\UserTest;
@@ -65,6 +68,19 @@ class UserController extends Controller
             UserCourseIntro::where('user_id', $user->id)->where('course_intro_id', $test->course_intro_id)->update([
                 'status'    =>  UserCourseIntro::STATUS_FINISHED
             ]);
+
+            if ($request->type == 'final') {
+                $courseIntro = CourseIntro::find($test->course_intro_id);
+                $course = Course::find($courseIntro->course_id);
+                $courseName = Translate::whereId($course->title)->value('ru');              //lang need from web
+                $path = $this->makeCertificate($user->name, $user->surname, $courseName);
+                UserCertificate::insert([
+                    'user_id'   =>  $user->id,
+                    'course_id' =>  $course->id,
+                    'path'  =>  $path,
+                    'created_at'    =>  Carbon::now(),
+                ]);
+            }
 
             return response()->json([
                 'data' => [

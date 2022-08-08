@@ -28,6 +28,9 @@ class CourseIntro extends Model
 {
     use HasFactory;
 
+    const TYPE_COURSE = 'course';
+    const TYPE_FINISH = 'final';
+
     protected $fillable = [
         'title',
         'course_id',

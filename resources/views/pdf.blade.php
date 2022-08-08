@@ -8,7 +8,7 @@
 <div class="certificate" style="display: flex;
     align-items: center;
     justify-content: center;
-    background: no-repeat url({{url('images/background.jpg')}});
+{{--    background: no-repeat url({{url('images/background.jpg')}});--}}
     height: 100vh;">
 
     <div class="certificate__container" style=" width: 90%;
@@ -33,7 +33,7 @@
             font-weight: 400;
             margin: 0 0 70px 0;
 {{--            letter-spacing: 4px;">ОБ ОКОНЧАНИИ СТАЖИРОВКИ {{$name}} </h2>--}}
-            letter-spacing: 4px;">ОБ ОКОНЧАНИИ СТАЖИРОВКИ </h2>
+            letter-spacing: 4px;">ОБ ОКОНЧАНИИ СТАЖИРОВКИ {{$name}} {{$surname}}</h2>
             <div class="certificate__text" style="font-size: 25px;
             font-family: 'DejaVu Sans', sans-serif;
             font-weight: 400;
@@ -49,7 +49,7 @@
             font-weight: 400;
             color: #6c9ed8;
             max-width: 600px;
-            margin: 0 auto;">Завершил 7-дневную стажировку по профессии "Экономист" в компании Jaryq</div>
+            margin: 0 auto;">Завершил 7-дневную стажировку по профессии {{$course}} в компании Jaryq</div>
         </div>
 
         <div class="certificate__bottom" style="flex-shrink: 0;">
@@ -59,9 +59,9 @@
             padding: 0 30px 10px 30px;
             font-style: italic;
             border-bottom: 2px solid #000;">Jaryq</div>
-            <div class="certificate__image">
-                <img src="{{url('images/logo.png')}}" alt="">
-            </div>
+{{--            <div class="certificate__image">--}}
+{{--                <img src="{{url('images/logo.png')}}" alt="">--}}
+{{--            </div>--}}
         </div>
     </div>
 </div>
