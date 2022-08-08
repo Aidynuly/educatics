@@ -60,9 +60,15 @@ class UserResource extends JsonResource
             $intros = CourseIntro::where('course_id', $course->id)->pluck('id')->toArray();
             $analytics[$key]['course'] = Translate::whereId($course->title)->value('ru');
             $analytics[$key]['count_intro'] = $countIntros;
-            $analytics[$key]['finished_count_intro'] = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_FINISHED)->count();
-            $analytics[$key]['process_count_intro'] = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_IN_PROCESS)->count();
-            $analytics[$key]['declined_count_intro'] = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_DECLINED)->count();
+            $finished_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_FINISHED)->count();
+            $process_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_IN_PROCESS)->count();
+            $declined_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_DECLINED)->count();
+            $analytics[$key]['finished_count_intro'] = $finished_count_intro;
+            $analytics[$key]['process_count_intro'] = $process_count_intro;
+            $analytics[$key]['declined_count_intro'] = $declined_count_intro;
+            $analytics[$key]['finished_procent'] = $this->getProcent($countIntros, $finished_count_intro);
+            $analytics[$key]['process_procent'] = $this->getProcent($countIntros, $process_count_intro);
+            $analytics[$key]['declined_procent'] = $this->getProcent($countIntros, $declined_count_intro);
         }
 
         return [
@@ -89,5 +95,10 @@ class UserResource extends JsonResource
             'course_count'  =>count($userCourses),
             'analytics'  =>  $analytics,
         ];
+    }
+
+    private function getProcent($countIntro, $countStatus)
+    {
+        return ($countStatus * 100) / $countIntro;
     }
 }
