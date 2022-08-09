@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Certificate</title>
-
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Montserrat:wght@400;700&display=swap');
+    </style>
 </head>
 <body>
-
 <div class="certificate" style="display: flex;
     align-items: center;
     justify-content: center;

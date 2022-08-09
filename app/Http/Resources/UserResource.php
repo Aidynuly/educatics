@@ -54,15 +54,20 @@ class UserResource extends JsonResource
 
         $userCourses = UserCourse::whereUserId($this->id)->where('status',UserCourse::STATUS_IN_PROCESS)->get()->unique('course_id');
         $analytics = [];
+        $countCourse = count($userCourses);
+
         foreach ($userCourses as $key => $value) {
             $course = Course::find($value['course_id']);
             $countIntros = CourseIntro::whereCourseId($course->id)->count();
             $intros = CourseIntro::where('course_id', $course->id)->pluck('id')->toArray();
-            $analytics[$key]['course'] = Translate::whereId($course->title)->value('ru');
+            $analytics[$key]['label'] = Translate::whereId($course->title)->value('ru');
+            $analytics[$key]['color'] = $course->background_color;
             $analytics[$key]['count_intro'] = $countIntros;
+            $analytics[$key]['value'] = 100 / $countCourse;
             $finished_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_FINISHED)->count();
             $process_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_IN_PROCESS)->count();
             $declined_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_DECLINED)->count();
+            $analytics[$key]['process_count_intro'] = $process_count_intro;
             $analytics[$key]['finished_count_intro'] = $finished_count_intro;
             $analytics[$key]['process_count_intro'] = $process_count_intro;
             $analytics[$key]['declined_count_intro'] = $declined_count_intro;
@@ -92,7 +97,7 @@ class UserResource extends JsonResource
             'certificates'  =>  UserCertificateResource::collection(UserCertificate::where('user_id', $this->id)->get()),
             'verified_at'   =>  $this->verified_at,
             'verified'  => isset($this->verified_at),
-            'course_count'  =>count($userCourses),
+            'course_count'  => $countCourse,
             'analytics'  =>  $analytics,
         ];
     }
