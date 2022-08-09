@@ -9,9 +9,9 @@
     align-items: center;
     justify-content: center;
 {{--    background: no-repeat url({{url('images/background.jpg')}});--}}
-    background: no-repeat url("{{public_path('background.jpg')}}");
+    background: no-repeat url("{{public_path('/background.jpg')}}");
     height: 100vh;">
-<img style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh;" src="{{public_path('background.jpg')}}" />
+<img style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100vh;" src="{{public_path('/background.jpg')}}" />
     <div class="certificate__container" style=" width: 90%; z-index: 5;
     margin: 0 auto;
             height: 80%;
@@ -60,7 +60,7 @@
             font-style: italic;
             border-bottom: 2px solid #000;">Jaryq</div>
             <div class="certificate__image">
-                <img src="{{public_path('logo.png')}}" alt="">
+                <img src="{{public_path('/logo.png')}}" alt="">
             </div>
         </div>
     </div>

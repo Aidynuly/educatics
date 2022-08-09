@@ -25,6 +25,12 @@ class UserCertificateResource extends JsonResource
             'path'  =>  $this->path,
             'course'    =>  Translate::whereId(Course::whereId($this->course_id)->value('title'))->value($lang),
             'created_at'    =>  $this->created_at,
+            'data'  =>  $data = [
+                'count_intro'   =>  CourseIntro::whereCourseId($this->course_id)->count(),
+                'name'  =>  User::whereId($this->user_id)->value('name'),
+                'surname'  =>  User::whereId($this->user_id)->value('surname'),
+            ],
+            'cert_data'     => $data,
             'count_intro'   =>  CourseIntro::whereCourseId($this->course_id)->count(),
             'name'  =>  User::whereId($this->user_id)->value('name'),
             'surname'  =>  User::whereId($this->user_id)->value('surname'),
