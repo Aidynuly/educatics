@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Mail\AuthCodeMail;
+use App\Models\Course;
+use App\Models\CourseIntro;
 use App\Models\User;
+use App\Models\UserCertificate;
 use Auth;
 use Carbon\Carbon;
 use Hash;
@@ -153,5 +156,31 @@ class AuthController extends Controller
         }
 
         return self::response(400, null, 'Неверный логин!');
+    }
+
+    public function certificate(Request $request)
+    {
+        $request->validate([
+            'course_id'   =>  'required|exists:courses,id',
+            'lang'  =>  'required',
+        ]);
+        $user = auth()->user();
+        $lang = $request->lang;
+        $certificate = UserCertificate::where('user_id', $user->id)->where('course_id', $request['course_id'])->first();
+        if (isset($certificate)) {
+            $data = [
+                'name' => $user->name,
+                'surname' => $user->surname,
+                'count_intro' => CourseIntro::whereCourseId($request['course_id'])->count(),
+                'course_name' => Course::join('translates as title', 'title.id', 'courses.title')->select('courses.id', 'title.' . $lang . ' as title')->value('title'),
+                'path'  =>  $certificate->path,
+            ];
+
+            return response()->json([
+                'cert_data' =>  $data
+            ],200);
+        } else {
+            return self::response(400, null, 'Сертификата не существует');
+        }
     }
 }

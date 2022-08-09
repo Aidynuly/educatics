@@ -82,6 +82,7 @@ Route::prefix('V1')->middleware('auth:sanctum')->group(function () {
 
         return new \App\Http\Resources\UserResource($request->user());
     });
+    Route::get('user-certificate', [AuthController::class, 'certificate']);
 
     Route::get('intros-by-course', [CourseController::class, 'intros']);
     Route::get('my-courses', [\App\Http\Controllers\Api\UserController::class, 'myCourses']);

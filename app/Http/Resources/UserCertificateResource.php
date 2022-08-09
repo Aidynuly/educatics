@@ -3,7 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Models\Course;
+use App\Models\CourseIntro;
 use App\Models\Translate;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserCertificateResource extends JsonResource
@@ -17,11 +19,15 @@ class UserCertificateResource extends JsonResource
     public function toArray($request)
     {
         $lang = $request->lang;
+
         return [
             'id'    =>  $this->id,
             'path'  =>  $this->path,
             'course'    =>  Translate::whereId(Course::whereId($this->course_id)->value('title'))->value($lang),
             'created_at'    =>  $this->created_at,
+            'count_intro'   =>  CourseIntro::whereCourseId($this->course_id)->count(),
+            'name'  =>  User::whereId($this->user_id)->value('name'),
+            'surname'  =>  User::whereId($this->user_id)->value('surname'),
         ];
     }
 }
