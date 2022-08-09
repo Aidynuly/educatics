@@ -64,9 +64,6 @@ class PaymentController extends Controller
         Transaction::find($transaction)->update([
             'status'    =>  Transaction::STATUS_SUCCESS
         ]);
-        Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->where('status', Basket::STATUS_IN_PROCESS)->update([
-            'status'    =>  'success'
-        ]);
         Promocode::where('code', $promocode)->update([
             'status'    =>  'used',
         ]);
@@ -88,6 +85,9 @@ class PaymentController extends Controller
                 }
             }
         }
+        Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->where('status', Basket::STATUS_IN_PROCESS)->update([
+            'status'    =>  'success'
+        ]);
 
         return \Redirect::to('https://jaryq.online/');
     }
@@ -102,9 +102,6 @@ class PaymentController extends Controller
         ]);
         Transaction::find($transaction)->update([
             'status'    =>  Transaction::STATUS_SUCCESS
-        ]);
-        Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->where('status', Basket::STATUS_IN_PROCESS)->update([
-            'status'    =>  'success'
         ]);
         $baskets = Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->where('status',Basket::STATUS_IN_PROCESS)->get();
         if (count($baskets) > 0 || count($baskets) == 0) {
@@ -124,6 +121,9 @@ class PaymentController extends Controller
                 }
             }
         }
+        Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->where('status', Basket::STATUS_IN_PROCESS)->update([
+            'status'    =>  'success'
+        ]);
 
         return \Redirect::to('https://jaryq.online/');
     }
