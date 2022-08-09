@@ -75,7 +75,8 @@ class AdminController extends Controller
     public function pdf(Request $request)
     {
         $data = [
-            'name' => 'Name Surname',
+            'name' => 'Name',
+            'surname'   =>   'Surname',
             'course'    =>  'Course',
         ];
         $pdf = PDF::loadView('pdf', $data);

@@ -30,8 +30,11 @@ class CourseDoc extends Model
     use HasFactory;
 
     public $timestamps = false;
+
     protected $fillable = [
         'course_intro_id',
         'path',
+        'title',
+        'created_at',
     ];
 }

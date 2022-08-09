@@ -74,12 +74,17 @@ class UserController extends Controller
                 $course = Course::find($courseIntro->course_id);
                 $courseName = Translate::whereId($course->title)->value('ru');              //lang need from web
                 $path = $this->makeCertificate($user->name, $user->surname, $courseName);
-                UserCertificate::insert([
+                $certificate = UserCertificate::create([
                     'user_id'   =>  $user->id,
                     'course_id' =>  $course->id,
                     'path'  =>  $path,
                     'created_at'    =>  Carbon::now(),
                 ]);
+                $certificateData = [
+                    'name'  =>  $user->name,
+                    'surname'   =>  $user->surname,
+                    'course'    =>  Translate::whereId($course->title)->value('ru'),
+                ];
             }
 
             return response()->json([
@@ -88,8 +93,8 @@ class UserController extends Controller
                     'count_correct' => count($answers),
                 ],
                 'status' => 200,
-                'message'   =>  'Успешно сдал'
-
+                'message'   =>  'Успешно сдал',
+                'certificate'   =>  isset($certificate) ? $certificateData : false,
             ], 200);
         } else {
             UserTest::whereTestId($request->test_id)->where('user_id', $user['id'])->update([

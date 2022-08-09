@@ -28,7 +28,7 @@ class CourseIntroResource extends JsonResource
             'course_id' =>  $this->course_id,
             'videos'    =>  CourseVideoResource::collection(CourseVideo::where('course_intro_id', $this->id)->get()),
             'tests'     =>  new TestResource(Test::whereCourseIntroId($this->id)->first()),
-            'docs'      =>  CourseDoc::where('course_intro_id', $this->id)->get(),
+            'docs'      =>  CourseDocResource::collection(CourseDoc::where('course_intro_id', $this->id)->get()),
             'status'    =>  isset($user) ? UserCourseIntro::where('course_intro_id', $this->id)->where('user_id', $user->id)->value('status') : false,
         ];
     }

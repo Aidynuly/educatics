@@ -16,7 +16,7 @@
                         <span class="card-title">Создание документа для сабкурса</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('docs.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('docs-store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="course_intro_id" id="course_intro_id" value="{{$intro['id']}}">
 

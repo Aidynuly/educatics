@@ -60,7 +60,7 @@
             border-bottom: 2px solid #000;">Jaryq</div>
             <div class="certificate__image">
                 {{--                <img src="images/logo.png" alt="">--}}
-                <img src="{{url('images/logo.png')}}" alt="">
+                <img src="{{asset('logo.png')}}" alt="">
             </div>
         </div>
     </div>
