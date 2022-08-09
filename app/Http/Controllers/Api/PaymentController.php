@@ -105,7 +105,7 @@ class PaymentController extends Controller
         Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->update([
             'status'    =>  'success'
         ]);
-        $baskets = Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->get();
+        $baskets = Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->where('status',Basket::STATUS_IN_PROCESS)->get();
         if (count($baskets) > 0 || count($baskets) == 0) {
             foreach ($baskets as $basket) {
                 UserCourse::insert([
@@ -136,7 +136,7 @@ class PaymentController extends Controller
         Transaction::find($transaction)->update([
             'status'    =>  Transaction::STATUS_REJECT
         ]);
-        $baskets = Basket::where('user_id', $user)->where('tariff_id', $tariff)->update([
+        $baskets = Basket::where('user_id', $user)->where('tariff_id', $tariff)->where('status', Basket::STATUS_IN_PROCESS)->update([
             'status'    =>  'reject'
         ]);
 
