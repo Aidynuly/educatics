@@ -69,7 +69,6 @@ class AdminController extends Controller
         if (session()->has('admin')) {
             return redirect()->route('admin.main');
         }
-
         return view('admin.login');
     }
 
