@@ -63,7 +63,6 @@ class UserResource extends JsonResource
             $analytics[$key]['label'] = Translate::whereId($course->title)->value('ru');
             $analytics[$key]['color'] = $course->background_color;
             $analytics[$key]['count_intro'] = $countIntros;
-
             $finished_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_FINISHED)->count();
             $process_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_IN_PROCESS)->count();
             $declined_count_intro = UserCourseIntro::where('user_id', $this->id)->whereIn('course_intro_id', $intros)->where('status', UserCourseIntro::STATUS_DECLINED)->count();
@@ -71,10 +70,10 @@ class UserResource extends JsonResource
             $analytics[$key]['finished_count_intro'] = $finished_count_intro;
             $analytics[$key]['process_count_intro'] = $process_count_intro;
             $analytics[$key]['declined_count_intro'] = $declined_count_intro;
-            $analytics[$key]['value'] = $this->getProcent($procent, $finished_count_intro);
-            $analytics[$key]['finished_procent'] = $this->getProcent($countIntros, $finished_count_intro);
+            $analytics[$key]['finished_procent'] = $finishedProcent = $this->getProcent($countIntros, $finished_count_intro);
             $analytics[$key]['process_procent'] = $this->getProcent($countIntros, $process_count_intro);
             $analytics[$key]['declined_procent'] = $this->getProcent($countIntros, $declined_count_intro);
+            $analytics[$key]['value'] = ($finishedProcent * $procent) / 100;
         }
 
         return [
