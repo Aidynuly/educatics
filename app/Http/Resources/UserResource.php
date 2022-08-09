@@ -55,7 +55,10 @@ class UserResource extends JsonResource
         $userCourses = UserCourse::whereUserId($this->id)->where('status',UserCourse::STATUS_IN_PROCESS)->get()->unique('course_id');
         $analytics = [];
         $countCourse = count($userCourses);
-        $procent = 100 / $countCourse;
+        $procent = 0;
+        if ($countCourse) {
+            $procent = 100 / $countCourse;
+        }
         foreach ($userCourses as $key => $value) {
             $course = Course::find($value['course_id']);
             $countIntros = CourseIntro::whereCourseId($course->id)->count();
