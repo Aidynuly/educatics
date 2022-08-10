@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\View\View;
 use Storage;
 use PDF;
 
@@ -60,14 +63,20 @@ class Controller extends BaseController
     protected function makeCertificate($name,$surname, $course)
     {
         $data = [
-            'name' => $name,
+            'name' =>       $name,
             'course'    =>  $course,
             'surname'   =>  $surname,
         ];
-        $pdf = PDF::loadView('pdf', $data);
-        $path = $pdf->stream('element.pdf')->header('Content-Type: text/html; charset=utf-8' , 'application/pdf', 'charset=utf-8');
+//        dd(public_path('background.jpg'));
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($options);
+        $view = \Illuminate\Support\Facades\View::make('pdf')->with('name', $data['name'])->with('surname', $data['surname'])->with('course', $data['course'])->render();
+        $dompdf->loadHtml($view);
+        $dompdf->render();
+        $output = $dompdf->output();
         $name = rand().'_'.time().'.pdf';
-        \Illuminate\Support\Facades\Storage::put('public/pdf/'. $name, $path);
+        \Illuminate\Support\Facades\Storage::put('public/pdf/'. $name, $output);
 
         return 'storage/pdf/' . $name;
     }
