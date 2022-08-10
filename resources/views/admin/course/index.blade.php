@@ -39,6 +39,7 @@
                                         <th>Описание</th>
 										<th>Сфера</th>
 										<th>Очередь</th>
+										<th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -62,6 +63,9 @@
                                             @endif
                                             <td>
                                                 {{$course->queue}}
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-info" href="{{route('course-seo', $course->id)}}">Настроить SEO</a>
                                             </td>
                                             <td>
                                                 <form action="{{ route('courses.destroy',$course->id) }}" method="POST">

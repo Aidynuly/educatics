@@ -63,4 +63,6 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('promocodes', \App\Http\Controllers\Admin\PromocodeController::class);
     Route::resource('contacts', \App\Http\Controllers\Admin\ContactController::class);
     Route::post('docs-store', [\App\Http\Controllers\Admin\DocController::class, 'store'])->name('docs-store');
+    Route::get('course-seo/{id}', [\App\Http\Controllers\Admin\CourseController::class, 'seo'])->name('course-seo');
+    Route::post('course-seo-update', [\App\Http\Controllers\Admin\CourseController::class, 'updateSeo'])->name('course-seo-update');
 });

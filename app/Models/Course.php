@@ -66,6 +66,8 @@ class Course extends Model
         'sphere_id',
         'trailer',
         'queue',
+        'meta_title',
+        'meta_description',
     ];
 
 

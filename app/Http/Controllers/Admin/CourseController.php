@@ -174,4 +174,48 @@ class CourseController extends Controller
         return redirect()->route('courses.index')
             ->with('success', 'Course deleted successfully');
     }
+
+    public function seo($id)
+    {
+        $course = Course::find($id);
+
+        return view('admin.course.seo', compact('course'));
+    }
+
+    public function updateSeo(Request $request)
+    {
+        $course = Course::find($request['course_id']);
+        if ($course->meta_title == null && $course->meta_description == null ) {
+            $title = Translate::create([
+                'ru'    =>  $request['title_ru'],
+                'kz'    =>  $request['title_kz'],
+                'en'    =>  $request['title_en'],
+            ]);
+            $description = Translate::create([
+                'ru'    =>  $request['description_ru'],
+                'kz'    =>  $request['description_kz'],
+                'en'    =>  $request['description_en'],
+            ]);
+
+            $course->update([
+                'meta_title'    =>  $title->id,
+                'meta_description'  =>  $description->id,
+            ]);
+
+            return redirect()->route('courses.index')->with('success', 'Успешно обновлено');
+        } else {
+            Translate::find($course->meta_title)->update([
+                'ru'    =>  $request['title_ru'],
+                'kz'    =>  $request['title_kz'],
+                'en'    =>  $request['title_en'],
+            ]);
+            Translate::find($course->meta_description)->update([
+                'ru'    =>  $request['description_ru'],
+                'kz'    =>  $request['description_kz'],
+                'en'    =>  $request['description_en'],
+            ]);
+
+            return redirect()->route('courses.index')->with('success', 'Успешно обновлено');
+        }
+    }
 }
