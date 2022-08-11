@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Moderator;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -52,6 +53,8 @@ class AdminController extends Controller
         $processSum = Transaction::whereMonth('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_IN_PROCESS)->sum('price');
         $rejectSum = Transaction::whereMonth('created_at', Carbon::now()->month)->where('status', Transaction::STATUS_REJECT)->sum('price');
 
+        $courses = Course::orderBy('queue','asc')->paginate(10);
+
         return view('admin.main', compact(
             'firstDay', 'lastDay',
             'transactions',
@@ -60,7 +63,8 @@ class AdminController extends Controller
             'rejectTransactions',
             'successSum',
             'processSum',
-            'rejectSum'
+            'rejectSum',
+            'courses',
         ));
     }
 
