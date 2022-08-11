@@ -51,6 +51,7 @@ class CourseResource extends JsonResource
             'intros'    =>  CourseIntroTitleResource::collection($intros),
             'finished_count'    =>  isset($user) ? $finishedCount : null,
             'meta_title'    => isset($this->meta_title) ? (isset($lang) ? Translate::whereId($this->meta_title)->value($lang) : Translate::find($this->meta_title)) : false,
+            'meta_description'    => isset($this->meta_description) ? (isset($lang) ? Translate::whereId($this->meta_description)->value($lang) : Translate::find($this->meta_description)) : false,
         ];
     }
 }
