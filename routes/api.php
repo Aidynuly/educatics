@@ -26,6 +26,11 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('send-code', [AuthController::class, 'send']);
 Route::post('check-code', [AuthController::class, 'check']);
+
+Route::get('reset-password-code', [AuthController::class, 'resetPasswordCode']);
+Route::get('reset-password-check-code', [AuthController::class, 'checkPasswordCode']);
+Route::get('reset-password-correct', [AuthController::class, 'newPassword']);
+
 Route::get('cities', [CityController::class, 'get']);
 Route::get('tariffs', [CityController::class, 'getTariff']);
 Route::get('schools', [SchoolController::class, 'get']);
