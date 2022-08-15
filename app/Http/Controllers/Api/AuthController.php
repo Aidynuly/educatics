@@ -206,7 +206,13 @@ class AuthController extends Controller
         $cache = \Cache::get($request['login']);
         if (isset($cache)) {
             if ($cache == $request['code']) {
-                return self::response(200, null, 'Успешно!');
+                $user = User::whereLogin($request['login'])->firstOrFail();
+                $token = $user->createToken('auth_token')->plainTextToken;
+
+                return response()->json([
+                    'data'  =>  $user,
+                    'access_token'  =>  $token,
+                ]);
             } else {
                 return self::response(400, null, 'Неверный код!');
             }
@@ -218,10 +224,9 @@ class AuthController extends Controller
     public function newPassword(Request $request)
     {
         $request->validate([
-            'login' => 'required|exists:users,login',
             'password'  =>  'required',
         ]);
-        $user = User::whereLogin($request['login'])->first();
+        $user = auth()->user();
         $user->password = Hash::make($request['password']);
         $user->save();
 

@@ -29,7 +29,7 @@ Route::post('check-code', [AuthController::class, 'check']);
 
 Route::get('reset-password-code', [AuthController::class, 'resetPasswordCode']);
 Route::get('reset-password-check-code', [AuthController::class, 'checkPasswordCode']);
-Route::get('reset-password-correct', [AuthController::class, 'newPassword']);
+Route::get('reset-password-correct', [AuthController::class, 'newPassword'])->middleware('auth:sanctum');
 
 Route::get('cities', [CityController::class, 'get']);
 Route::get('tariffs', [CityController::class, 'getTariff']);
