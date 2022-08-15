@@ -76,7 +76,7 @@ class Course extends Model
      */
     public function courseIntros()
     {
-        return $this->hasMany('App\CourseIntro', 'course_id', 'id');
+        return $this->hasMany(CourseIntro::class);
     }
 
     /**

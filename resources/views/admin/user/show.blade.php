@@ -7,6 +7,11 @@
 @section('content')
     <br>
     <section class="content container-fluid">
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -125,7 +130,12 @@
                                     </div>
 
                                     <div class="tab-pane" id="timeline">
+                                        <div class="float-right">
+                                            <a href="{{route('user-course-add', $user->id)}}" class="btn btn-sm btn-info">Добавить курс</a>
+                                        </div>
+                                        <br>
                                         <div class="post">
+                                            <br>
                                             @foreach($courses as $course)
                                                 <div class="user-block">
                                                     <span class="username">

@@ -65,4 +65,7 @@ Route::middleware('admin.auth')->group(function () {
     Route::post('docs-store', [\App\Http\Controllers\Admin\DocController::class, 'store'])->name('docs-store');
     Route::get('course-seo/{id}', [\App\Http\Controllers\Admin\CourseController::class, 'seo'])->name('course-seo');
     Route::post('course-seo-update', [\App\Http\Controllers\Admin\CourseController::class, 'updateSeo'])->name('course-seo-update');
+
+    Route::get('user-course-add/{id}', [\App\Http\Controllers\Admin\UserController::class, 'addCourse'])->name('user-course-add');
+    Route::post('user-course-store', [\App\Http\Controllers\Admin\UserController::class, 'storeCourse'])->name('user-course-store');
 });

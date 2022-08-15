@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Basket;
 use App\Models\City;
+use App\Models\Course;
 use App\Models\School;
 use App\Models\Tariff;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserCourse;
+use App\Models\UserCourseIntro;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Compound;
 use function redirect;
@@ -134,4 +137,36 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
+
+    public function addCourse($id)
+    {
+        $user = User::find($id);
+        $userCourses = UserCourse::whereUserId($id)->pluck('course_id')->toArray();
+        $courses = Course::whereNotIn('id', $userCourses)->get();
+
+        return view('admin.user.add-course', compact('user', 'courses'));
+    }
+
+    public function storeCourse(Request $request)
+    {
+        $user = User::find($request['user_id']);
+        $course = Course::find($request['course_id']);
+        $intros = $course->courseIntros->toArray();
+        UserCourse::insert([
+            'user_id'   =>  $user->id,
+            'course_id' =>  $course->id,
+            'status'    =>  UserCourse::STATUS_IN_PROCESS,
+            'created_at'    =>  Carbon::now(),
+        ]);
+        foreach ($intros as $intro) {
+            UserCourseIntro::insert([
+                'course_intro_id'   =>  $intro['id'],
+                'user_id'   =>  $user->id,
+                'status'    =>  UserCourseIntro::STATUS_IN_PROCESS,
+            ]);
+        }
+
+        return redirect()->route('users.show', $user->id)->with('success', 'Успешно добавлено!');
+    }
+
 }
