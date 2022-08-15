@@ -190,7 +190,7 @@ class AuthController extends Controller
         $request->validate([
             'login' => 'required|exists:users,login',
         ]);
-        $code = 1234;
+        $code = random_int(1000, 9999);
         \Mail::to($request['login'])->send(new ResetPasswordMail($code));
         \Cache::put($request['login'], $code, 360);
 
@@ -212,6 +212,7 @@ class AuthController extends Controller
                 return response()->json([
                     'data'  =>  $user,
                     'access_token'  =>  $token,
+                    'message'   =>  'Код отправлено!'
                 ]);
             } else {
                 return self::response(400, null, 'Неверный код!');
