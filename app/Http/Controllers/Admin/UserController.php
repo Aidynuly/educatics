@@ -169,4 +169,15 @@ class UserController extends Controller
         return redirect()->route('users.show', $user->id)->with('success', 'Успешно добавлено!');
     }
 
+    public function destroyCourse(Request $request)
+    {
+        $user = User::find($request['user_id']);
+        $course = Course::find($request['course_id']);
+        $intros = $course->courseIntros->pluck('id')->toArray();
+        UserCourseIntro::where('user_id', $user->id)->whereIn('course_intro_id', $intros)->delete();
+        UserCourse::where('user_id', $user->id)->where('course_id', $course->id)->delete();
+
+        return redirect()->route('users.show', $user->id)->with('success', 'Успешно удалено!');
+    }
+
 }

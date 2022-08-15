@@ -156,18 +156,27 @@ class PaymentController extends Controller
         $price = $tariff->price;
         if (Promocode::whereCode($request['promocode'])->exists()) {
             $promocode = Promocode::whereCode($request['promocode'])->first();
-            if ($promocode->status == 'in_process') {
-                $discount = ($price * $promocode->procent) / 100;
-                $price = $price - $discount;
+            $discount = ($price * $promocode->procent) / 100;
+            $price = $price - $discount;
 
-                return response()->json([
-                    'price' => $tariff->price,
-                    'new_price' => $price,
-                    'discount' => $discount,
-                ], 200);
-            } else {
-                return self::response(400, null, 'Промокод уже используется!');
-            }
+            return response()->json([
+                'price' => $tariff->price,
+                'new_price' => $price,
+                'discount' => $discount,
+            ], 200);
+
+//            if ($promocode->status == 'in_process') {
+//                $discount = ($price * $promocode->procent) / 100;
+//                $price = $price - $discount;
+//
+//                return response()->json([
+//                    'price' => $tariff->price,
+//                    'new_price' => $price,
+//                    'discount' => $discount,
+//                ], 200);
+//            } else {
+//                return self::response(400, null, 'Промокод уже используется!');
+//            }
         }
 
         return self::response(400, null, 'Промокод не найден!');

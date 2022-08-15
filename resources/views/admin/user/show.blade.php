@@ -159,6 +159,15 @@
                                                         <p id="status">Отменен</p>
                                                     @endif
                                                 </div>
+                                                <div class="form-group">
+                                                    <form action="{{ route('user-course-destroy') }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="user_id" value="{{$user->id}}">
+                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i>Удалить курс</button>
+                                                    </form>
+                                                </div>
                                                 <hr>
                                             @endforeach
                                         </div>
