@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Basket;
 use App\Models\UserCourse;
 use App\Models\UserCourseIntro;
+use App\Models\UserPromocode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Service\Paybox;
@@ -64,9 +65,14 @@ class PaymentController extends Controller
         Transaction::find($transaction)->update([
             'status'    =>  Transaction::STATUS_SUCCESS
         ]);
-        Promocode::where('code', $promocode)->update([
-            'status'    =>  'used',
+        $promocode = Promocode::where('code', $promocode)->first();
+        $promocode->status = 'used';
+        $promocode->save();
+
+        UserPromocode::where('user_id', $user)->where('promocode_id', $promocode->id)->update([
+            'status'    => UserPromocode::STATUS_SUCCESS
         ]);
+
         $baskets = Basket::where('user_id', $user)->where('tariff_id', $tariff->id)->where('status', Basket::STATUS_IN_PROCESS)->get();
         if (count($baskets) > 0 || count($baskets) == 0) {
             foreach ($baskets as $basket) {
@@ -158,6 +164,11 @@ class PaymentController extends Controller
             $promocode = Promocode::whereCode($request['promocode'])->first();
             $discount = ($price * $promocode->procent) / 100;
             $price = $price - $discount;
+            UserPromocode::insert([
+                'user_id'   =>  $user->id,
+                'promocode_id'  =>  $promocode->id,
+                'created_at'    =>  Carbon::now(),
+            ]);
 
             return response()->json([
                 'price' => $tariff->price,

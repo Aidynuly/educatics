@@ -62,6 +62,7 @@
                                             <td>{{$promocode->deadline}}</td>
                                             <td>
                                                 <form action="{{ route('promocodes.destroy',$promocode->id) }}" method="POST">
+                                                    <a href="{{route('promocodes.show', $promocode->id)}}" class="btn btn-sm btn-info"><i class="fa fa-fw fa-eye"></i></a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>

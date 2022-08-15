@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Promocode;
+use App\Models\UserPromocode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use function redirect;
@@ -53,7 +54,7 @@ class PromocodeController extends Controller
             'procent'   =>  $request['procent'],
             'interval'  =>  $request['interval'],
             'created_at'    =>  Carbon::now(),
-            'deadline'  =>  Carbon::now()->addMonths($request['interval']),
+            'deadline'  =>  Carbon::now()->addDays($request['interval']),
         ]);
 
         return redirect()->route('promocodes.index')
@@ -69,8 +70,9 @@ class PromocodeController extends Controller
     public function show($id)
     {
         $promocode = Promocode::find($id);
+        $userPromocodes = UserPromocode::where('promocode_id', $id)->paginate(15);
 
-        return view('admin.promocode.show', compact('promocode'));
+        return view('admin.promocode.show', compact('promocode', 'userPromocodes'));
     }
 
     /**
