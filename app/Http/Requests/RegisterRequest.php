@@ -41,7 +41,7 @@ class RegisterRequest extends FormRequest
             response()->json([
                 'message' => $validator->errors()->first(),
                 'status'        =>  400,
-            ],200)
+            ],422)
         );
     }
 }
