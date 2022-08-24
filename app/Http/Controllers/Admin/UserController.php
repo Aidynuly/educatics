@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Models\Basket;
 use App\Models\City;
@@ -14,7 +15,7 @@ use App\Models\UserCourse;
 use App\Models\UserCourseIntro;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Compound;
+use Maatwebsite\Excel\Facades\Excel;
 use function redirect;
 use function request;
 use function view;
@@ -32,7 +33,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::orderBy('created_at',  'desc')->paginate(10);
 
         return view('admin.user.index', compact('users'));
     }
@@ -180,4 +181,10 @@ class UserController extends Controller
         return redirect()->route('users.show', $user->id)->with('success', 'Успешно удалено!');
     }
 
+    public function export(Request $request)
+    {
+        $now = Carbon::now();
+
+        return Excel::download(new UserExport,'users.xlsx');
+    }
 }

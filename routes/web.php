@@ -69,4 +69,6 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('user-course-add/{id}', [\App\Http\Controllers\Admin\UserController::class, 'addCourse'])->name('user-course-add');
     Route::post('user-course-store', [\App\Http\Controllers\Admin\UserController::class, 'storeCourse'])->name('user-course-store');
     Route::delete('user-course-destroy', [\App\Http\Controllers\Admin\UserController::class, 'destroyCourse'])->name('user-course-destroy');
+
+    Route::get('users-export', [\App\Http\Controllers\Admin\UserController::class, 'export'])->name('users-export');
 });
