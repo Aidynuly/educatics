@@ -129,12 +129,12 @@ class AuthController extends Controller
         $request->validate([
             'login' => 'required|exists:users,login',
         ]);
-        $code = 1234;
+        $code = random_int(1000, 9999);
 
         \Mail::to($request['login'])->send(new AuthCodeMail($code));
         \Cache::put($request['login'], $code, 360);
 
-        return self::response(200, $code, 'Отправлено!');
+        return self::response(200, null, 'Отправлено!');
     }
 
     public function check(Request $request)
