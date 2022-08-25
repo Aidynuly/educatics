@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Http;
 class Paybox
 {
     const URL = 'https://api.paybox.money/init_payment.php';
-    const SECRET_KEY = 'CmAKMPDUfIm0aOOm';
-    const MERCHANT_ID = '542526';
     const INIT_ROUTE = 'init_payment.php';
     const SUCCESS_URL = 'https://jaryk-back.test-nomad.kz/api/success-payment/';
     const SUCCESS_URL_PROMOCODE = 'https://jaryk-back.test-nomad.kz/api/success-payment-promocode/';
@@ -29,12 +27,12 @@ class Paybox
             $this->data['pg_success_url'] = self::SUCCESS_URL . $this->data['pg_order_id'] . '/' . $this->data['tariff_id'] . '/' . $this->data['transaction_id'];
         }
         $this->data['pg_reject_url'] = self::REJECT_URL . $this->data['pg_order_id'] . '/' . $this->data['tariff_id'] . '/' . $this->data['transaction_id'];
-        $this->data['pg_merchant_id'] = self::MERCHANT_ID;
+        $this->data['pg_merchant_id'] = config('constants.options.merchant_id');
         $requestForSignature = $this->makeFlatParamsArray($this->data);
 
         ksort($requestForSignature);
         array_unshift($requestForSignature, self::INIT_ROUTE);
-        array_push($requestForSignature, self::SECRET_KEY);
+        array_push($requestForSignature, config('constants.options.secret_key'));
 
         $this->data['pg_sig'] = md5(implode(';', $requestForSignature));
         $response = Http::post(self::URL, $this->data);
