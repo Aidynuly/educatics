@@ -53,6 +53,7 @@ class UserResource extends JsonResource
         $profTest['correct_count'] = $data['correctCount'];
 
         $userCourses = UserCourse::whereUserId($this->id)->where('status',UserCourse::STATUS_IN_PROCESS)->get()->unique('course_id');
+
         $analytics = [];
         $countCourse = count($userCourses);
         $procent = 0;
