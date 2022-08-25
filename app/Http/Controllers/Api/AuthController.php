@@ -146,11 +146,16 @@ class AuthController extends Controller
         $cache = \Cache::get($request['login']);
         if (isset($cache)) {
             if ($cache == $request['code']) {
-                User::whereLogin($request['login'])->update([
-                    'verified_at' => Carbon::now(),
-                ]);
+                $user = User::whereLogin($request['login'])->first();
+                $user->verified_at = Carbon::now();
+                $user->save();
 
-                return self::response(200, new UserResource(User::whereLogin($request['login'])->first()), 'Успешно!');
+                $token = $user->createToken('auth_token')->plainTextToken;
+
+                return response()->json([
+                    'data'  =>  new UserResource($user),
+                    'access_token'  =>  $token,
+                ],200);
             } else {
                 return self::response(400, null, 'Неверный код!');
             }
