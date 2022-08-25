@@ -29,6 +29,6 @@ class AuthCodeMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail from me')->view('emails.code');
+        return $this->subject('Код верификации')->view('emails.code');
     }
 }
